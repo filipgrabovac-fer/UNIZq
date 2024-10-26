@@ -1,4 +1,3 @@
-import { Outlet } from "@tanstack/react-router";
 import { Home } from "./pages/Home/Home";
 
 export const App = () => {
@@ -11,7 +10,6 @@ export const App = () => {
       </p>
       We will use our components like this one!:
       <Home />
-      <Outlet />
     </div>
   );
 };
