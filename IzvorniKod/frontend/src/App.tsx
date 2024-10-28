@@ -1,8 +1,12 @@
+import { useState } from "react";
+import { CustomInput } from "./components/CustomInput/CustomInput";
 import { Home } from "./pages/Home/Home";
 
 export const App = () => {
+  const [value, setValue] = useState("");
+
   return (
-    <div className="bg-green-200">
+    <div>
       <p>this is working</p>
       <p>
         This is our default page. All of the pages will be rendered inside this
@@ -10,6 +14,40 @@ export const App = () => {
       </p>
       We will use our components like this one!:
       <Home />
+      <div className="w-1/4 m-auto flex gap-8 flex-col">
+        <CustomInput
+          setValue={setValue}
+          title="my title"
+          placeholder="my placeholder"
+          errorMessage="custom error message"
+        />
+        <CustomInput
+          setValue={setValue}
+          title="my title"
+          placeholder="my placeholder"
+        />
+        <CustomInput
+          setValue={setValue}
+          title="password"
+          placeholder="password"
+          password={true}
+        />
+
+        <CustomInput
+          setValue={setValue}
+          title="my title"
+          placeholder="my placeholder"
+          rows={10}
+        />
+
+        <CustomInput
+          setValue={setValue}
+          title="my title"
+          placeholder="my placeholder"
+          rows={10}
+          errorMessage="error message on textarea"
+        />
+      </div>
     </div>
   );
 };
