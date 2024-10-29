@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { CustomInput } from "./components/CustomInput/CustomInput";
 import { Home } from "./pages/Home/Home";
-import { Header } from "./components/Header/Header";
 import { SidebarLayout } from "./layouts/SidebarLayout/SidebarLayout";
 
 export const App = () => {
