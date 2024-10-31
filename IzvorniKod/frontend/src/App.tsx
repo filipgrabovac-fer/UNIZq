@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CustomInput } from "./components/CustomInput/CustomInput";
 import { Home } from "./pages/Home/Home";
 import { SidebarLayout } from "./layouts/SidebarLayout/SidebarLayout";
+import { CustomButton } from "./components/CustomButton/CustomButton";
 
 export const App = () => {
   const [value, setValue] = useState("");
@@ -50,6 +51,7 @@ export const App = () => {
             errorMessage="error message on textarea"
           />
         </div>
+        <CustomButton variant_={"logout"} />
       </div>
     </SidebarLayout>
   );
