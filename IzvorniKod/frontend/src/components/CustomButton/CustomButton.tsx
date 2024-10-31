@@ -13,7 +13,7 @@ export const CustomButton = ({ variant_ }: CustomInputType) => {
     );
   } else if (variant === "logout") {
     return (
-      <button className="w-full h-[38] rounded bg-primary border-solid border-2 border-black bg-primary text-white border-gray_border">
+      <button className="w-full h-[38] rounded bg-primary border-solid border-2 border-black bg-primary text-white border-gray_border ">
         logout
       </button>
     );
