@@ -31,4 +31,9 @@ public class UserController {
     public User loginUser(@RequestBody UserLoginDTO userLoginDTO){
         return userService.authenticateUser(userLoginDTO.getUsernameOrEmail(), userLoginDTO.getPassword());
     }
+
+    @GetMapping("/user/{userId}")
+    public User getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
 }
