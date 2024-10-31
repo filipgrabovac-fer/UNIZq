@@ -3,6 +3,7 @@ package com.educhat.backend.services;
 
 import com.educhat.backend.exceptions.EmailAlreadyExistsException;
 import com.educhat.backend.exceptions.InvalidCredentialsException;
+import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.exceptions.UsernameAlreadyExistsException;
 import com.educhat.backend.models.User;
 import com.educhat.backend.models.UserLoginDTO;
@@ -46,6 +47,6 @@ public class UserService {
     }
 
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 }
