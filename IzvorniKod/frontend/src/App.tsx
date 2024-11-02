@@ -51,7 +51,11 @@ export const App = () => {
             errorMessage="error message on textarea"
           />
         </div>
-        <CustomButton variant_={"secondary"} title="logout" />
+        <CustomButton
+          variant={"secondary"}
+          onClick={() => null}
+          title="filip"
+        />
       </div>
     </SidebarLayout>
   );
