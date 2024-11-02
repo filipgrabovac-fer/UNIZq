@@ -1,8 +1,13 @@
-type CustomInputType = {
+type CustomButtonType = {
   variant_?: string;
+  title?: string;
   onClick?: () => void;
 };
-export const CustomButton = ({ variant_ }: CustomInputType) => {
+export const CustomButton = ({
+  variant_,
+  title,
+  onClick,
+}: CustomButtonType) => {
   const variant = variant_?.toLocaleLowerCase();
   if (variant === "cancel") {
     return (
