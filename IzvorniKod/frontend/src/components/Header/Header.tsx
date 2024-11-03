@@ -1,5 +1,5 @@
 import { Menu, Popover } from "antd";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   UserCircleIcon,
   Bars3Icon,
@@ -44,16 +44,20 @@ export const sidebarDataMock = [
   },
 ];
 
-export const Header = () => {
+type HeaderType = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
   const [open, setOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
 
   return (
-    <div className="flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4 sticky ">
+    <div className="flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
       <div className="min-[500px]:hidden flex">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           {isSidebarOpen ? (
@@ -62,18 +66,6 @@ export const Header = () => {
             <Bars3Icon width={25} height={25} />
           )}
         </button>
-        <div
-          className={cn(
-            "absolute left-0 top-[60px] w-full h-screen bg-white",
-            isSidebarOpen ? "" : "hidden"
-          )}
-        >
-          <Menu
-            mode="inline"
-            items={sidebarDataMock}
-            onSelect={() => setIsSidebarOpen(false)} // dodati funkcionalnost za odabir godine pojedinog faksa
-          />
-        </div>
       </div>
 
       <Link to="/" className="text-md my-auto">
@@ -97,9 +89,7 @@ export const Header = () => {
         open={open}
         onOpenChange={handleOpenChange}
       >
-        <button>
-          <UserCircleIcon className="w-[25px] h-[25px]" />
-        </button>
+        <UserCircleIcon className="w-[25px] h-[25px] cursor-pointer my-auto" />
       </Popover>
     </div>
   );
