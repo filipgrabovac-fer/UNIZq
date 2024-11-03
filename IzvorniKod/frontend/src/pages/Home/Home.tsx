@@ -1,3 +1,9 @@
+import { SidebarLayout } from "../../layouts/SidebarLayout/SidebarLayout";
+
 export const Home = () => {
-  return <p>This will be our homepage!</p>;
+  return (
+    <SidebarLayout>
+      <p>This will be our homepage!</p>
+    </SidebarLayout>
+  );
 };

@@ -6,7 +6,6 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "@tanstack/react-router";
-import { cn } from "../../utils/cn.util";
 
 export const sidebarDataMock = [
   {

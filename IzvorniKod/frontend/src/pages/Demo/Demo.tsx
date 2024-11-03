@@ -1,3 +1,9 @@
+import { NoSidebarLayout } from "../../layouts/NoSidebarLayout/NoSidebarLayout";
+
 export const DemoPage = () => {
-  return <p>This is our demo page</p>;
+  return (
+    <NoSidebarLayout>
+      <p>This is our demo page</p>
+    </NoSidebarLayout>
+  );
 };

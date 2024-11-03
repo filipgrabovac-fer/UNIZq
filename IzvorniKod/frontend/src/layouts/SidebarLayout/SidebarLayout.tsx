@@ -1,11 +1,11 @@
 import { Menu } from "antd";
 import { useState } from "react";
 import { Header, sidebarDataMock } from "../../components/Header/Header";
-import { cn } from "../../utils/cn.util";
 
 type SidebarLayoutType = {
   children: JSX.Element;
 };
+
 export const SidebarLayout = ({ children }: SidebarLayoutType) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
