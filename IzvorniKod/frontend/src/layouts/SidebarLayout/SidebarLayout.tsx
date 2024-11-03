@@ -1,4 +1,3 @@
-import { Outlet } from "@tanstack/react-router";
 import { Header } from "../../components/Header/Header";
 
 type SidebarLayoutType = {
@@ -9,7 +8,8 @@ export const SidebarLayout = ({ children }: SidebarLayoutType) => {
     <div>
       <Header />
       <div className="flex w-full">
-        <div className="w-[300px]">This is the sidebar</div>
+        <div className="w-[300px] max-[500px]:hidden">This is the sidebar</div>
+
         {children}
       </div>
       ;
