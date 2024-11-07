@@ -5,19 +5,19 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 type CustomInputType = {
   rows?: number;
   errorMessage?: string;
-  password?: boolean;
   placeholder: string;
   value?: string;
   setValue: Dispatch<SetStateAction<string>>;
   readOnly?: boolean;
   title: string;
   required?: boolean;
+  type?: "password" | "email" | "text";
 };
 
 export const CustomInput = ({
   rows,
   errorMessage,
-  password,
+  type,
   placeholder,
   value,
   setValue,
@@ -64,10 +64,11 @@ export const CustomInput = ({
             placeholder={placeholder}
             value={value}
             className="bg-transparent w-full focus:outline-none"
-            type={password && togglePassword ? "password" : "text"}
+            type={type && togglePassword ? type : "text"}
             onChange={(event) => setValue(event.target.textContent ?? "")}
           />
-          {password ? (
+
+          {type === "password" ? (
             togglePassword ? (
               <EyeIcon
                 width={18}

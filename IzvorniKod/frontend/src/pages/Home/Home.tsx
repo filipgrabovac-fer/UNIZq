@@ -18,6 +18,7 @@ export const Home = () => {
             placeholder="123"
             setValue={() => 0}
             required={true}
+            type="email"
           />
           <CustomLoginRegisterButton
             title="Register"
