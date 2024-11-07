@@ -23,6 +23,7 @@ bin/
 ../eduChat.iml
 ../../frontend.iml
 ../frontend.iml
+.env
 
 ### IntelliJ IDEA ###
 .idea
