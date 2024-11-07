@@ -6,9 +6,7 @@ export const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    console.log(username, email, password);
-  }, [username, email, password]);
+
   return (
     <div
       className="
