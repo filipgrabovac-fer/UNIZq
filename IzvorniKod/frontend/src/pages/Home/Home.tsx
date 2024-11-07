@@ -9,6 +9,7 @@ export const Home = () => {
           title="123"
           onClick={() => console.log(123)}
         />
+        <img src="/images/img123.png" />
       </div>
     </SidebarLayout>
   );
