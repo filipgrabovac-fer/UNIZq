@@ -11,6 +11,7 @@ type CustomInputType = {
   setValue: Dispatch<SetStateAction<string>>;
   readOnly?: boolean;
   title: string;
+  required?: boolean;
 };
 
 export const CustomInput = ({
@@ -22,6 +23,7 @@ export const CustomInput = ({
   setValue,
   readOnly,
   title,
+  required = false,
 }: CustomInputType) => {
   const [togglePassword, setTogglePassword] = useState(true);
 
@@ -34,6 +36,7 @@ export const CustomInput = ({
       </p>
       {rows ? (
         <textarea
+          required={required}
           readOnly={readOnly}
           rows={rows}
           value={value}
@@ -56,6 +59,7 @@ export const CustomInput = ({
           )}
         >
           <input
+            required={required}
             readOnly={readOnly}
             placeholder={placeholder}
             value={value}
