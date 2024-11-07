@@ -1,11 +1,8 @@
 package com.educhat.backend.controllers;
 
-import com.educhat.backend.models.UserLoginDTO;
-import com.educhat.backend.models.UserRegistrationDTO;
+import com.educhat.backend.models.*;
 import com.educhat.backend.services.UserService;
 import org.springframework.web.bind.annotation.*;
-
-import com.educhat.backend.models.User;
 
 @RestController
 @RequestMapping("/api")
@@ -36,4 +33,10 @@ public class UserController {
     public User getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
+
+    @PostMapping("/user/{userId}/faculty")
+    public FacultyUser addFacultyUser(@PathVariable Long userId, @RequestBody Faculty faculty) {
+        return userService.createFacultyUser(userId, faculty);
+    }
+
 }
