@@ -1,4 +1,4 @@
-package com.educhat.backend.models;
+package com.educhat.backend.DTO;
 
 import lombok.Data;
 

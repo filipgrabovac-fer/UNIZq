@@ -6,7 +6,6 @@ import com.educhat.backend.exceptions.InvalidCredentialsException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.exceptions.UsernameAlreadyExistsException;
 import com.educhat.backend.models.User;
-import com.educhat.backend.models.UserLoginDTO;
 import com.educhat.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

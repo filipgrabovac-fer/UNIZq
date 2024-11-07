@@ -1,7 +1,7 @@
 package com.educhat.backend.controllers;
 
-import com.educhat.backend.models.UserLoginDTO;
-import com.educhat.backend.models.UserRegistrationDTO;
+import com.educhat.backend.DTO.UserLoginDTO;
+import com.educhat.backend.DTO.UserRegistrationDTO;
 import com.educhat.backend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
