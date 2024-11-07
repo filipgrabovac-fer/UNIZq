@@ -5,8 +5,11 @@ import com.educhat.backend.exceptions.EmailAlreadyExistsException;
 import com.educhat.backend.exceptions.InvalidCredentialsException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.exceptions.UsernameAlreadyExistsException;
+import com.educhat.backend.models.Faculty;
+import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.models.User;
 import com.educhat.backend.models.UserLoginDTO;
+import com.educhat.backend.repository.FacultyUserRepository;
 import com.educhat.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,11 +20,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final FacultyUserRepository facultyUserRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, FacultyUserRepository facultyUserRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.facultyUserRepository = facultyUserRepository;
     }
 
     public User saveUser(User user) {
@@ -49,4 +54,13 @@ public class UserService {
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
+
+    public FacultyUser createFacultyUser(Long userId, Faculty faculty) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        FacultyUser facultyUser = new FacultyUser();
+        facultyUser.setUser(user);
+        facultyUser.setFaculty(faculty);
+        return facultyUserRepository.save(facultyUser);
+    }
+
 }
