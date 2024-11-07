@@ -12,11 +12,15 @@ export const Register = () => {
   return (
     <div
       className="
-      w-3/5 flex items-center justify-center flex-col m-auto h-screen"
+       flex items-center justify-center flex-col m-auto h-screen"
     >
-      <img src="/images/educhat_image.png" alt="image not responding" />
+      <img
+        src="/images/educhat_image.png"
+        alt="image not responding"
+        className="mb-8 w-[330px]"
+      />
 
-      <form className="p-[15px]" method="POST">
+      <form className=" min-[400px]:w-[320px] w-[250px] mb-4" method="POST">
         <CustomInput
           title="username"
           placeholder="add username"
@@ -35,7 +39,7 @@ export const Register = () => {
       </form>
       <div className="w-[381px] h-[60px] p-[15px]">
         <CustomLoginRegisterButton
-          title="proba"
+          title="Register"
           onClick={() => 0}
         ></CustomLoginRegisterButton>
       </div>
