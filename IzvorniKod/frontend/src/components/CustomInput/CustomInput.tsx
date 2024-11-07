@@ -38,7 +38,7 @@ export const CustomInput = ({
           rows={rows}
           value={value}
           placeholder={placeholder}
-          onChange={(event) => setValue(event.target.textContent ?? "")}
+          onChange={(event) => setValue(event.target.value ?? "")}
           className={cn(
             "rounded-lg border-[1px] border-gray_border text-sm px-4 py-2 w-full focus:border-gray focus:outline-none",
             errorMessage
