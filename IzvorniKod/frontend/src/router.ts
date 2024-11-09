@@ -1,8 +1,16 @@
 import { createRouter } from "@tanstack/react-router";
 import { rootRoute } from "./routes/root.routes";
-import { demoRoute } from "./routes/demo.routes";
+import {
+  sidebarLayoutRoute,
+  noSidebarLayoutRoute,
+} from "./routes/layout.routes";
 import { homeRoute } from "./routes/home.routes";
+import { loginRoute } from "./routes/login.routes";
 
-const routeTree = rootRoute.addChildren({ demoRoute, homeRoute });
+const routeTree = rootRoute.addChildren([
+  sidebarLayoutRoute.addChildren([homeRoute]),
+  noSidebarLayoutRoute,
+  loginRoute,
+]);
 
 export const router = createRouter({ routeTree });

@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Header, sidebarDataMock } from "../../components/Header/Header";
 import { Menu } from "antd";
+import { Outlet } from "@tanstack/react-router";
 
-type NoSidebarLayoutType = {
-  children: JSX.Element;
-};
-
-export const NoSidebarLayout = ({ children }: NoSidebarLayoutType) => {
+export const NoSidebarLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -27,7 +24,7 @@ export const NoSidebarLayout = ({ children }: NoSidebarLayoutType) => {
           />
         </div>
       ) : (
-        children
+        <Outlet />
       )}
     </div>
   );
