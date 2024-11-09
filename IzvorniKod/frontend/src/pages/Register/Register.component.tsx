@@ -27,19 +27,19 @@ export const Register = () => {
         <CustomInput
           required={true}
           title="username"
-          placeholder="add username"
+          placeholder="username"
           setValue={setUsername}
         />
         <CustomInput
           required={true}
           title="email"
-          placeholder="add email"
+          placeholder="email@example.com"
           setValue={setEmail}
         />
         <CustomInput
           required={true}
           title="password"
-          placeholder="add password"
+          placeholder="password"
           setValue={setPassword}
         />
         <div className="mt-5">
