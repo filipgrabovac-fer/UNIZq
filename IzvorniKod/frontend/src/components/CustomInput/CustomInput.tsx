@@ -65,7 +65,7 @@ export const CustomInput = ({
             value={value}
             className="bg-transparent w-full focus:outline-none"
             type={type && togglePassword ? type : "text"}
-            onChange={(event) => setValue(event.target.textContent ?? "")}
+            onChange={(event) => setValue(event.target.value ?? "")}
           />
 
           {type === "password" ? (
