@@ -50,9 +50,7 @@ export const Login = () => {
 
       <a
         className="mt-2"
-        href={`${
-          process.env.DEV && "http://localhost:8080"
-        }/oauth2/authorization/google`}
+        href={`${process.env.DEV && "http://localhost:8080"}/api/auth/google`}
       >
         <GoogleButton />
       </a>
