@@ -1,12 +1,9 @@
 import { Menu } from "antd";
 import { useState } from "react";
 import { Header, sidebarDataMock } from "../../components/Header/Header";
+import { Outlet } from "@tanstack/react-router";
 
-type SidebarLayoutType = {
-  children: JSX.Element;
-};
-
-export const SidebarLayout = ({ children }: SidebarLayoutType) => {
+export const SidebarLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -31,7 +28,7 @@ export const SidebarLayout = ({ children }: SidebarLayoutType) => {
           <div className="w-[300px] max-[500px]:hidden">
             This is the sidebar
           </div>
-          {children}
+          <Outlet />
         </div>
       )}
     </div>
