@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { CustomLoginRegisterButton } from "../../components/CustomLoginRegisterButton/CustomLoginRegisterButton.component";
 import GoogleButton from "react-google-button";
+import { Link } from "@tanstack/react-router";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ export const Login = () => {
         </div>
       </form>
 
-      <p className="text-sm text-gray mt-5">or</p>
+      <p className="text-sm text-gray mt-5">or sign in with Google</p>
 
       <a
         className="mt-2"
@@ -55,6 +56,13 @@ export const Login = () => {
       >
         <GoogleButton />
       </a>
+
+      <p className="text-sm absolute m-auto bottom-10">
+        Don't have an account?{" "}
+        <Link to="/register" className="underline text-blue-700">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 };

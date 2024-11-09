@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { CustomLoginRegisterButton } from "../../components/CustomLoginRegisterButton/CustomLoginRegisterButton.component";
+import GoogleButton from "react-google-button";
+import { Link } from "@tanstack/react-router";
 
 export const Register = () => {
   const [username, setUsername] = useState("");
@@ -40,13 +42,32 @@ export const Register = () => {
           placeholder="add password"
           setValue={setPassword}
         />
-
-        <CustomLoginRegisterButton
-          type="submit"
-          title="Register"
-          onClick={() => 0}
-        />
+        <div className="mt-5">
+          <CustomLoginRegisterButton
+            type="submit"
+            title="Register"
+            onClick={() => 0}
+          />
+        </div>
       </form>
+
+      <p className="text-sm text-gray mt-5">or continue with Google</p>
+
+      <a
+        className="mt-2"
+        href={`${
+          process.env.DEV && "http://localhost:8080"
+        }/oauth2/authorization/google`}
+      >
+        <GoogleButton />
+      </a>
+
+      <p className="text-sm absolute m-auto bottom-10">
+        Already have an account?{" "}
+        <Link to="/login" className="underline text-blue-700">
+          Sign in
+        </Link>
+      </p>
     </div>
   );
 };
