@@ -1,13 +1,18 @@
+import { scrollTo } from "../../../utils/scrollTo";
+
 type EventProps = {
   title: string;
   description: string;
 };
 export const Event = ({ title, description }: EventProps) => {
   return (
-    <div className="w-full flex flex-col">
-      <p className="text-[20px]">{title}</p>
-      <hr />
-      <p className="text-[14px]">{description}</p>
+    <div
+      className="w-full flex flex-col cursor-pointer"
+      onClick={() => scrollTo({ id: "google-maps" })}
+    >
+      <p className="text-[20px] p-4 font-medium">{title}</p>
+      <hr className="border-gray_border" />
+      <p className="text-[14px] p-2">{description}</p>
     </div>
   );
 };
