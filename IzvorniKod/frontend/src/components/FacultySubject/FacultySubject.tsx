@@ -10,7 +10,7 @@ export const FacultySubject = ({
   onClick,
 }: FacultySubjectType) => {
   return (
-    <div className="w-[250px] h-[250px] bg-white rounded-[20px] p-[15px]">
+    <div onClick={onClick} className="w-[250px] h-[250px] bg-white rounded-[20px] p-[15px]">
       <p className="font-bold text-[26px] mb-[10px]">{subjectTitle}</p>
       <hr />
       <p className="mt-[10px] text-[14px]">{subjectDescription}</p>
