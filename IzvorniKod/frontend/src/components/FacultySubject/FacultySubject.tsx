@@ -1,14 +1,14 @@
-type CustomFacultySubjectComponent = {
+type FacultySubjectType = {
   subjectTitle: string;
   subjectDescription: string;
   onClick: () => void;
 };
 
-export const CustomFacultySubjectComponent = ({
+export const FacultySubject = ({
   subjectTitle,
   subjectDescription,
   onClick,
-}: CustomFacultySubjectComponent) => {
+}: FacultySubjectType) => {
   return (
     <div className="w-[250px] h-[250px] bg-white rounded-[20px] p-[15px]">
       <p className="font-bold text-[26px] mb-[10px]">{subjectTitle}</p>
