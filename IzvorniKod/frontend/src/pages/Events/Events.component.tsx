@@ -117,6 +117,7 @@ export const Events = () => {
           defaultZoom={12}
           defaultCenter={{ lat: 45.815, lng: 15.9819 }}
           center={selectedEvent}
+          onCameraChanged={() => setSelectedEvent(undefined)}
         >
           {eventsMockData.map((event, i) => (
             <MarkerWithInfoWindow key={i} {...event} />
