@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Event } from "./components/Event.component";
 import { Map, Marker } from "@vis.gl/react-google-maps";
+import { MarkerWithInfoWindow } from "./components/MarkerWithInfoWindow.component";
 
 const eventsMockData = [
   {
@@ -117,8 +118,8 @@ export const Events = () => {
           defaultCenter={{ lat: 45.815, lng: 15.9819 }}
           center={selectedEvent}
         >
-          {eventsMockData.map((event) => (
-            <Marker position={{ lat: event.lat, lng: event.lng }}></Marker>
+          {eventsMockData.map((event, i) => (
+            <MarkerWithInfoWindow key={i} {...event} />
           ))}
         </Map>
       </div>
