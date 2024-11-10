@@ -84,8 +84,8 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
         placement="bottomLeft"
         content={
           <div className="flex flex-col px-2 gap-2">
-            {dropdownTabs.map((tab) => (
-              <Link to={tab.link} className="w-full text-left">
+            {dropdownTabs.map((tab, i) => (
+              <Link key={i} to={tab.link} className="w-full text-left">
                 {tab.label}
               </Link>
             ))}
