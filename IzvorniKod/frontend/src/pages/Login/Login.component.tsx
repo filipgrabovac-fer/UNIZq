@@ -3,11 +3,13 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { CustomLoginRegisterButton } from "../../components/CustomLoginRegisterButton/CustomLoginRegisterButton.component";
 import GoogleButton from "react-google-button";
 import { Link } from "@tanstack/react-router";
+import { usePostLogin } from "./hooks/usePostLogin.hook";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: postLogin } = usePostLogin();
   return (
     <div
       className="
@@ -19,21 +21,18 @@ export const Login = () => {
         className="mb-8 w-[330px]"
       />
 
-      <form
-        className="flex flex-col gap-4 min-[400px]:w-[320px] w-[250px] mb-4"
-        method="POST"
-        action=""
-      >
+      <div className="flex flex-col gap-4 min-[400px]:w-[320px] w-[250px] mb-4">
         <CustomInput
           required={true}
           title="email or username"
           placeholder="email@example.com"
-          setValue={setEmail}
+          setValue={setUsernameOrEmail}
         />
         <CustomInput
           required={true}
           title="password"
           placeholder="password"
+          type="password"
           setValue={setPassword}
         />
 
@@ -41,10 +40,10 @@ export const Login = () => {
           <CustomLoginRegisterButton
             type="submit"
             title="Login"
-            onClick={() => 0}
+            onClick={() => postLogin({ password, usernameOrEmail })}
           />
         </div>
-      </form>
+      </div>
 
       <p className="text-sm text-gray mt-5">or sign in with Google</p>
 

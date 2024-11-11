@@ -28,14 +28,14 @@ export const FacultySubject = ({
         {subjectTitle}
       </p>
       <hr />
-      <p className="mt-[5px] text-[10px] min-[501px]:text-[14px] min-[501px]:mt-[10px]">
+      <div className="mt-[5px] text-[10px] min-[501px]:text-[14px] min-[501px]:mt-[10px]">
         <p className="max-[500px]:hidden">
           {formattedSubjectDescriptionDesktop}
         </p>
         <p className="min-[500px]:hidden">
           {formattedSubjectDescriptionMobile}
         </p>
-      </p>
+      </div>
     </div>
   );
 };
