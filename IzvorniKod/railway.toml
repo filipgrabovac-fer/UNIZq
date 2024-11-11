@@ -1,5 +1,6 @@
 [build]
 builder = "nixpacks"
+<<<<<<< HEAD
 buildCommand = "bash build_script.bash.sh"
 
 [deploy]
@@ -7,3 +8,12 @@ startCommand = "export JAVA_HOME=java && export PATH=$JAVA_HOME/bin:$PATH && cd 
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "never"
+=======
+buildCommand = "echo building!"
+
+[deploy]
+startCommand = "bash build_script.bash.sh"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "never"
+>>>>>>> 368198a (add railway toml file)
