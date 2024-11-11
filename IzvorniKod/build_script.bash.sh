@@ -41,8 +41,6 @@ echo "Node.js and npm installed successfully using NVM!"
 # Install frontend dependencies
 npm install
 
-# Build the frontend (TypeScript compile + Vite build)
-echo "Building frontend..."
 #!/bin/bash
 
 # Install Node.js (which includes npm) locally without sudo
@@ -74,6 +72,11 @@ echo "Verifying npm installation..."
 npm -v
 
 echo "Node.js and npm installed successfully!"
+
+npm install
+
+# Build the frontend (TypeScript compile + Vite build)
+echo "Building frontend..."
 
 npm run build
 
