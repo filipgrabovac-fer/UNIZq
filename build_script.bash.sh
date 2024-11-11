@@ -13,7 +13,6 @@ echo "Starting frontend build..."
 # Navigate to frontend
 cd $FRONTEND_DIR
 
-echo $DB_HOST
 # Install dependencies if node_modules does not exist
 echo "Installing frontend dependencies..."
 
@@ -44,6 +43,38 @@ npm install
 
 # Build the frontend (TypeScript compile + Vite build)
 echo "Building frontend..."
+#!/bin/bash
+
+# Install Node.js (which includes npm) locally without sudo
+INSTALL_DIR="$HOME/nodejs"
+
+# Create installation directory
+mkdir -p "$INSTALL_DIR"
+
+# Download Node.js tarball (latest LTS version)
+echo "Downloading Node.js..."
+curl -sL https://nodejs.org/dist/latest-v18.x/node-v18.20.0-linux-x64.tar.xz -o nodejs.tar.xz
+
+# Extract Node.js to the local directory
+echo "Extracting Node.js..."
+tar -xf nodejs.tar.xz -C "$INSTALL_DIR" --strip-components=1
+
+# Remove the tarball after extraction
+rm nodejs.tar.xz
+
+# Add Node.js and npm to PATH by modifying .bashrc (or .zshrc for zsh users)
+echo "Adding Node.js and npm to your PATH..."
+echo 'export PATH="$HOME/nodejs/bin:$PATH"' >> ~/.bashrc
+
+# Apply changes to the current shell session
+source ~/.bashrc
+
+# Verify npm installation
+echo "Verifying npm installation..."
+npm -v
+
+echo "Node.js and npm installed successfully!"
+
 npm run build
 
 # Check if the build succeeded
