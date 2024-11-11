@@ -12,6 +12,7 @@ echo "Starting frontend build..."
 
 # Navigate to frontend
 cd $FRONTEND_DIR
+INSTALL_DIR="$FRONTEND_DIR/nodejs"
 
 # Download the latest Node.js (LTS) tarball
 echo "Downloading Node.js..."
