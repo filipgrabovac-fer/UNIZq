@@ -49,15 +49,10 @@ echo "Installing NVM..."
 # Download and install NVM (Node Version Manager) script
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-# Ensure NVM is loaded into the shell by sourcing the profile files
-echo "Setting up NVM in your shell..."
-
-# Add NVM to bash profile
-echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
-
-# Apply the changes to the current shell session
-source ~/.bashrc
+# Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Install the latest LTS version of Node.js (which includes npm)
 echo "Installing Node.js and npm..."
@@ -70,12 +65,11 @@ npm -v
 
 echo "Node.js and npm installed successfully using NVM!"
 
-
+# Install frontend dependencies
 npm install
 
 # Build the frontend (TypeScript compile + Vite build)
 echo "Building frontend..."
-
 npm run build
 
 # Check if the build succeeded
