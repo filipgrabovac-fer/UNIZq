@@ -12,7 +12,9 @@ export const customFetch = async ({
   headers,
 }: CustomFetchType) => {
   return await fetch(
-    `${import.meta.env.VITE_DEV && "http://localhost:8080"}/api/${endpointUrl}`,
+    `${
+      import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
+    }/api/${endpointUrl}`,
     {
       method,
       body: JSON.stringify(body),

@@ -49,7 +49,9 @@ export const Login = () => {
 
       <a
         className="mt-2"
-        href={`${process.env.DEV && "http://localhost:8080"}/api/auth/google`}
+        href={`${
+          import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
+        }/api/auth/google`}
       >
         <GoogleButton />
       </a>

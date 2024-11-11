@@ -58,7 +58,7 @@ export const Register = () => {
       <a
         className="mt-2"
         href={`${
-          import.meta.env.VITE_DEV && "http://localhost:8080"
+          import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
         }/api/auth/google`}
       >
         <GoogleButton />
