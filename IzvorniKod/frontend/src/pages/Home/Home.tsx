@@ -7,7 +7,7 @@ export const Home = () => {
       <FacultySubject
         subjectTitle="Operative Systems"
         subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
-        onClick={() => 0}
+        onClick={() => console.log("navigate to faculty")}
       />
     </div>
   );
