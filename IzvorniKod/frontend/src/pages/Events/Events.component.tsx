@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Event } from "./components/Event.component";
-import { Map, Marker } from "@vis.gl/react-google-maps";
+import { Map } from "@vis.gl/react-google-maps";
 import { MarkerWithInfoWindow } from "./components/MarkerWithInfoWindow.component";
 
 const eventsMockData = [
@@ -77,10 +77,12 @@ type SelectedEventType = {
 export const Events = () => {
   const [selectedEvent, setSelectedEvent] = useState<SelectedEventType>();
 
+  const defaultCenter = { lat: 45.815, lng: 15.9819 };
+
   return (
-    <div className="flex mt-7 w-full justify-center gap-x-10 mb-[500px] max-[1160px]:flex-col max-[1160px]:px-20">
+    <div className="flex mt-7 w-full justify-center gap-x-10  max-[1160px]:flex-col max-[1160px]:px-20 max-[500px]:px-2">
       <div className="flex flex-col ">
-        <p className="text-[40px] font-medium">
+        <p className="text-[40px] font-medium max-[500px]:text-[28px]">
           What events are currently active?
         </p>
         <div className="border-[1px] border-gray_border mt-7 flex flex-col gap-2 max-h-[600px] overflow-y-scroll">
@@ -108,14 +110,17 @@ export const Events = () => {
           alt="placeholder image"
           className="w-full h-[300px] max-[1160px]:hidden mt-7 object-cover"
         />
-        <p className="text-[40px] font-medium mt-7" id="google-maps">
+        <p
+          className="text-[40px] font-medium mt-7 max-[500px]:text-[28px]"
+          id="google-maps"
+        >
           Where can I find those events?
         </p>
 
         <Map
-          className="w-full mt-7 h-[512px]"
+          className="w-full mt-7 h-[512px] max-[500px]:h-[320px]"
           defaultZoom={12}
-          defaultCenter={{ lat: 45.815, lng: 15.9819 }}
+          defaultCenter={defaultCenter}
           center={selectedEvent}
           onCameraChanged={() => setSelectedEvent(undefined)}
         >
