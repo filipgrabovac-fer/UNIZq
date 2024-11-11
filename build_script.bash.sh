@@ -43,35 +43,33 @@ npm install
 
 #!/bin/bash
 
-# Install Node.js (which includes npm) locally without sudo
-INSTALL_DIR="$HOME/nodejs"
+# Install NVM (Node Version Manager)
+echo "Installing NVM..."
 
-# Create installation directory
-mkdir -p "$INSTALL_DIR"
+# Download and install NVM (Node Version Manager) script
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-# Download Node.js tarball (latest LTS version)
-echo "Downloading Node.js..."
-curl -sL https://nodejs.org/dist/latest-v18.x/node-v18.20.0-linux-x64.tar.xz -o nodejs.tar.xz
+# Ensure NVM is loaded into the shell by sourcing the profile files
+echo "Setting up NVM in your shell..."
 
-# Extract Node.js to the local directory
-echo "Extracting Node.js..."
-tar -xf nodejs.tar.xz -C "$INSTALL_DIR" --strip-components=1
+# Add NVM to bash profile
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc
 
-# Remove the tarball after extraction
-rm nodejs.tar.xz
-
-# Add Node.js and npm to PATH by modifying .bashrc (or .zshrc for zsh users)
-echo "Adding Node.js and npm to your PATH..."
-echo 'export PATH="$HOME/nodejs/bin:$PATH"' >> ~/.bashrc
-
-# Apply changes to the current shell session
+# Apply the changes to the current shell session
 source ~/.bashrc
 
-# Verify npm installation
-echo "Verifying npm installation..."
+# Install the latest LTS version of Node.js (which includes npm)
+echo "Installing Node.js and npm..."
+nvm install --lts
+
+# Verify Node.js and npm installation
+echo "Verifying installation..."
+node -v
 npm -v
 
-echo "Node.js and npm installed successfully!"
+echo "Node.js and npm installed successfully using NVM!"
+
 
 npm install
 
