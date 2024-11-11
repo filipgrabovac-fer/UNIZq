@@ -1,6 +1,7 @@
 [build]
 builder = "nixpacks"
 <<<<<<< HEAD
+<<<<<<< HEAD
 buildCommand = "bash build_script.bash.sh"
 
 [deploy]
@@ -10,9 +11,13 @@ healthcheckTimeout = 100
 restartPolicyType = "never"
 =======
 buildCommand = "echo building!"
+=======
+buildCommand = "bash build_script.bash.sh"
+>>>>>>> 8fea4ab (add config to railway.toml)
 
 [deploy]
-startCommand = "bash build_script.bash.sh"
+startCommand = "chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun
+"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "never"
