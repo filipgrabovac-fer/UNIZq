@@ -1,0 +1,9 @@
+[build]
+builder = "nixpacks"
+buildCommand = "echo building!"
+
+[deploy]
+startCommand = "bash build_script.bash.sh"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "never"
