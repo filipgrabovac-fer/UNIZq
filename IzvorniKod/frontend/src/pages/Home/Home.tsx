@@ -1,4 +1,5 @@
 import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
+import { PostPreview } from "../../components/PostPreview/PostPreview";
 
 export const Home = () => {
   return (
@@ -7,8 +8,8 @@ export const Home = () => {
       <FacultySubject
         subjectTitle="Operative Systems"
         subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
-        onClick={() => 0}
       />
+      <PostPreview postTitle="efjenjkhwkbjckcbhkbjhbhnrjbvhrbvrkvkrekefjenjkhwkbjckcbhkbjhbhnrjbvhrbvrkvkrek" />
     </div>
   );
 };
