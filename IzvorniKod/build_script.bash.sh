@@ -13,52 +13,33 @@ echo "Starting frontend build..."
 # Navigate to frontend
 cd $FRONTEND_DIR
 
-#!/bin/bash
+# Download the latest Node.js (LTS) tarball
+echo "Downloading Node.js..."
+curl -sL https://nodejs.org/dist/latest-v18.x/node-v18.x.x-linux-x64.tar.xz -o nodejs.tar.xz
 
-# Exit the script if any command fails
-set -e
+# Create installation directory
+mkdir -p "$INSTALL_DIR"
 
-# Specify the version of Node.js to install (optional)
-NODE_VERSION="lts"  # You can set this to a specific version like "16", "18", etc.
+# Extract the Node.js tarball
+echo "Extracting Node.js..."
+tar -xf nodejs.tar.xz -C "$INSTALL_DIR" --strip-components=1
 
-# Function to check if a command exists
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
+# Remove the tarball after extraction
+rm nodejs.tar.xz
 
-echo "Checking for Node.js and npm..."
+# Add Node.js binary to the PATH by modifying .bashrc (or .zshrc for zsh users)
+echo "Adding Node.js and npm to your PATH..."
+echo 'export PATH="$HOME/nodejs/bin:$PATH"' >> ~/.bashrc
 
-# Check if Node.js and npm are already installed
-if command_exists node && command_exists npm; then
-    echo "Node.js and npm are already installed."
-    echo "Node.js version: $(node -v)"
-    echo "npm version: $(npm -v)"
-else
-    echo "Node.js and npm are not installed. Installing..."
+# Apply the changes to the current shell session
+source ~/.bashrc
 
-    # Check if `curl` is installed, if not, use `wget`
-    if command_exists curl; then
-        # Using NodeSource for Node.js installation
-        curl -fsSL https://fnm.vercel.app/install | bash
-        # Load FNM immediately without restarting the terminal
-        export PATH="$HOME/.fnm:$PATH"
-        eval "$(fnm env)"
-        # Install the specified version of Node.js using FNM
-        fnm install $NODE_VERSION
-        fnm use $NODE_VERSION
-    else
-        echo "curl is required but not installed. Please install curl and try again."
-        exit 1
-    fi
-fi
-
-# Verify the installation
-echo "Verifying Node.js and npm installation..."
+# Verify installation
+echo "Verifying installation..."
 node -v
 npm -v
 
-echo "Node.js and npm have been successfully installed."
-
+echo "Node.js and npm installation completed successfully!"
 # Install dependencies if node_modules does not exist
 echo "Installing frontend dependencies..."
 
