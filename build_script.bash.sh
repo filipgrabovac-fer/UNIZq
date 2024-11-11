@@ -12,35 +12,8 @@ echo "Starting frontend build..."
 
 # Navigate to frontend
 cd $FRONTEND_DIR
-INSTALL_DIR="$FRONTEND_DIR/nodejs"
 
-# Download the latest Node.js (LTS) tarball
-echo "Downloading Node.js..."
-curl -sL https://nodejs.org/dist/latest-v18.x/node-v18.x.x-linux-x64.tar.xz -o nodejs.tar.xz
-
-# Create installation directory
-mkdir -p "$INSTALL_DIR"
-
-# Extract the Node.js tarball
-echo "Extracting Node.js..."
-tar -xf nodejs.tar.xz -C "$INSTALL_DIR" --strip-components=1
-
-# Remove the tarball after extraction
-rm nodejs.tar.xz
-
-# Add Node.js binary to the PATH by modifying .bashrc (or .zshrc for zsh users)
-echo "Adding Node.js and npm to your PATH..."
-echo 'export PATH="$HOME/nodejs/bin:$PATH"' >> ~/.bashrc
-
-# Apply the changes to the current shell session
-source ~/.bashrc
-
-# Verify installation
-echo "Verifying installation..."
-node -v
-npm -v
-
-echo "Node.js and npm installation completed successfully!"
+echo DB_HOST
 # Install dependencies if node_modules does not exist
 echo "Installing frontend dependencies..."
 
