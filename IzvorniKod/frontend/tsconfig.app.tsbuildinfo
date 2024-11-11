@@ -1,13 +1,35 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-{"root":["./src/app.tsx","./src/main.tsx","./src/router.ts","./src/components/custombutton/custombutton.tsx","./src/components/custominput/custominput.tsx","./src/components/customloginregisterbutton/customloginregisterbutton.component.tsx","./src/components/facultysubject/facultysubject.tsx","./src/components/header/header.tsx","./src/layouts/nosidebarlayout/nosidebarlayout.tsx","./src/layouts/sidebarlayout/sidebarlayout.tsx","./src/pages/events/events.component.tsx","./src/pages/events/components/event.component.tsx","./src/pages/events/components/markerwithinfowindow.component.tsx","./src/pages/events/hooks/usegetevents.hook.ts","./src/pages/home/home.tsx","./src/pages/home/hooks/hook.ts","./src/pages/login/login.component.tsx","./src/pages/login/hooks/usepostlogin.hook.ts","./src/pages/register/register.component.tsx","./src/pages/register/hooks/usepostregister.hook.ts","./src/routes/events.routes.tsx","./src/routes/home.routes.tsx","./src/routes/layout.routes.tsx","./src/routes/login.routes.tsx","./src/routes/register.routes.tsx","./src/routes/root.routes.tsx","./src/utils/cn.util.ts","./src/utils/customfetch.ts","./src/utils/scrollto.ts","./vite-env.d.ts"],"version":"5.6.3"}
-=======
-{"root":["./src/main.tsx","./src/router.ts","./src/components/custombutton/custombutton.tsx","./src/components/custominput/custominput.tsx","./src/components/customloginregisterbutton/customloginregisterbutton.component.tsx","./src/components/header/header.tsx","./src/layouts/nosidebarlayout/nosidebarlayout.tsx","./src/layouts/sidebarlayout/sidebarlayout.tsx","./src/pages/demo/demo.tsx","./src/pages/home/home.tsx","./src/pages/home/hooks/hook.ts","./src/routes/demo.routes.tsx","./src/routes/home.routes.tsx","./src/routes/root.routes.tsx","./src/utils/cn.util.ts","./src/utils/customfetch.ts"],"version":"5.6.3"}
->>>>>>> 162412f (trying out if images work on deployed instance)
-=======
-{"root":["./src/main.tsx","./src/router.ts","./src/components/custombutton/custombutton.tsx","./src/components/custominput/custominput.tsx","./src/components/customloginregisterbutton/customloginregisterbutton.component.tsx","./src/components/facultysubject/facultysubject.tsx","./src/components/header/header.tsx","./src/layouts/nosidebarlayout/nosidebarlayout.tsx","./src/layouts/sidebarlayout/sidebarlayout.tsx","./src/pages/home/home.tsx","./src/pages/home/hooks/hook.ts","./src/pages/login/login.component.tsx","./src/pages/login/hooks/usepostlogin.hook.ts","./src/pages/register/register.component.tsx","./src/pages/register/hooks/usepostregister.hook.ts","./src/routes/home.routes.tsx","./src/routes/layout.routes.tsx","./src/routes/login.routes.tsx","./src/routes/register.routes.tsx","./src/routes/root.routes.tsx","./src/utils/cn.util.ts","./src/utils/customfetch.ts"],"errors":true,"version":"5.6.3"}
->>>>>>> 9dd0fec (fix errors before deployment)
-=======
-{"root":["./src/main.tsx","./src/router.ts","./src/components/custombutton/custombutton.tsx","./src/components/custominput/custominput.tsx","./src/components/customloginregisterbutton/customloginregisterbutton.component.tsx","./src/components/facultysubject/facultysubject.tsx","./src/components/header/header.tsx","./src/layouts/nosidebarlayout/nosidebarlayout.tsx","./src/layouts/sidebarlayout/sidebarlayout.tsx","./src/pages/home/home.tsx","./src/pages/home/hooks/hook.ts","./src/pages/login/login.component.tsx","./src/pages/login/hooks/usepostlogin.hook.ts","./src/pages/register/register.component.tsx","./src/pages/register/hooks/usepostregister.hook.ts","./src/routes/home.routes.tsx","./src/routes/layout.routes.tsx","./src/routes/login.routes.tsx","./src/routes/register.routes.tsx","./src/routes/root.routes.tsx","./src/utils/cn.util.ts","./src/utils/customfetch.ts"],"version":"5.6.3"}
->>>>>>> f916cb3 (build fe)
+{
+  "root": [
+    "./src/app.tsx",
+    "./src/main.tsx",
+    "./src/router.ts",
+    "./src/components/custombutton/custombutton.tsx",
+    "./src/components/custominput/custominput.tsx",
+    "./src/components/customloginregisterbutton/customloginregisterbutton.component.tsx",
+    "./src/components/facultysubject/facultysubject.tsx",
+    "./src/components/header/header.tsx",
+    "./src/layouts/nosidebarlayout/nosidebarlayout.tsx",
+    "./src/layouts/sidebarlayout/sidebarlayout.tsx",
+    "./src/pages/events/events.component.tsx",
+    "./src/pages/events/components/event.component.tsx",
+    "./src/pages/events/components/markerwithinfowindow.component.tsx",
+    "./src/pages/events/hooks/usegetevents.hook.ts",
+    "./src/pages/home/home.tsx",
+    "./src/pages/home/hooks/hook.ts",
+    "./src/pages/login/login.component.tsx",
+    "./src/pages/login/hooks/usepostlogin.hook.ts",
+    "./src/pages/register/register.component.tsx",
+    "./src/pages/register/hooks/usepostregister.hook.ts",
+    "./src/routes/events.routes.tsx",
+    "./src/routes/home.routes.tsx",
+    "./src/routes/layout.routes.tsx",
+    "./src/routes/login.routes.tsx",
+    "./src/routes/register.routes.tsx",
+    "./src/routes/root.routes.tsx",
+    "./src/utils/cn.util.ts",
+    "./src/utils/customfetch.ts",
+    "./src/utils/scrollto.ts",
+    "./vite-env.d.ts"
+  ],
+  "version": "5.6.3"
+}
