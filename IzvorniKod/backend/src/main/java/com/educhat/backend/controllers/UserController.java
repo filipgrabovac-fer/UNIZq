@@ -3,6 +3,8 @@ package com.educhat.backend.controllers;
 import com.educhat.backend.DTO.UserLoginDTO;
 import com.educhat.backend.DTO.UserRegistrationDTO;
 import com.educhat.backend.services.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import com.educhat.backend.models.User;
@@ -35,5 +37,10 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public User getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
+    }
+
+    @GetMapping("/asd")
+    public void asd(@AuthenticationPrincipal OAuth2User principal) {
+        System.out.println(principal);
     }
 }

@@ -1,11 +1,9 @@
 package com.educhat.backend.services;
 
 
-import com.educhat.backend.exceptions.EmailAlreadyExistsException;
-import com.educhat.backend.exceptions.InvalidCredentialsException;
-import com.educhat.backend.exceptions.UserNotFoundException;
-import com.educhat.backend.exceptions.UsernameAlreadyExistsException;
+import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.User;
+import com.educhat.backend.models.enums.LoginType;
 import com.educhat.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +28,7 @@ public class UserService {
         if(userRepository.findByEmail(user.getEmail()) != null) {
             throw new EmailAlreadyExistsException("Email already exists");
         }
+        user.setLoginType(LoginType.CREDENTIALS);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -41,6 +40,9 @@ public class UserService {
         }
         if(user == null || !passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new InvalidCredentialsException("Invalid credentials");
+        }
+        if(user.getLoginType() != LoginType.CREDENTIALS) {
+            throw new InvalidLoginTypeException("Invalid login type");
         }
         return user;
     }
