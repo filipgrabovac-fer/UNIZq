@@ -12,6 +12,51 @@ echo "Starting frontend build..."
 
 # Navigate to frontend
 cd $FRONTEND_DIR
+#!/bin/bash
+
+# Exit the script if any command fails
+set -e
+
+# Specify the version of Node.js to install (optional)
+NODE_VERSION="lts"  # You can set this to a specific version like "16", "18", etc.
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+echo "Checking for Node.js and npm..."
+
+# Check if Node.js and npm are already installed
+if command_exists node && command_exists npm; then
+    echo "Node.js and npm are already installed."
+    echo "Node.js version: $(node -v)"
+    echo "npm version: $(npm -v)"
+else
+    echo "Node.js and npm are not installed. Installing..."
+
+    # Check if `curl` is installed, if not, use `wget`
+    if command_exists curl; then
+        # Using NodeSource for Node.js installation
+        curl -fsSL https://fnm.vercel.app/install | bash
+        # Load FNM immediately without restarting the terminal
+        export PATH="$HOME/.fnm:$PATH"
+        eval "$(fnm env)"
+        # Install the specified version of Node.js using FNM
+        fnm install $NODE_VERSION
+        fnm use $NODE_VERSION
+    else
+        echo "curl is required but not installed. Please install curl and try again."
+        exit 1
+    fi
+fi
+
+# Verify the installation
+echo "Verifying Node.js and npm installation..."
+node -v
+npm -v
+
+echo "Node.js and npm have been successfully installed."
 
 # Install dependencies if node_modules does not exist
 echo "Installing frontend dependencies..."
