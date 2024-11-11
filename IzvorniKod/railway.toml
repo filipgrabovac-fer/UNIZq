@@ -1,9 +1,26 @@
 [build]
 builder = "nixpacks"
-buildCommand = "echo building!"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+buildCommand = "bash build_script.bash.sh"
 
 [deploy]
-startCommand = "bash build_script.bash.sh"
+startCommand = "export JAVA_HOME=java && export PATH=$JAVA_HOME/bin:$PATH && cd backend && chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "never"
+=======
+>>>>>>> 2f50da0 (add config to railway.toml)
+buildCommand = "echo building!"
+=======
+buildCommand = "bash build_script.bash.sh"
+>>>>>>> 8fea4ab (add config to railway.toml)
+
+[deploy]
+startCommand = "chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun
+"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "never"
