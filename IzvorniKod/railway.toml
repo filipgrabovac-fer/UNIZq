@@ -1,16 +1,20 @@
 [build]
 builder = "nixpacks"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+>>>>>>> 9735c45 (fix toml file)
 buildCommand = "bash build_script.bash.sh"
 
 [deploy]
-startCommand = "export JAVA_HOME=java && export PATH=$JAVA_HOME/bin:$PATH && cd backend && chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun"
+startCommand = "chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "never"
+<<<<<<< HEAD
 =======
 >>>>>>> 2f50da0 (add config to railway.toml)
 buildCommand = "echo building!"
@@ -24,3 +28,5 @@ startCommand = "chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "never"
+=======
+>>>>>>> 9735c45 (fix toml file)
