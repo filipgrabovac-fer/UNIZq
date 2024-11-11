@@ -13,7 +13,7 @@ echo "Starting frontend build..."
 # Navigate to frontend
 cd $FRONTEND_DIR
 
-echo DB_HOST
+echo $DB_HOST
 # Install dependencies if node_modules does not exist
 echo "Installing frontend dependencies..."
 
