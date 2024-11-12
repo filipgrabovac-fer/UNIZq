@@ -17,14 +17,14 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
     }
 
     const postPreviewDiv = useRef<HTMLDivElement>(null);
-    const [size, setSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+    const [postPreviewWidth, setPostPreviewWidth] = useState(0);
 
     useEffect(() => {
         if (postPreviewDiv.current) {
           const resizeObserver = new ResizeObserver(() => {
             if (postPreviewDiv.current) {
               const { width } = postPreviewDiv.current.getBoundingClientRect();
-              setSize({ width, height: 0 });
+              setPostPreviewWidth(width);
             }
           });
     
@@ -35,7 +35,7 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
 
     const getFormattedTitle = () => {
         const charWidth = 18; 
-        const maxChars = Math.floor(size.width / charWidth); 
+        const maxChars = Math.floor(postPreviewWidth / charWidth); 
         return postTitle.length > maxChars ? `${postTitle.slice(0, maxChars)}...` : postTitle;
       };
 
