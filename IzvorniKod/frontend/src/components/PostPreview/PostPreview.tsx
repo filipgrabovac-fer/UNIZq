@@ -11,6 +11,11 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
     onClick,
   }: PostPreviewProps) => {
     
+    type GetIconStyleType = {
+      isClicked: boolean;
+     color: string;
+    }
+
     const postPreviewDiv = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
 
@@ -40,25 +45,11 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
     const [isReportClicked, setIsReportClicked] = useState(false);
     const [isTrashClicked, setIsTrashClicked] = useState(false);
 
-    const getHearthStyle = (isClicked: boolean) => {
+    const getIconStyle = ({color, isClicked}: GetIconStyleType) => {
         return {
         stroke: isClicked ? 'none' : 'black',
         strokeWidth: isClicked ? '0' : '1px',
-        fill: isClicked ? 'red' : 'white', 
-        };
-    };
-    const getThumbsStyle = (isClicked: boolean) => {
-        return {
-        stroke: isClicked ? 'none' : 'black',
-        strokeWidth: isClicked ? '0' : '1px',
-        fill: isClicked ? 'blue' : 'white', 
-        };
-    };
-    const getBlackStyle = (isClicked: boolean) => {
-        return {
-        stroke: isClicked ? 'none' : 'black',
-        strokeWidth: isClicked ? '0' : '1px',
-        fill: isClicked ? 'black' : 'white', 
+        fill: isClicked ? color : 'white', 
         };
     };
 
@@ -73,23 +64,23 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
             setIsHeartClicked(!isHeartClicked);
           }}
           className="w-[25px] cursor-pointer"
-          style={getHearthStyle(isHeartClicked)}/>
+          style={getIconStyle({ color: "red", isClicked: isHeartClicked})}/>
        <HandThumbUpIcon onClick={(e) => {
             e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
-          }} className="w-[25px] cursor-pointer" style={getThumbsStyle(isThumbUpClicked)}/>
+          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "blue", isClicked: isThumbUpClicked })}/>
        <HandThumbDownIcon onClick={(e) => {
             e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
-          }} className="w-[25px] cursor-pointer" style={getThumbsStyle(isThumbDownClicked)}/>
+          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "blue", isClicked: isThumbDownClicked})}/>
        <MegaphoneIcon onClick={(e) => {
             e.stopPropagation();
             setIsReportClicked(!isReportClicked);
-          }} className="w-[25px] cursor-pointer" style={getBlackStyle(isReportClicked)}/>
+          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "black", isClicked: isReportClicked})}/>
        <TrashIcon onClick={(e) => {
             e.stopPropagation();
             setIsTrashClicked(!isTrashClicked);
-          }} className="w-[25px] cursor-pointer"style={getBlackStyle(isTrashClicked)}/>
+          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "black", isClicked: isTrashClicked})}/>
        </div>
       </div>
     );
