@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon } from "@heroicons/react/24/solid";
 
  type PostPreviewProps = {
@@ -54,33 +54,32 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
     };
 
     return (
-      <div ref={postPreviewDiv} onClick={onClick} className="w-[90%] h-[60px] rounded-[20px] bg-white flex items-center justify-between p-[15px]">
+      <div ref={postPreviewDiv} onClick={onClick} className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[20px]">
        <p className="text-[18px]">{getFormattedTitle()}</p>
        <div className="flex">
-        
        <HeartIcon
           onClick={(e) => {
             e.stopPropagation();
             setIsHeartClicked(!isHeartClicked);
           }}
-          className="w-[25px] cursor-pointer"
+          className="w-[25px] cursor-pointer mx-0.5"
           style={getIconStyle({ color: "red", isClicked: isHeartClicked})}/>
        <HandThumbUpIcon onClick={(e) => {
             e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
-          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "blue", isClicked: isThumbUpClicked })}/>
+          }} className="w-[25px] cursor-pointer mx-0.5" style={getIconStyle({ color: "#111D4A", isClicked: isThumbUpClicked })}/>
        <HandThumbDownIcon onClick={(e) => {
             e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
-          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "blue", isClicked: isThumbDownClicked})}/>
+          }} className="w-[25px] cursor-pointer mx-0.5" style={getIconStyle({ color: "#111D4A", isClicked: isThumbDownClicked})}/>
        <MegaphoneIcon onClick={(e) => {
             e.stopPropagation();
             setIsReportClicked(!isReportClicked);
-          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "black", isClicked: isReportClicked})}/>
+          }} className="w-[25px] cursor-pointer mx-0.5" style={getIconStyle({ color: "black", isClicked: isReportClicked})}/>
        <TrashIcon onClick={(e) => {
             e.stopPropagation();
             setIsTrashClicked(!isTrashClicked);
-          }} className="w-[25px] cursor-pointer" style={getIconStyle({ color: "black", isClicked: isTrashClicked})}/>
+          }} className="w-[25px] cursor-pointer mx-0.5" style={getIconStyle({ color: "black", isClicked: isTrashClicked})}/>
        </div>
       </div>
     );
