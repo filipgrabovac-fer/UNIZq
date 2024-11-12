@@ -11,6 +11,7 @@ export default {
         error: "red",
         black: "black",
         gray_border: "#D9D9D9",
+        gray_hover: "#F2F2F2",
       },
       fontSize: {
         xs: 10,

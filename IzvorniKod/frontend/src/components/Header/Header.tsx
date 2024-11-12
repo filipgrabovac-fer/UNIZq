@@ -43,6 +43,14 @@ export const sidebarDataMock = [
   },
 ];
 
+const dropdownTabs = [
+  { link: "/events", label: "Events" },
+  { link: "/profile", label: "View profile" },
+  {
+    link: "/login",
+    label: "Logout",
+  },
+];
 type HeaderType = {
   isSidebarOpen: boolean;
   setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
@@ -76,12 +84,11 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
         placement="bottomLeft"
         content={
           <div className="flex flex-col px-2 gap-2">
-            <Link to="/profile" className="w-full text-left">
-              View Profile
-            </Link>
-            <Link to="/login" className="w-full text-left">
-              Logout
-            </Link>
+            {dropdownTabs.map((tab, i) => (
+              <Link key={i} to={tab.link} className="w-full text-left">
+                {tab.label}
+              </Link>
+            ))}
           </div>
         }
         trigger="click"

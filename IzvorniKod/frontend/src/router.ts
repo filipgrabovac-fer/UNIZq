@@ -7,10 +7,11 @@ import {
 import { homeRoute } from "./routes/home.routes";
 import { loginRoute } from "./routes/login.routes";
 import { registerRoute } from "./routes/register.routes";
+import { eventsRoute } from "./routes/events.routes";
 
 const routeTree = rootRoute.addChildren([
   sidebarLayoutRoute.addChildren([homeRoute]),
-  noSidebarLayoutRoute,
+  noSidebarLayoutRoute.addChildren([eventsRoute]),
   loginRoute,
   registerRoute,
 ]);

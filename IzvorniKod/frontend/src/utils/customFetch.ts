@@ -11,9 +11,14 @@ export const customFetch = async ({
   body,
   headers,
 }: CustomFetchType) => {
-  return await fetch(`http://mock-database-url/${endpointUrl}`, {
-    method,
-    body: JSON.stringify(body),
-    headers,
-  }).then((data) => data.json);
+  return await fetch(
+    `${
+      import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
+    }/api/${endpointUrl}`,
+    {
+      method,
+      body: JSON.stringify(body),
+      headers,
+    }
+  ).then((data) => data.json);
 };

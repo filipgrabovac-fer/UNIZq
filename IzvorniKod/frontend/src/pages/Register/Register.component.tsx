@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { CustomLoginRegisterButton } from "../../components/CustomLoginRegisterButton/CustomLoginRegisterButton.component";
 import GoogleButton from "react-google-button";
 import { Link } from "@tanstack/react-router";
+import { usePostRegister } from "./hooks/usePostRegister.hook";
 
 export const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState();
+
+  const { mutate: postRegister } = usePostRegister();
   return (
     <div
       className="
@@ -20,10 +24,7 @@ export const Register = () => {
         className="mb-8 w-[330px]"
       />
 
-      <form
-        className="flex flex-col gap-3 min-[400px]:w-[320px] w-[250px] mb-4"
-        action=""
-      >
+      <div className="flex flex-col gap-3 min-[400px]:w-[320px] w-[250px] mb-4">
         <CustomInput
           required={true}
           title="username"
@@ -40,22 +41,25 @@ export const Register = () => {
           required={true}
           title="password"
           placeholder="password"
+          type="password"
           setValue={setPassword}
         />
         <div className="mt-5">
           <CustomLoginRegisterButton
             type="submit"
             title="Register"
-            onClick={() => 0}
+            onClick={() => postRegister({ email, password, username })}
           />
         </div>
-      </form>
+      </div>
 
       <p className="text-sm text-gray mt-5">or continue with Google</p>
 
       <a
         className="mt-2"
-        href={`${process.env.DEV && "http://localhost:8080"}/api/auth/google`}
+        href={`${
+          import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
+        }/api/auth/google`}
       >
         <GoogleButton />
       </a>
