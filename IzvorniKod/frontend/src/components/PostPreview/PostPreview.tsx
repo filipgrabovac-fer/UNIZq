@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon } from "@heroicons/react/24/solid";
 
- type PostPreviewType = {
+ type PostPreviewProps = {
     postTitle: string;
     onClick: () => void;
   };
@@ -9,7 +9,7 @@ import { HeartIcon, HandThumbUpIcon, HandThumbDownIcon, MegaphoneIcon, TrashIcon
   export const PostPreview = ({
     postTitle,
     onClick,
-  }: PostPreviewType) => {
+  }: PostPreviewProps) => {
     
     const postPreviewDiv = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
