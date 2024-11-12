@@ -2,14 +2,14 @@ import { InfoWindow, Marker, useMarkerRef } from "@vis.gl/react-google-maps";
 import { useState } from "react";
 
 type MarkerWithInfoWindowProps = {
-  lng: number;
-  lat: number;
+  longitude: number;
+  latitude: number;
   title: string;
 };
 
 export const MarkerWithInfoWindow = ({
-  lng,
-  lat,
+  longitude,
+  latitude,
   title,
 }: MarkerWithInfoWindowProps) => {
   const [isInfoWindowVisible, setIsInfoWindowVisible] = useState(false);
@@ -19,7 +19,7 @@ export const MarkerWithInfoWindow = ({
     <>
       <Marker
         ref={markerRef}
-        position={{ lat, lng }}
+        position={{ lat: latitude, lng: longitude }}
         onClick={() => setIsInfoWindowVisible(!isInfoWindowVisible)}
       />
       {isInfoWindowVisible && (

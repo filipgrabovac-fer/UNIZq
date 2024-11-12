@@ -22,6 +22,5 @@ export const customFetch = async ({
     }
   ).then((data) => data.json());
 
-  console.log(data);
   return data;
 };
