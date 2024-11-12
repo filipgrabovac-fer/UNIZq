@@ -82,6 +82,12 @@ public class WebConfig implements WebMvcConfigurer {
                         exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
 
+                /* For testing purposes, use this instead of customAuthenticationEntryPoint
+                .exceptionHandling(exceptionHandling ->
+                                exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
+                */
+
                 // Configure OAuth2 login
                 .oauth2Login(oauth2Login ->
                         oauth2Login
