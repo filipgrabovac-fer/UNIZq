@@ -123,7 +123,7 @@ public class WebConfig implements WebMvcConfigurer {
         jwtCookie.setSecure(true);
         jwtCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(jwtCookie);
-        response.sendRedirect("http://localhost:5173/home");
+        response.sendRedirect("/home");
     }
 }
 
