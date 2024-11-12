@@ -2,6 +2,7 @@ package com.educhat.backend.services;
 
 import com.educhat.backend.models.User;
 import com.educhat.backend.models.enums.LoginType;
+import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final Logger log = LoggerFactory.getLogger(CustomOAuth2UserService.class);
 
     @Autowired
     public CustomOAuth2UserService(UserRepository userRepository) {
@@ -26,10 +28,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public void saveUser(OAuth2User oauth2User) {
         String email = oauth2User.getAttribute("email");
 
-        if (userRepository.findByEmail(email) == null) {
+        if (!userRepository.findByEmail(email).isPresent()) {
             User user = new User();
             user.setEmail(email);
             user.setLoginType(LoginType.GOOGLE);
+            user.setRole(Role.USER);
             userRepository.save(user);
         }
     }
