@@ -28,4 +28,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidLoginTypeException.class)
+    public ResponseEntity<String> handleInvalidLoginTypeException(InvalidLoginTypeException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }

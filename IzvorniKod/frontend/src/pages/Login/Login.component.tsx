@@ -51,7 +51,8 @@ export const Login = () => {
         className="mt-2"
         href={`${
           import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
-        }/api/auth/google`}
+        }/oauth2/authorization/google`}
+
       >
         <GoogleButton />
       </a>

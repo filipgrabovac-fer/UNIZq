@@ -1,48 +1,69 @@
 package com.educhat.backend.services;
 
 
-import com.educhat.backend.exceptions.EmailAlreadyExistsException;
-import com.educhat.backend.exceptions.InvalidCredentialsException;
-import com.educhat.backend.exceptions.UserNotFoundException;
-import com.educhat.backend.exceptions.UsernameAlreadyExistsException;
+import com.educhat.backend.DTO.UserLoginDTO;
+import com.educhat.backend.DTO.UserRegistrationDTO;
+import com.educhat.backend.auth.AuthenticationResponse;
+import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.User;
+import com.educhat.backend.models.enums.LoginType;
+import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.UserRepository;
+import io.jsonwebtoken.Jwt;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
+    public AuthenticationResponse saveUser(UserRegistrationDTO registrationDTO) {
+        var user = User.builder()
+                .username(registrationDTO.getUsername())
+                .email(registrationDTO.getEmail())
+                .password(passwordEncoder.encode(registrationDTO.getPassword()))
+                .loginType(LoginType.CREDENTIALS)
+                .role(Role.USER)
+                .build();
 
-    public User saveUser(User user) {
-        if(userRepository.findByUsername(user.getUsername()) != null) {
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException("Username already exists");
         }
-        if(userRepository.findByEmail(user.getEmail()) != null) {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email already exists");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
-    public User authenticateUser(String usernameOrEmail, String rawPassword) {
-        User user = userRepository.findByUsername(usernameOrEmail);
-        if(user == null) {
-            user = userRepository.findByEmail(usernameOrEmail);
-        }
-        if(user == null || !passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid credentials");
-        }
-        return user;
+    public AuthenticationResponse authenticateUser(UserLoginDTO userLoginDTO) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userLoginDTO.getEmail()
+                        , userLoginDTO.getPassword()
+                )
+        );
+        var user = userRepository.findByEmail(userLoginDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
     public User getUserById(Long userId) {
