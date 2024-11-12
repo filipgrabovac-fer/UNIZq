@@ -1,8 +1,4 @@
-import {
-  InfoWindow,
-  Marker,
-  useAdvancedMarkerRef,
-} from "@vis.gl/react-google-maps";
+import { InfoWindow, Marker, useMarkerRef } from "@vis.gl/react-google-maps";
 import { useState } from "react";
 
 type MarkerWithInfoWindowProps = {
@@ -17,7 +13,7 @@ export const MarkerWithInfoWindow = ({
   title,
 }: MarkerWithInfoWindowProps) => {
   const [isInfoWindowVisible, setIsInfoWindowVisible] = useState(false);
-  const [markerRef, marker] = useAdvancedMarkerRef();
+  const [markerRef, marker] = useMarkerRef();
 
   return (
     <>

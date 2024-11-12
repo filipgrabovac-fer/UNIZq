@@ -11,7 +11,7 @@ export const customFetch = async ({
   body,
   headers,
 }: CustomFetchType) => {
-  return await fetch(
+  const data = await fetch(
     `${
       import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
     }/api/${endpointUrl}`,
@@ -20,5 +20,8 @@ export const customFetch = async ({
       body: JSON.stringify(body),
       headers,
     }
-  ).then((data) => data.json);
+  ).then((data) => data.json());
+
+  console.log(data);
+  return data;
 };
