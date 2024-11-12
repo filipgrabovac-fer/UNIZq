@@ -9,7 +9,7 @@ export const Home = () => {
         subjectTitle="Operative Systems"
         subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
       />
-      <PostPreview postTitle="efjenjkhwkbjckcbhkbjhbhnrjbvhrbvrkvkrekefjenjkhwkbjckcbhkbjhbhnrjbvhrbvrkvkrek" />
+      <PostPreview postTitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt" />
     </div>
   );
 };
