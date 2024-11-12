@@ -62,7 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(authorizeRequests ->
                                 authorizeRequests
                                         // Allow JWT auth endpoints// Allow OAuth2 endpoints
-                                        .requestMatchers("/home", "/events").authenticated()
+                                        // .requestMatchers("/home", "/events").authenticated()
                                         .anyRequest().permitAll()
                 )
 
