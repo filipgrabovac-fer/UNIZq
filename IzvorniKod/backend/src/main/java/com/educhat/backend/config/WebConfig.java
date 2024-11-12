@@ -33,7 +33,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -42,6 +42,15 @@ public class WebConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/{path:[^\\.]*}")
+                .setViewName("forward:/index.html");
+    }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -51,10 +60,10 @@ public class WebConfig {
 
                 // Configure URL authorization
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/api/login", "/api/register").permitAll() // Allow JWT auth endpoints
-                                .requestMatchers("/oauth2/**").permitAll() // Allow OAuth2 endpoints
-                                .anyRequest().authenticated() // Secure all other endpoints
+                                authorizeRequests
+                                        // Allow JWT auth endpoints// Allow OAuth2 endpoints
+                                        .requestMatchers("/home", "/events").authenticated()
+                                        .anyRequest().permitAll()
                 )
 
                 // Set session management to stateless for REST APIs
@@ -70,7 +79,7 @@ public class WebConfig {
 
                 // Exception handling to return 401 instead of redirecting
                 .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
 
                 // Configure OAuth2 login
