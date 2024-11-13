@@ -57,9 +57,7 @@ echo "Installing NVM..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 # Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
-echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-source ~/.bashrc
-
+export NVM_DIR="$HOME/.nvm" 
 #loading nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
