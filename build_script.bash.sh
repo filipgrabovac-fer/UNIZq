@@ -5,32 +5,8 @@ set -e
 
 if [ -n "${JAVA_HOME}" ]
 then
-    echo "installing nvm..."
-
-    # Navigate to frontend
-    cd $FRONTEND_DIR
-
-    # Install NVM (Node Version Manager)
-    echo "Installing NVM..."
-
-    # Download and install NVM (Node Version Manager) script
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-
-    # Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
-    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-    source ~/.bashrc
-
-    # Install the latest LTS version of Node.js (which includes npm)
-    echo "Installing Node.js and npm..."
-    nvm install --lts
-
-    # Verify Node.js and npm installation
-    echo "Verifying installation..."
-    node -v
-    npm -v
-
     # navigate to backend
-    cd ../backend
+    cd /backend
 
     # Define variables
     JAVA_VERSION="17"  # Specify your Java version
@@ -69,6 +45,27 @@ SPRING_STATIC_DIR="../backend/src/main/resources/"
 # Define directories
 
 echo "Starting frontend build..."
+echo "installing nvm..."
+
+
+# Install NVM (Node Version Manager)
+echo "Installing NVM..."
+
+# Download and install NVM (Node Version Manager) script
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+# Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+source ~/.bashrc
+
+# Install the latest LTS version of Node.js (which includes npm)
+echo "Installing Node.js and npm..."
+nvm install --lts
+
+# Verify Node.js and npm installation
+echo "Verifying installation..."
+node -v
+npm -v
 
 #loading nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
