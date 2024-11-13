@@ -50,20 +50,20 @@ SPRING_STATIC_DIR="../backend/src/main/resources/"
 
 echo "Starting frontend build..."
 
-# Install NVM (Node Version Manager)
-echo "Installing NVM..."
+# # Install NVM (Node Version Manager)
+# echo "Installing NVM..."
 
-# Download and install NVM (Node Version Manager) script
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+# # Download and install NVM (Node Version Manager) script
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-# Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
-export NVM_DIR="$HOME/.nvm" 
-#loading nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
-# Install the latest LTS version of Node.js (which includes npm)
-echo "Installing Node.js and npm..."
-nvm install --lts
+# # Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
+# export NVM_DIR="$HOME/.nvm" 
+# #loading nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+# # Install the latest LTS version of Node.js (which includes npm)
+# echo "Installing Node.js and npm..."
+# nvm install --lts
 
 # Verify Node.js and npm installation
 echo "Verifying installation..."
@@ -95,4 +95,4 @@ cd ../../../../frontend
 
 mv dist/* $SPRING_STATIC_DIR/static/
 
-rm dist/
+rm -r dist/
