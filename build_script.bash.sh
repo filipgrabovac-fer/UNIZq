@@ -58,9 +58,9 @@ echo "Starting frontend build..."
 
 # # Manually source NVM from the installed location (since .bashrc isn't loaded in a non-interactive shell)
 # export NVM_DIR="$HOME/.nvm" 
-# #loading nvm
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+#loading nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
 # # Install the latest LTS version of Node.js (which includes npm)
 # echo "Installing Node.js and npm..."
 # nvm install --lts
