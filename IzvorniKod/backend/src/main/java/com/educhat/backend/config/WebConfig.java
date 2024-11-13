@@ -78,15 +78,14 @@ public class WebConfig implements WebMvcConfigurer {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                 // Exception handling to return 401 instead of redirecting
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
-                )
+                //.exceptionHandling(exceptionHandling ->
+                //       exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint)
+                //)
 
-                /* For testing purposes, use this instead of customAuthenticationEntryPoint
                 .exceptionHandling(exceptionHandling ->
                                 exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 )
-                */
+
 
                 // Configure OAuth2 login
                 .oauth2Login(oauth2Login ->

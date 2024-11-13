@@ -57,6 +57,7 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
     {
       onClick: () => {
         localStorage.removeItem("token");
+        document.cookie = "jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Secure";
         navigate({ to: "/login" });
       },
       label: "Logout",
