@@ -80,5 +80,3 @@ tar -xvzf openjdk.tar.gz -C $INSTALL_DIR --strip-components=1
 
 # Clean up the tarball
 rm openjdk.tar.gz
-cd ..
-chmod +x ./gradlew
