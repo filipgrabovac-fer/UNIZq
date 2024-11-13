@@ -58,6 +58,7 @@ then
     echo "Java installed successfully"
 
     chmod +x ./gradlew 
+    cd ..
 fi
 
 # Define directories
