@@ -3,49 +3,8 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-if [ -z ${JAVA_HOME} ]
+if [ -n "${JAVA_HOME}" ]
 then
-    echo "Java is already installed!"
-    # Define directories
-    FRONTEND_DIR="./frontend"
-    BACKEND_DIR="./backend"
-    SPRING_STATIC_DIR="../backend/src/main/resources/"
-
-    # Define directories
-
-    echo "Starting frontend build..."
-
-    #loading nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
-    # Navigate to frontend
-    cd $FRONTEND_DIR
-
-    echo "Installing dependencies..."
-    npm install
-
-    # Build the frontend (TypeScript compile + Vite build)
-    echo "Building frontend..."
-    npm run build
-
-    # Check if the build succeeded
-    if [ ! -d "dist" ]; then
-        echo "Frontend build failed. Exiting..."
-        exit 1
-    fi
-
-    # Copy frontend build to Spring Boot static directory
-    echo "Copying frontend build to backend static directory..."
-    cd $SPRING_STATIC_DIR 
-    mkdir static
-    cd ../../../../frontend
-
-    mv dist/* $SPRING_STATIC_DIR/static/
-
-    rm dist/
-
-
-else
     echo "installing nvm..."
 
     # Navigate to frontend
@@ -100,3 +59,41 @@ else
 
     chmod +x ./gradlew 
 fi
+
+# Define directories
+FRONTEND_DIR="./frontend"
+BACKEND_DIR="./backend"
+SPRING_STATIC_DIR="../backend/src/main/resources/"
+
+# Define directories
+
+echo "Starting frontend build..."
+
+#loading nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+# Navigate to frontend
+cd $FRONTEND_DIR
+
+echo "Installing dependencies..."
+npm install
+
+# Build the frontend (TypeScript compile + Vite build)
+echo "Building frontend..."
+npm run build
+
+# Check if the build succeeded
+if [ ! -d "dist" ]; then
+echo "Frontend build failed. Exiting..."
+exit 1
+fi
+
+# Copy frontend build to Spring Boot static directory
+echo "Copying frontend build to backend static directory..."
+cd $SPRING_STATIC_DIR 
+mkdir static
+cd ../../../../frontend
+
+mv dist/* $SPRING_STATIC_DIR/static/
+
+rm dist/
