@@ -55,19 +55,18 @@ growth and adaptability.
 
 > To ensure smooth collaboration, productivity, and quality outcomes, the eduChat team will follow the following functioning rules:
 
-> 1. **Clear roles and responsibilities**
+> 1. **Clear roles and responsibilities**:
 >    Each team member has clearly defined role and responsibilities based on their expertise and strengths.
 >    Each member will maintain a checklist of tasks and regularly update the team on progress to avoid overlapping responsibilities.
->    nejnkn
 
-> 2. **Version control and code quality standards**
+> 2. **Version control and code quality standards**:
 >    All team members must follow version control protocols and adhere to code quality standards to maintain consistency.
 >    We are using GitHub for version control, with branches organized by feature and mandatory pull requests to merge code. Also, establish coding standards (naming conventions, documentation practices) and conduct code reviews before merging ensures adherence.
 
-> 3. **Respectful collaboration and Problem solving**
+> 3. **Respectful collaboration and Problem solving**:
 >    All team members foster a respectful and collaborative environment, focusing on constructive problem-solving.
 
-> 4. **Communication Tools and Channels**
+> 4. **Communication Tools and Channels**:
 > For effective collaboration on the eduChat project, we will rely on Discord as our primary communication platform, with regular live meetings to ensure alignment and problem-solving efficiency.
 > We’ve organized specific text channels in Discord for focused conversations on different aspects of the project, such as #front-end, #bac-kend, #database, #time-log and #general. This setup keeps communication organized, allowing team members to quickly find relevant information and discussions.
 > For quick, real-time discussions, we will use Discord voice channels. This feature allows us to jump on calls immediately to clarify doubts, resolve issues, or brainstorm ideas without needing to schedule formal meetings.
