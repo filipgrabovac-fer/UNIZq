@@ -1,4 +1,4 @@
-import { createRouter } from "@tanstack/react-router";
+import { createRoute, createRouter, redirect } from "@tanstack/react-router";
 import { rootRoute } from "./routes/root.routes";
 import {
   sidebarLayoutRoute,
@@ -9,11 +9,17 @@ import { loginRoute } from "./routes/login.routes";
 import { registerRoute } from "./routes/register.routes";
 import { eventsRoute } from "./routes/events.routes";
 
+export const defaultRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  beforeLoad: () => redirect({ to: "/home" }),
+});
 const routeTree = rootRoute.addChildren([
   sidebarLayoutRoute.addChildren([homeRoute]),
   noSidebarLayoutRoute.addChildren([eventsRoute]),
   loginRoute,
   registerRoute,
+  defaultRoute,
 ]);
 
 export const router = createRouter({ routeTree });
