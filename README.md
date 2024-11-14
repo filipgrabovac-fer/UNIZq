@@ -51,10 +51,6 @@ growth and adaptability.
 > Documentation Contributions:
 > All team members, regardless of their primary development focus, contribute to the project documentation. Each developer provides insights into their respective areas, ensuring that the documentation is comprehensive and reflects all aspects of the system.
 
-# Contributions
-
-> Pravila ovise o organizaciji tima i su često izdvojena u CONTRIBUTING.md
-
 > ## Team functioning:
 
 > To ensure smooth collaboration, productivity, and quality outcomes, the eduChat team will follow the following functioning rules:
