@@ -1,3 +1,4 @@
+import { CreateEventModal } from "../../components/CreateEventModal/CreateEventModal.component";
 import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
 
 export const Home = () => {
@@ -9,6 +10,7 @@ export const Home = () => {
         subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
         onClick={() => 0}
       />
+      <CreateEventModal />
     </div>
   );
 };
