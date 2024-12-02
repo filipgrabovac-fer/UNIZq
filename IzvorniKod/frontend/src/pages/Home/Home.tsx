@@ -1,4 +1,5 @@
-import { PostPreview } from "../../components/PostPreview/PostPreview";
+import { CreateEventModal } from "../../components/CreateEventModal/CreateEventModal.component";
+import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
 
 export const Home = () => {
   return (
@@ -11,6 +12,7 @@ export const Home = () => {
         canModify={true}
         postID={1}
       />
+      <CreateEventModal />
     </div>
   );
 };
