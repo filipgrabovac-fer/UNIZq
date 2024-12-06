@@ -12,9 +12,9 @@ export const CustomButton = ({ variant, title, onClick }: CustomButtonType) => {
     <button
       onClick={onClick}
       className={cn(
-        "w-full h-[38px] rounded-[20px]  border-solid border-2  hover:opacity-75",
+        "w-full text-[18px] rounded-[20px] p-[10px] border-solid border-2  hover:opacity-75",
         variant === "primary"
-          ? "bg-primary  text-white"
+          ? "bg-primary  text-white  border-primary"
           : "border-black bg-white"
       )}
     >
