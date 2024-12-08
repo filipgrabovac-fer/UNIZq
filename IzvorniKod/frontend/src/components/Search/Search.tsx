@@ -20,10 +20,6 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
 
   const [searchContent, setsearchContent] = useState("");
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setsearchContent(e.target.value);
-  };
-
   return (
     <div onClick={onClick} className="h-[50px] flex  justify-evenly ">
       <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-3">
@@ -32,7 +28,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
         <input
           type="text"
           value={searchContent}
-          onChange={handleSearchChange}
+          onChange={(event) => setsearchContent(event.target.value)}
           placeholder="Search..."
           className="h-full focus:outline-none"
         />
