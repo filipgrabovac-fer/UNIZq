@@ -52,7 +52,7 @@ export const CustomInput = ({
       ) : (
         <div
           className={cn(
-            "rounded-lg border-[1px] border-gray_border text-sm h-[40px] flex align-middle pl-4 w-full focus-within:border-gray bg-white",
+            "rounded-lg border-[1px] border-gray_border text-sm h-[40px] flex align-middle px-4 w-full focus-within:border-gray bg-white",
             errorMessage
               ? "border-red text-red placeholder:text-red placeholder:opacity-60 focus-within:border-gray_border focus-within:border-[1px]"
               : ""
