@@ -12,6 +12,8 @@ import {
 type PostPreviewProps = {
   postTitle: string;
   postID: number;
+  canDelete: boolean;
+  canModify: boolean;
   onClick: () => void;
 };
 
@@ -36,13 +38,13 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
   };
 
   const content = (
-    <div className="flex">
+    <div className="flex gap-1">
       <MegaphoneIcon
         onClick={(e) => {
           e.stopPropagation();
           setIsReportClicked(!isReportClicked);
         }}
-        className="w-[25px] cursor-pointer mx-0.5"
+        className="w-[25px] cursor-pointer"
         style={getIconStyle({ color: "black", isClicked: isReportClicked })}
       />
       <TrashIcon
@@ -50,7 +52,7 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
           e.stopPropagation();
           setIsTrashClicked(!isTrashClicked);
         }}
-        className="w-[25px] cursor-pointer mx-0.5"
+        className="w-[25px] cursor-pointer"
         style={getIconStyle({ color: "black", isClicked: isTrashClicked })}
       />
     </div>
@@ -59,16 +61,16 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
   return (
     <div
       onClick={onClick}
-      className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[20px]"
+      className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[10px]"
     >
-      <p className="truncate text-[18px]">{postTitle}</p>
-      <div className="flex">
+      <p className="cursor-default truncate text-[18px] w-[75%]">{postTitle}</p>
+      <div className="flex gap-1.5">
         <HeartIcon
           onClick={(e) => {
             e.stopPropagation();
             setIsHeartClicked(!isHeartClicked);
           }}
-          className="w-[25px] cursor-pointer mx-0.5"
+          className="w-[25px] cursor-pointer"
           style={getIconStyle({ color: "red", isClicked: isHeartClicked })}
         />
         <HandThumbUpIcon
@@ -76,7 +78,7 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
           }}
-          className="w-[25px] cursor-pointer mx-0.5"
+          className="w-[25px] cursor-pointer"
           style={getIconStyle({
             color: "#111D4A",
             isClicked: isThumbUpClicked,
@@ -87,14 +89,14 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
           }}
-          className="w-[25px] cursor-pointer mx-0.5"
+          className="w-[25px] cursor-pointer"
           style={getIconStyle({
             color: "#111D4A",
             isClicked: isThumbDownClicked,
           })}
         />
         <Popover content={content}>
-          <EllipsisVerticalIcon className="h-7" />
+          <EllipsisVerticalIcon className="w-[25px] cursor-pointer" />
         </Popover>
       </div>
     </div>
