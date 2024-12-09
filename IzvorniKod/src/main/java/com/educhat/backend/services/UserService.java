@@ -80,14 +80,14 @@ public class UserService {
     }
 
     public List<FacultyUser> createFacultyUser(Long userId, List<FacultyUserCreateDTO> facultyUserCreateDTOs) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-
+        if(!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("User not found");
+        }
         List<FacultyUser> savedFacultyUsers = new ArrayList<>();
         for(FacultyUserCreateDTO dto : facultyUserCreateDTOs) {
-            Faculty faculty = facultyRepository.findById(dto.getFacultyId())
-                    .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
-
+            if(!facultyRepository.existsById(dto.getFacultyId())) {
+                throw new FacultyNotFoundException("Faculty not found");
+            }
             FacultyUser facultyUser = new FacultyUser();
             facultyUser.setUserId(userId);
             facultyUser.setFacultyId(dto.getFacultyId());
