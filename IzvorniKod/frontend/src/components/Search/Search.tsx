@@ -19,10 +19,10 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
   );
 
   const [searchContent, setsearchContent] = useState("");
-
+  //501-620 je sjeban
   return (
-    <div onClick={onClick} className="h-[50px] flex  justify-evenly ">
-      <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-3">
+    <div onClick={onClick} className="h-[45px] flex justify-center gap-[3%]">
+      <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-2">
         <MagnifyingGlassIcon className="h-6 text-black" />
         <div className="h-[80%] border-l-[1px] border-black"></div>
         <input
@@ -30,7 +30,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           value={searchContent}
           onChange={(event) => setsearchContent(event.target.value)}
           placeholder="Search..."
-          className="h-full focus:outline-none"
+          className="h-full focus:outline-none w-full rounded-[20px]"
         />
       </div>
 
@@ -40,7 +40,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           trigger="hover"
           className="border-none text-black hover:text-black"
         >
-          <Button className="bg-white text-black rounded-[20px] h-full text-[18px] flex items-center gap-3 hover:border-none hover:text-black focus:outline-none">
+          <Button className=" text-black rounded-[20px] h-full text-[18px] flex items-center gap-3 hover:border-none hover:text-black focus:outline-none">
             <p className="text-black">Filter by</p>
             <ChevronDownIcon className="h-5 w-5 text-black" />
           </Button>
@@ -48,7 +48,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
       </div>
 
       {withAddPost && (
-        <div className="h-full flex">
+        <div className="flex w-[10%]">
           <CustomButton variant="primary" title="Add post" onClick={() => {}} />
         </div>
       )}
