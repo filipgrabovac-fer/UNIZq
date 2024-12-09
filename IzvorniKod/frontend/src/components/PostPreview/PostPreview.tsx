@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Button, Popover } from "antd";
+import { useState } from "react";
+import { Popover } from "antd";
 import {
   HeartIcon,
   HandThumbUpIcon,
@@ -19,31 +19,6 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
   type GetIconStyleType = {
     isClicked: boolean;
     color: string;
-  };
-
-  const postPreviewDiv = useRef<HTMLDivElement>(null);
-  const [postPreviewWidth, setPostPreviewWidth] = useState(0);
-
-  useEffect(() => {
-    if (postPreviewDiv.current) {
-      const resizeObserver = new ResizeObserver(() => {
-        if (postPreviewDiv.current) {
-          const { width } = postPreviewDiv.current.getBoundingClientRect();
-          setPostPreviewWidth(width);
-        }
-      });
-
-      resizeObserver.observe(postPreviewDiv.current);
-      return () => resizeObserver.disconnect();
-    }
-  }, []);
-
-  const getFormattedTitle = () => {
-    const charWidth = 18;
-    const maxChars = Math.floor(postPreviewWidth / charWidth);
-    return postTitle.length > maxChars
-      ? `${postTitle.slice(0, maxChars)}...`
-      : postTitle;
   };
 
   const [isHeartClicked, setIsHeartClicked] = useState(false);
@@ -83,11 +58,10 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
 
   return (
     <div
-      ref={postPreviewDiv}
       onClick={onClick}
       className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[20px]"
     >
-      <p className="text-[18px]">{getFormattedTitle()}</p>
+      <p className="truncate text-[18px]">{postTitle}</p>
       <div className="flex">
         <HeartIcon
           onClick={(e) => {
@@ -119,10 +93,10 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             isClicked: isThumbDownClicked,
           })}
         />
+        <Popover content={content}>
+          <EllipsisVerticalIcon className="h-7" />
+        </Popover>
       </div>
-      <Popover content={content}>
-        <EllipsisVerticalIcon className="h-7" />
-      </Popover>
     </div>
   );
 };
