@@ -48,7 +48,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
       </div>
 
       {withAddPost && (
-        <div className="flex w-[10%]">
+        <div className="flex">
           <CustomButton variant="primary" title="Add post" onClick={() => {}} />
         </div>
       )}
