@@ -3,7 +3,7 @@ import { PostPreview } from "../../components/PostPreview/PostPreview";
 
 export const Home = () => {
   return (
-    <div className="w-full bg-secondary">
+    <div className=" bg-secondary overflow-hidden">
       Home page
       <FacultySubject
         subjectTitle="Operative Systems"
