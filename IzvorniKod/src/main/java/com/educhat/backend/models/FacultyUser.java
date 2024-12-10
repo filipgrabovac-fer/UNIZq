@@ -1,10 +1,7 @@
 package com.educhat.backend.models;
 
 import com.educhat.backend.models.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -23,6 +20,7 @@ public class FacultyUser {
     private Long userId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @NotNull
