@@ -84,10 +84,20 @@ public class UserService {
             throw new UserNotFoundException("User not found");
         }
         List<FacultyUser> savedFacultyUsers = new ArrayList<>();
+
         for(FacultyUserCreateDTO dto : facultyUserCreateDTOs) {
             if(!facultyRepository.existsById(dto.getFacultyId())) {
                 throw new FacultyNotFoundException("Faculty not found");
             }
+            if(facultyUserRepository.existsByUserIdAndFacultyIdAndRole(userId, dto.getFacultyId(), dto.getUserRole())) {
+//                Optional<Faculty> alreadySelectedFaculty = facultyRepository.findById(dto.getFacultyId());
+//                if (alreadySelectedFaculty.isPresent()) {
+//                    throw new FacultyUserAlreadyExistsException("User already selected " + alreadySelectedFaculty.get().getTitle());
+//                }
+                throw new FacultyUserAlreadyExistsException("User already selected faculty with id: " + dto.getFacultyId()
+                        + " and role: " + dto.getUserRole());
+            }
+
             FacultyUser facultyUser = new FacultyUser();
             facultyUser.setUserId(userId);
             facultyUser.setFacultyId(dto.getFacultyId());
@@ -97,6 +107,7 @@ public class UserService {
             savedFacultyUsers.add(facultyUser);
         }
         facultyUserRepository.saveAll(savedFacultyUsers);
+
         return savedFacultyUsers;
     }
 
