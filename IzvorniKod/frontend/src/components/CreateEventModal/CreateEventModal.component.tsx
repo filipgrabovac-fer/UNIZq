@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { CustomInput } from "../CustomInput/CustomInput";
 import { CustomButton } from "../CustomButton/CustomButton";
 import { Map, Marker, useMarkerRef } from "@vis.gl/react-google-maps";
+import { usePostEvent } from "./hooks/usePostEvent.hook";
 
 type CreateEventModalProps = {
   setState: Dispatch<SetStateAction<boolean>>;
@@ -15,6 +16,10 @@ export const CreateEventModal = ({ setState }: CreateEventModalProps) => {
 
   const markerExists = longitude && latitude;
   const [markerRef] = useMarkerRef();
+
+  const { mutate: postEvent } = usePostEvent({
+    onSuccess: () => setState(false),
+  });
 
   return (
     <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-gray bg-opacity-20 w-screen h-screen flex">
@@ -63,7 +68,14 @@ export const CreateEventModal = ({ setState }: CreateEventModalProps) => {
               <CustomButton
                 variant="primary"
                 title="Save"
-                onClick={() => console.log("save")}
+                onClick={() =>
+                  postEvent({
+                    description: eventDescription,
+                    latitude: latitude ?? 0,
+                    longitude: longitude ?? 0,
+                    title: eventTitle,
+                  })
+                }
               />
             </div>
           </div>
