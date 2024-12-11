@@ -1,7 +1,7 @@
 type CustomFetchType = {
   endpointUrl: string;
   method: string;
-  body?: Record<string, string>;
+  body?: Record<string, string | number>;
   headers?: Record<string, string>;
 };
 
