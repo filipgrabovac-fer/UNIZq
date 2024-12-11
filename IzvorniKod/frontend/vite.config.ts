@@ -10,5 +10,9 @@ export default defineConfig(({ mode }) => {
       "process.env.DEV": JSON.stringify(env.DEV),
     },
     plugins: [react()],
+    build: {
+      outDir: "./src/main/resources/static",
+      empyOutDir: true,
+    },
   };
 });
