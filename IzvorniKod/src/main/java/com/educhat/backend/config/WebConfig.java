@@ -46,9 +46,6 @@ public class WebConfig implements WebMvcConfigurer {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
 
-    @Value("${spring.datasource.username}")
-    private String SECRET_KEY;
-
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/{path:[^\\.]*}")
