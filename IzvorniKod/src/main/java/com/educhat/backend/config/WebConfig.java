@@ -51,6 +51,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        System.out.println(SECRET_KEY);
+        
         registry.addViewController("/{path:[^\\.]*}")
                 .setViewName("forward:/index.html");
     }
