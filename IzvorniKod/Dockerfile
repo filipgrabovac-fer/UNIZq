@@ -5,8 +5,6 @@ COPY src ./src
 COPY frontend/package*.json ./
 RUN npm install
 COPY frontend/ ./
-RUN echo $VITE_GOOGLE_MAPS_API_KEY
-RUN echo $JDBC_DB_NAME
 RUN npm run build
 
 
