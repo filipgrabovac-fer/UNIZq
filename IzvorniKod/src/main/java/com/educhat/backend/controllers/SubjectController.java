@@ -22,9 +22,6 @@ public class SubjectController {
     @GetMapping("/year/{facultyYearId}")
     public ResponseEntity<List<Subject>> getSubjectsByFacultyYear(@PathVariable Long facultyYearId) {
         List<Subject> subjects = subjectService.getAllSubjects(facultyYearId);
-        if (subjects.isEmpty()) {
-            return ResponseEntity.noContent().build(); // HTTP 204 No Content
-        }
         return ResponseEntity.ok(subjects);
     }
 
