@@ -16,4 +16,5 @@ public class FacultyService {
     public List<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
+
 }
