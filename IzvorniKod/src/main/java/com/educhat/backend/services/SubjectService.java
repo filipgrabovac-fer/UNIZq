@@ -13,8 +13,8 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
 
-    public List<Subject> getAllSubjects() {
-        return subjectRepository.findAll();
+    public List<Subject> getAllSubjects(Long facultyYearId) {
+        return subjectRepository.findByFacultyYearId(facultyYearId);
     }
 
 }

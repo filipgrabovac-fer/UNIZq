@@ -4,15 +4,12 @@ import com.educhat.backend.models.Subject;
 import com.educhat.backend.services.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/subjects")
 @CrossOrigin("*")
 public class SubjectController {
 
@@ -22,10 +19,14 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    @GetMapping("/subjects")
-    public ResponseEntity<List<Subject>> getAllSubjects() {
-        List<Subject> subjects = subjectService.getAllSubjects();
+    @GetMapping("/year/{facultyYearId}")
+    public ResponseEntity<List<Subject>> getSubjectsByFacultyYear(@PathVariable Long facultyYearId) {
+        List<Subject> subjects = subjectService.getAllSubjects(facultyYearId);
+        if (subjects.isEmpty()) {
+            return ResponseEntity.noContent().build(); // HTTP 204 No Content
+        }
         return ResponseEntity.ok(subjects);
     }
+
 
 }
