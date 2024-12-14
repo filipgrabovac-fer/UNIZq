@@ -1,7 +1,12 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        - VITE_GOOGLE_MAPS_API_KEY=${VITE_GOOGLE_MAPS_API_KEY}
+
     image: unizq
+
     environment:
       - JDBC_DB_USERNAME=${JDBC_DB_USERNAME}
       - JDBC_DB_NAME=${JDBC_DB_NAME}
@@ -13,5 +18,6 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - VITE_GOOGLE_MAPS_API_KEY=${VITE_GOOGLE_MAPS_API_KEY}
+
     ports:
       - "8080:8080"
