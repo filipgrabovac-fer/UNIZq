@@ -1,10 +1,11 @@
 # Stage 1: Build the frontend
 FROM node:20 AS unizq-fe
 WORKDIR /app
-COPY src ./src
-COPY frontend/package*.json ./
-RUN npm install
 COPY frontend/ ./
+COPY src ./src
+ARG VITE_GOOGLE_MAPS_API_KEY
+ENV VITE_GOOGLE_MAPS_API_KEY=${VITE_GOOGLE_MAPS_API_KEY}
+RUN npm install
 RUN npm run build
 
 
