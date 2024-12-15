@@ -34,12 +34,12 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
 
   const content = (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3 p-1">
       <button
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="w-[25px] cursor-pointer"
+        className="cursor-pointer"
       >
         Report
       </button>
@@ -49,7 +49,7 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="w-[25px] cursor-pointer text-red"
+        className="cursor-pointer text-red"
       >
         Delete
       </button>
@@ -93,8 +93,13 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             isClicked: isThumbDownClicked,
           })}
         />
-        <Popover content={content}>
-          <EllipsisVerticalIcon className="w-[25px] cursor-pointer" />
+        <Popover
+          arrow={false}
+          content={content}
+          trigger="click"
+          className="w-[25px]"
+        >
+          <EllipsisVerticalIcon className="cursor-pointer" />
         </Popover>
       </div>
     </div>
