@@ -4,8 +4,6 @@ import {
   HeartIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
-  MegaphoneIcon,
-  TrashIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/24/solid";
 
@@ -17,44 +15,44 @@ type PostPreviewProps = {
   onClick: () => void;
 };
 
-export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
-  type GetIconStyleType = {
-    isClicked: boolean;
-    color: string;
-  };
+type GetIconStyleType = {
+  isClicked: boolean;
+  color: string;
+};
 
+const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
+  return {
+    stroke: isClicked ? "none" : "black",
+    strokeWidth: isClicked ? "0" : "1px",
+    fill: isClicked ? color : "white",
+  };
+};
+
+export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
-  const [isReportClicked, setIsReportClicked] = useState(false);
-  const [isTrashClicked, setIsTrashClicked] = useState(false);
-
-  const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
-    return {
-      stroke: isClicked ? "none" : "black",
-      strokeWidth: isClicked ? "0" : "1px",
-      fill: isClicked ? color : "white",
-    };
-  };
 
   const content = (
-    <div className="flex gap-1">
-      <MegaphoneIcon
+    <div className="flex flex-col gap-2">
+      <button
         onClick={(e) => {
           e.stopPropagation();
-          setIsReportClicked(!isReportClicked);
         }}
         className="w-[25px] cursor-pointer"
-        style={getIconStyle({ color: "black", isClicked: isReportClicked })}
-      />
-      <TrashIcon
+      >
+        Report
+      </button>
+
+      {/* napraviti validaciju može li korisnik obrisati ovaj post i ako ne može, onda ne prikazivati Delete gumb */}
+      <button
         onClick={(e) => {
           e.stopPropagation();
-          setIsTrashClicked(!isTrashClicked);
         }}
-        className="w-[25px] cursor-pointer"
-        style={getIconStyle({ color: "black", isClicked: isTrashClicked })}
-      />
+        className="w-[25px] cursor-pointer text-red"
+      >
+        Delete
+      </button>
     </div>
   );
 
