@@ -90,10 +90,6 @@ public class UserService {
                 throw new FacultyNotFoundException("Faculty not found");
             }
             if(facultyUserRepository.existsByUserIdAndFacultyIdAndRole(userId, dto.getFacultyId(), dto.getUserRole())) {
-//                Optional<Faculty> alreadySelectedFaculty = facultyRepository.findById(dto.getFacultyId());
-//                if (alreadySelectedFaculty.isPresent()) {
-//                    throw new FacultyUserAlreadyExistsException("User already selected " + alreadySelectedFaculty.get().getTitle());
-//                }
                 throw new FacultyUserAlreadyExistsException("User already selected faculty with id: " + dto.getFacultyId()
                         + " and role: " + dto.getUserRole());
             }
