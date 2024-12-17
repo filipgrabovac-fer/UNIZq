@@ -6,6 +6,7 @@ type UsePostEventProps = {
   description: string;
   latitude: number;
   longitude: number;
+  faculty_id: number;
 };
 
 type UsePostEventOnSuccessType = {
@@ -20,8 +21,9 @@ export const usePostEvent = ({ onSuccess }: UsePostEventOnSuccessType) => {
       description,
       latitude,
       longitude,
+      faculty_id,
     }: UsePostEventProps) => {
-      const response = await customFetch({
+      await customFetch({
         endpointUrl: "events/create",
         method: "POST",
         body: {
@@ -29,13 +31,12 @@ export const usePostEvent = ({ onSuccess }: UsePostEventOnSuccessType) => {
           description,
           latitude,
           longitude,
+          faculty_id,
         },
         headers: {
           "Content-Type": "application/json",
         },
       });
-
-      console.log(response);
 
       return;
     },
