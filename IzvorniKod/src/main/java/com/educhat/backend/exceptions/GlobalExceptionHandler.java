@@ -43,4 +43,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(SubjectNotFoundException.class)
+    public ResponseEntity<String> handleSubjectNotFoundException(SubjectNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
+
 }

@@ -15,6 +15,7 @@ public class PostResponseDTO {
     private String title;
     private String description;
     private Long facutlyUserId;
+    private Long subjectId;
     private int upvotes;
     private int downvotes;
     private int reports;

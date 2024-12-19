@@ -21,6 +21,10 @@ public class Post {
 
     @NotNull
     private Long facutlyUserId;
+
+    @NotNull
+    private Long subjectId;
+
     private int upvotes;
     private int downvotes;
     private int reports;

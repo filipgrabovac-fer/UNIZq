@@ -1,12 +1,16 @@
 package com.educhat.backend.controllers;
 
+import com.educhat.backend.DTO.FacultyUserCreateDTO;
+import com.educhat.backend.DTO.PostResponseDTO;
+import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.services.PostService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 @CrossOrigin("*")
 public class PostController {
 
@@ -14,6 +18,12 @@ public class PostController {
 
     public PostController(PostService postService) {
         this.postService = postService;
+    }
+
+    @GetMapping("subject/{subjectId}")
+    public ResponseEntity<List<PostResponseDTO>> getPosts(@PathVariable Long subjectId, @RequestParam Long userId) {
+        List<PostResponseDTO> subjectPosts = postService.getPostsBySubject(subjectId, userId);
+        return ResponseEntity.ok(subjectPosts);
     }
 
 }
