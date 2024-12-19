@@ -4,7 +4,6 @@ import { CustomLoginRegisterButton } from "../../components/CustomLoginRegisterB
 import GoogleButton from "react-google-button";
 import { Link } from "@tanstack/react-router";
 import { usePostLogin } from "./hooks/usePostLogin.hook";
-import { Search } from "../../components/Search/Search";
 
 export const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -63,14 +62,6 @@ export const Login = () => {
           Sign up
         </Link>
       </p>
-      <div className="w-full bg-black">
-        <Search
-          withAddPost={true}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      </div>
     </div>
   );
 };
