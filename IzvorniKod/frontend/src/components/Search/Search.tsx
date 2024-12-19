@@ -10,6 +10,7 @@ type SearchType = {
 
 export const Search = ({ withAddPost, onClick }: SearchType) => {
   const [searchContent, setsearchContent] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div onClick={onClick} className="h-[45px] flex justify-center gap-[3%]">
@@ -24,12 +25,16 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           className="h-full focus:outline-none w-full rounded-[20px]"
         />
       </div>
+
       <ConfigProvider
         theme={{
-          token: {
-            borderRadius: 20,
-            colorBorder: "#fffff",
-            fontSize: 18,
+          components: {
+            Select: {
+              borderRadius: 20,
+              colorBorder: "#fffff",
+              fontSize: 18,
+              optionFontSize: 14,
+            },
           },
         }}
       >
@@ -38,6 +43,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           style={{
             width: 120,
             height: "100%",
+            cursor: "default",
           }}
           allowClear
           options={[
@@ -52,6 +58,9 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
               .localeCompare((optionB?.label ?? "").toLowerCase())
           }
           placeholder="Filter by"
+          open={isOpen}
+          onMouseEnter={() => setIsOpen(true)} // Otvori dropdown kad hovera
+          onMouseLeave={() => setIsOpen(false)} // zatvori dropdown kad ne hovera
         />
       </ConfigProvider>
 
