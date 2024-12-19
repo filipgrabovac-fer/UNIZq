@@ -2,72 +2,7 @@ import { useState } from "react";
 import { Event } from "./components/Event.component";
 import { Map } from "@vis.gl/react-google-maps";
 import { MarkerWithInfoWindow } from "./components/MarkerWithInfoWindow.component";
-
-const eventsMockData = [
-  {
-    title: "Zagreb",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.815,
-    lng: 15.9819,
-  },
-  {
-    title: "Tokyo",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 35.6764,
-    lng: 139.65,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-  {
-    title: "Novska",
-    description:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores, deleniti?",
-    lat: 45.34,
-    lng: 16.9786,
-  },
-];
+import { useGetEvents } from "./hooks/useGetEvents.hook";
 
 type SelectedEventType = {
   lng: number;
@@ -78,6 +13,7 @@ export const Events = () => {
   const [selectedEvent, setSelectedEvent] = useState<SelectedEventType>();
 
   const defaultCenter = { lat: 45.815, lng: 15.9819 };
+  const { data: eventsData } = useGetEvents();
 
   return (
     <div className="flex mt-7 w-full justify-center gap-x-10  max-[1160px]:flex-col max-[1160px]:px-20 max-[500px]:px-2">
@@ -86,16 +22,23 @@ export const Events = () => {
           What events are currently active?
         </p>
         <div className="border-[1px] border-gray_border mt-7 flex flex-col gap-2 max-h-[600px] overflow-y-scroll">
-          {eventsMockData.map((event, i) => (
-            <Event
-              key={i}
-              onClick={() =>
-                setSelectedEvent({ lng: event.lng, lat: event.lat })
-              }
-              title={event.title}
-              description={event.description}
-            />
-          ))}
+          {eventsData && eventsData.length > 0 ? (
+            eventsData.map((event, i) => (
+              <Event
+                key={i}
+                onClick={() =>
+                  setSelectedEvent({
+                    lng: event.longitude,
+                    lat: event.latitude,
+                  })
+                }
+                title={event.title}
+                description={event.description}
+              />
+            ))
+          ) : (
+            <p className="m-auto">There are currently no active events.</p>
+          )}
         </div>
         <img
           src="/images/events-crowd.jpg"
@@ -124,7 +67,7 @@ export const Events = () => {
           center={selectedEvent}
           onCameraChanged={() => setSelectedEvent(undefined)}
         >
-          {eventsMockData.map((event, i) => (
+          {eventsData?.map((event, i) => (
             <MarkerWithInfoWindow key={i} {...event} />
           ))}
         </Map>

@@ -10,8 +10,6 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState();
-
   const { mutate: postRegister } = usePostRegister();
   return (
     <div
@@ -59,7 +57,7 @@ export const Register = () => {
         className="mt-2"
         href={`${
           import.meta.env.VITE_DEV ? "http://localhost:8080" : ""
-        }/api/auth/google`}
+        }/oauth2/authorization/google`}
       >
         <GoogleButton />
       </a>

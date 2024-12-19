@@ -10,6 +10,7 @@ type SearchType = {
 
 export const Search = ({ withAddPost, onClick }: SearchType) => {
   const [searchContent, setsearchContent] = useState("");
+
   return (
     <div onClick={onClick} className="h-[45px] flex justify-center gap-[3%]">
       <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-2">

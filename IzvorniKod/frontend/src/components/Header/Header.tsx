@@ -1,11 +1,11 @@
-import { Menu, Popover } from "antd";
+import { Button, Popover } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import {
   UserCircleIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 export const sidebarDataMock = [
   {
@@ -43,20 +43,26 @@ export const sidebarDataMock = [
   },
 ];
 
-const dropdownTabs = [
-  { link: "/events", label: "Events" },
-  { link: "/profile", label: "View profile" },
-  {
-    link: "/login",
-    label: "Logout",
-  },
-];
 type HeaderType = {
   isSidebarOpen: boolean;
   setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
+  const navigate = useNavigate();
+
+  const dropdownTabs = [
+    { onClick: () => navigate({ to: "/events" }), label: "Events" },
+    { onClick: () => navigate({ to: "/profile" }), label: "View profile" },
+    {
+      onClick: () => {
+        localStorage.removeItem("token");
+        document.cookie = "jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Secure";
+        navigate({ to: "/login" });
+      },
+      label: "Logout",
+    },
+  ];
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -85,9 +91,13 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
         content={
           <div className="flex flex-col px-2 gap-2">
             {dropdownTabs.map((tab, i) => (
-              <Link key={i} to={tab.link} className="w-full text-left">
+              <Button
+                key={i}
+                onClick={tab.onClick}
+                className="w-full text-left border-none shadow-none"
+              >
                 {tab.label}
-              </Link>
+              </Button>
             ))}
           </div>
         }

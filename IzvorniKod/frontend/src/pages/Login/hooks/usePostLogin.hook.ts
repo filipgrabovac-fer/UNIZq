@@ -3,21 +3,29 @@ import { customFetch } from "../../../utils/customFetch";
 import { useNavigate } from "@tanstack/react-router";
 
 type UsePostLoginProps = {
-  usernameOrEmail: string;
+  email: string;
   password: string;
+};
+
+type PostLoginResponseType = {
+  token: string;
 };
 
 export const usePostLogin = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async ({ usernameOrEmail, password }: UsePostLoginProps) => {
-      const response = await customFetch({
+    mutationFn: async ({ email, password }: UsePostLoginProps) => {
+      const response: PostLoginResponseType = await customFetch({
         endpointUrl: "login",
-        body: { usernameOrEmail, password },
+        body: { email, password },
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.id) navigate({ to: "/home" });
+
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+        navigate({ to: "/home" });
+      }
     },
   });
 };
