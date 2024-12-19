@@ -1,6 +1,5 @@
 import { CustomButton } from "../../components/CustomButton/CustomButton";
-import { Button, Popover } from "antd";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Select, ConfigProvider } from "antd";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
@@ -10,16 +9,7 @@ type SearchType = {
 };
 
 export const Search = ({ withAddPost, onClick }: SearchType) => {
-  const content = (
-    <div className="text-[16px]">
-      <p>Name</p>
-      <p>Date</p>
-      <p>Content</p>
-    </div>
-  );
-
   const [searchContent, setsearchContent] = useState("");
-  //501-620 je sjeban
   return (
     <div onClick={onClick} className="h-[45px] flex justify-center gap-[3%]">
       <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-2">
@@ -33,19 +23,36 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           className="h-full focus:outline-none w-full rounded-[20px]"
         />
       </div>
-
-      <div className="rounded-[20px] border-none text-black hover:border-none hover:text-black">
-        <Popover
-          content={content}
-          trigger="hover"
-          className="border-none text-black hover:text-black"
-        >
-          <Button className=" text-black rounded-[20px] h-full text-[18px] flex items-center gap-3 hover:border-none hover:text-black focus:outline-none">
-            <p className="text-black">Filter by</p>
-            <ChevronDownIcon className="h-5 w-5 text-black" />
-          </Button>
-        </Popover>
-      </div>
+      <ConfigProvider
+        theme={{
+          token: {
+            borderRadius: 20,
+            colorBorder: "#fffff",
+            fontSize: 18,
+          },
+        }}
+      >
+        <Select
+          showSearch
+          style={{
+            width: 120,
+            height: "100%",
+          }}
+          allowClear
+          options={[
+            { value: "Name", label: "Name" },
+            { value: "Date", label: "Date" },
+            { value: "Content", label: "Content" },
+          ]}
+          optionFilterProp="label"
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? "")
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? "").toLowerCase())
+          }
+          placeholder="Filter by"
+        />
+      </ConfigProvider>
 
       {withAddPost && (
         <div className="flex">
