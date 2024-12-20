@@ -48,6 +48,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FacultyUserNotFoundException.class)
+    public ResponseEntity<String> handleFacultyUserNotFoundException(FacultyUserNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FacultyYearNotFoundException.class)
+    public ResponseEntity<String> handleFacultyYearNotFoundException(FacultyYearNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
 
 
 }
