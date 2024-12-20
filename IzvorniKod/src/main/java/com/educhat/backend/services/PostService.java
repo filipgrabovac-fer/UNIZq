@@ -80,44 +80,4 @@ public class PostService {
         return facultyUserOptional.isPresent();
     }
 
-    
-    private boolean isEditable(Post post, Long userId) {
-        boolean isAuthor = false;
-        boolean isAdmin = false;
-
-        // find if user is the author of post
-        Long facultyUserId = post.getFacutlyUserId();
-        Optional<FacultyUser> facultyUserOptional = facultyUserRepository.findById(facultyUserId);
-        if(facultyUserOptional.isPresent()) {
-            FacultyUser facultyUser = facultyUserOptional.get();
-            isAuthor = facultyUser.getUserId().equals(userId);
-            //isAdmin = facultyUser.getRole().equals(Role.ADMIN);
-        }
-
-        // find if user is admin of faculty
-        Long subjectId = post.getSubjectId();
-        Optional<Subject> subjectOptional = subjectRepository.findById(subjectId);
-        if(subjectOptional.isPresent()) {
-            Subject subject = subjectOptional.get();
-            Long facultyYearId = subject.getFacultyYearId();
-            Optional<FacultyYear> facultyYearOptional = facultyYearRepository.findById(facultyYearId);
-            if(facultyYearOptional.isPresent()) {
-                FacultyYear facultyYear = facultyYearOptional.get();
-                Long facultyId = facultyYear.getFacultyId();
-
-                Optional<FacultyUser> furOptional = facultyUserRepository.findByUserIdAndFacultyId(userId, facultyId);
-                if(furOptional.isPresent()) {
-                    FacultyUser fu = furOptional.get();
-
-                    isAdmin = fu.getRole().equals(Role.ADMIN);
-                }
-            }
-        }
-
-        return isAuthor || isAdmin;
-    }
-
-
-
-
 }
