@@ -72,7 +72,7 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
 
   return (
     <div className="flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
-      <div className="min-[500px]:hidden flex">
+      <div className="min-[501px]:hidden flex">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           {isSidebarOpen ? (
             <XMarkIcon width={25} height={25} />

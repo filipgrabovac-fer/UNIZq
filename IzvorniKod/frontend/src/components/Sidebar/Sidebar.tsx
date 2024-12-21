@@ -33,7 +33,6 @@ export const Sidebar = ({ onClick }: SidebarProps) => {
         <Menu
           onClick={handleClick}
           style={{
-            width: 256,
             borderRadius: "20px",
           }}
           selectedKeys={[current]}
