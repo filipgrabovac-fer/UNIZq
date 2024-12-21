@@ -1,16 +1,10 @@
-import { PostPreview } from "../../components/PostPreview/PostPreview";
+import { Search } from "../../components/Search/Search";
 
 export const Home = () => {
   return (
-    <div className=" bg-secondary overflow-hidden">
+    <div className="w-full bg-secondary">
       Home page
-      <PostPreview
-        postTitle="Post title"
-        onClick={() => {}}
-        canDelete={true}
-        canModify={true}
-        postID={1}
-      />
+      <Search withAddPost={true} onClick={() => {}} />
     </div>
   );
 };
