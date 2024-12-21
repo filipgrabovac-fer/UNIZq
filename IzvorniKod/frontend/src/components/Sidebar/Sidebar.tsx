@@ -3,11 +3,7 @@ import { useState } from "react";
 import type { MenuProps } from "antd";
 import { ConfigProvider, Menu } from "antd";
 
-type SidebarProps = {
-  onClick: MenuProps["onClick"];
-};
-
-export const Sidebar = ({ onClick }: SidebarProps) => {
+export const Sidebar = () => {
   const [current, setCurrent] = useState("1");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

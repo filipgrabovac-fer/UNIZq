@@ -43,7 +43,7 @@ export const sidebarDataMock = [
           { key: 16, label: "Add year", icon: <PlusIcon className="h-4" /> },
         ],
       },
-      { key: 13, label: "Add year", icon: <PlusIcon className="h-4" /> },
+      { key: 13, label: "Add faculty", icon: <PlusIcon className="h-4" /> },
     ],
   },
   {

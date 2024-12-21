@@ -25,10 +25,9 @@ export const SidebarLayout = () => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
       {isSmallScreen ? (
-        // Small screen layout
         isSidebarOpen ? (
           <div className={"absolute left-0 top-[60px] w-full h-full bg-white"}>
-            <Sidebar onClick={() => setIsSidebarOpen(false)} />
+            <Sidebar />
           </div>
         ) : (
           <Outlet />
@@ -36,7 +35,7 @@ export const SidebarLayout = () => {
       ) : (
         <div className="flex w-full">
           <div className="w-[300px]">
-            <Sidebar onClick={undefined} />
+            <Sidebar />
           </div>
           <Outlet />
         </div>
