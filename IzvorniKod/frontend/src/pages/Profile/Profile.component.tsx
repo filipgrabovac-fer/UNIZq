@@ -18,6 +18,7 @@ import {
   TrashIcon,
   InboxIcon,
   PencilSquareIcon,
+  ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
 import type { TabsProps } from "antd";
 import { PostPreview } from "../../components/PostPreview/PostPreview";
@@ -48,25 +49,6 @@ const data = [
 const items: TabsProps["items"] = [
   {
     key: "1",
-    label: "My posts",
-    children: (
-      <div className="mb-3">
-        <PostPreview
-          postTitle={
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
-          }
-          postID={0}
-          canDelete={false}
-          canModify={false}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      </div>
-    ),
-  },
-  {
-    key: "2",
     label: "My faculties",
     children: (
       <List
@@ -79,7 +61,7 @@ const items: TabsProps["items"] = [
           /*actions*/
           >
             <Card
-              className="w-[70%] h-[170px] transition-transform duration-300 hover:scale-105"
+              className="w-[70%] h-[170px] transition-transform duration-300 hover:scale-105 hover:shadow-md"
               title={
                 <div className="flex justify-between">
                   <p>{item.faculty}</p>
@@ -92,6 +74,53 @@ const items: TabsProps["items"] = [
           </List.Item>
         )}
       />
+    ),
+  },
+  {
+    key: "2",
+    label: "My posts",
+    children: (
+      <div className="mb-3">
+        <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+          <PostPreview
+            postTitle={
+              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+            }
+            postID={0}
+            canDelete={false}
+            canModify={false}
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        </div>
+        <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+          <PostPreview
+            postTitle={
+              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+            }
+            postID={0}
+            canDelete={false}
+            canModify={false}
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        </div>
+        <div className="transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+          <PostPreview
+            postTitle={
+              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+            }
+            postID={0}
+            canDelete={false}
+            canModify={false}
+            onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        </div>
+      </div>
     ),
   },
 ];
@@ -107,33 +136,36 @@ export const Profile = () => {
     switch (selectedKey) {
       case "1":
         return (
-          <div className="w-fit">
-            <p className="text-lg">My profile</p>
-            <hr className="my-3" />
-            <Form>
-              <Form.Item name="username">
-                <p>Username</p>
-                <div className="flex">
+          <div className="w-full flex items-center justify-center h-screen">
+            <div>
+              <p className="text-lg text-center">My profile</p>
+              <UserIcon />
+              <br />
+              <Form>
+                <Form.Item name="username">
+                  <p>Username</p>
+                  <div className="flex">
+                    <Input
+                      className="h-10"
+                      prefix={<UserIcon className="w-5" />}
+                      placeholder="Username"
+                    />
+                    <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
+                      <PencilSquareIcon className="w-5 fill-white" />
+                    </div>
+                  </div>
+                </Form.Item>
+                <p>Email</p>
+                <Form.Item name="email">
                   <Input
                     className="h-10"
-                    prefix={<UserIcon className="w-5" />}
-                    placeholder="Username"
+                    prefix={<InboxIcon className="w-5" />}
+                    type="email"
+                    placeholder="email"
                   />
-                  <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
-                    <PencilSquareIcon className="w-5 fill-white" />
-                  </div>
-                </div>
-              </Form.Item>
-              <p>Email</p>
-              <Form.Item name="email">
-                <Input
-                  className="h-10"
-                  prefix={<InboxIcon className="w-5" />}
-                  type="email"
-                  placeholder="email"
-                />
-              </Form.Item>
-            </Form>
+                </Form.Item>
+              </Form>
+            </div>
           </div>
         );
       case "2":
@@ -163,8 +195,9 @@ export const Profile = () => {
   return (
     <Layout className="h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <a href="/home">bla</a>
-        <br />
+        <a href="/home">
+          <ArrowLeftIcon className="ml-[14%] mt-3 w-5 fill-white my-1" />
+        </a>
         <Menu
           theme="dark"
           mode="inline"
