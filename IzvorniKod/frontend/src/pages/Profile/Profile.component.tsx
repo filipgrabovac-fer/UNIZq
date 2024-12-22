@@ -163,7 +163,8 @@ export const Profile = () => {
   return (
     <Layout className="h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        <a href="/home">bla</a>
+        <br />
         <Menu
           theme="dark"
           mode="inline"
