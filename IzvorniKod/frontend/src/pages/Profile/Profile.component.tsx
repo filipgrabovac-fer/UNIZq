@@ -19,6 +19,7 @@ import {
   InboxIcon,
   PencilSquareIcon,
   ArrowLeftIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import type { TabsProps } from "antd";
 import { PostPreview } from "../../components/PostPreview/PostPreview";
@@ -80,7 +81,7 @@ const items: TabsProps["items"] = [
     key: "2",
     label: "My posts",
     children: (
-      <div className="mb-3">
+      <div className="mb-3 w-[90%]">
         <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
           <PostPreview
             postTitle={
@@ -141,6 +142,8 @@ export const Profile = () => {
               <p className="text-lg text-center">My profile</p>
               <UserIcon />
               <br />
+              <hr />
+              <br />
               <Form>
                 <Form.Item name="username">
                   <p>Username</p>
@@ -155,14 +158,19 @@ export const Profile = () => {
                     </div>
                   </div>
                 </Form.Item>
-                <p>Email</p>
                 <Form.Item name="email">
-                  <Input
-                    className="h-10"
-                    prefix={<InboxIcon className="w-5" />}
-                    type="email"
-                    placeholder="email"
-                  />
+                  <p>Email</p>
+                  <div className="flex">
+                    <Input
+                      className="h-10"
+                      prefix={<InboxIcon className="w-5" />}
+                      type="email"
+                      placeholder="Email"
+                    />
+                    <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
+                      <PencilSquareIcon className="w-5 fill-white" />
+                    </div>
+                  </div>
                 </Form.Item>
               </Form>
             </div>
@@ -187,6 +195,8 @@ export const Profile = () => {
             </ConfigProvider>
           </div>
         );
+      case "3":
+        return <div>set</div>;
       default:
         return <div>Default Content</div>;
     }
@@ -194,25 +204,77 @@ export const Profile = () => {
 
   return (
     <Layout className="h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        style={{ background: "#111D4A" }}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
         <a href="/home">
           <ArrowLeftIcon className="ml-[14%] mt-3 w-5 fill-white my-1" />
         </a>
         <Menu
-          theme="dark"
+          style={{ background: "#111D4A" }}
           mode="inline"
           defaultSelectedKeys={["1"]}
           onClick={(e) => setSelectedKey(e.key)} // Update selectedKey on click
           items={[
             {
               key: "1",
-              icon: <UserIcon className="w-5" />,
-              label: "Profile",
+              icon: (
+                <UserIcon
+                  className={`w-5 ${
+                    selectedKey === "1" ? "fill-blue-500" : "fill-white"
+                  }`}
+                />
+              ),
+              label: (
+                <p
+                  className={`${
+                    selectedKey === "1" ? "text-blue-500" : "text-white"
+                  } hover:text-blue-500`}
+                >
+                  Profile
+                </p>
+              ),
             },
             {
               key: "2",
-              icon: <WifiIcon className="w-5" />,
-              label: "Activity",
+              icon: (
+                <WifiIcon
+                  className={`w-5 ${
+                    selectedKey === "2" ? "fill-blue-500" : "fill-white"
+                  }`}
+                />
+              ),
+              label: (
+                <p
+                  className={`${
+                    selectedKey === "2" ? "text-blue-500" : "text-white"
+                  } hover:text-blue-500`}
+                >
+                  Activity
+                </p>
+              ),
+            },
+            {
+              key: "3",
+              icon: (
+                <Cog6ToothIcon
+                  className={`w-5 ${
+                    selectedKey === "3" ? "fill-blue-500" : "fill-white"
+                  }`}
+                />
+              ),
+              label: (
+                <p
+                  className={`${
+                    selectedKey === "3" ? "text-blue-500" : "text-white"
+                  } hover:text-blue-500`}
+                >
+                  Settings
+                </p>
+              ),
             },
           ]}
         />
