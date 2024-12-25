@@ -24,7 +24,6 @@ export const CreateEventModalForm = ({
     errors.description && touched.description
       ? "Please provide a description"
       : "";
-
   return (
     <div className="w-[800px] max-[950px]:w-full">
       <form onSubmit={handleSubmit}>
