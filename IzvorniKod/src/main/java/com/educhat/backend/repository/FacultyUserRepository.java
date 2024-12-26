@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> {
 
-    boolean existsByUserIdAndFacultyIdAndRole(Long userId, @NonNull Long facultyId, Role role);
+    boolean existsByUserIdAndFacultyIdAndRole(Long userId, Long facultyId, Role role);
+
+    List<FacultyUser> findByUserIdAndRole(Long userId, Role role);
 
     Optional<FacultyUser> findByUserIdAndFacultyIdAndRole(Long userId, Long facultyId, Role role);
 
