@@ -24,6 +24,7 @@ public class PostService {
     private final SubjectRepository subjectRepository;
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyYearRepository facultyYearRepository;
+    private final AnswerRepository answerRepository;
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
         if(!userRepository.existsById(userId)) {
@@ -78,6 +79,11 @@ public class PostService {
 
         Optional<FacultyUser> facultyUserOptional = facultyUserRepository.findByUserIdAndFacultyIdAndRole(userId, facultyId, Role.ADMIN);
         return facultyUserOptional.isPresent();
+    }
+
+    public List<Answer> getPostResponses(Long postId) {
+        List<Answer> answers = answerRepository.findByPostId(postId);
+        return answers;
     }
 
 }
