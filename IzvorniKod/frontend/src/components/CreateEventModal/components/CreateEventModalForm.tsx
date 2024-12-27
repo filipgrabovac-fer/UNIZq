@@ -25,7 +25,7 @@ export const CreateEventModalForm = ({
       ? "Please provide a description"
       : "";
   return (
-    <div className="w-[800px] max-[950px]:w-full">
+    <div className="w-[400px] max-[950px]:w-full max-[950px]:h-screen ">
       <form onSubmit={handleSubmit}>
         <div className="flex gap-x-2">
           <div className="w-1/2 max-[950px]:mt-4">
