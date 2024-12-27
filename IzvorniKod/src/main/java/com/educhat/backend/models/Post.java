@@ -25,6 +25,8 @@ public class Post {
     @NotNull
     private Long subjectId;
 
+    private String link;
+
     private int upvotes;
     private int downvotes;
     private int reports;

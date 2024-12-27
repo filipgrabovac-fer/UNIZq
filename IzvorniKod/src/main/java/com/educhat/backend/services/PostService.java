@@ -101,11 +101,11 @@ public class PostService {
         post.setDescription(postCreateDTO.getPostContent());
         post.setFacutlyUserId(facultyUser.getId());
         post.setSubjectId(postCreateDTO.getSubjectId());
+        post.setLink(postCreateDTO.getLink());
         post.setUpvotes(0);
         post.setDownvotes(0);
         post.setReports(0);
         post.setActive(true);
-        //type - treba li?
 
         Post savedPost = postRepository.save(post);
 
