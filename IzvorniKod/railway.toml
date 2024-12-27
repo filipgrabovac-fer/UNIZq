@@ -1,9 +1,0 @@
-[build]
-builder = "nixpacks"
-buildCommand = "bash build_script.bash.sh"
-
-[deploy]
-startCommand = "export JAVA_HOME=java && export PATH=$JAVA_HOME/bin:$PATH && cd backend && chmod +x ./gradlew && ./gradlew clean build && ./gradlew bootRun"
-healthcheckPath = "/"
-healthcheckTimeout = 100
-restartPolicyType = "never"

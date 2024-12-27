@@ -7,8 +7,8 @@ function getTokenFromLocalStorageOrCookie() {
   let token = localStorage.getItem("token");
   if (!token) {
     const tokenCookie = document.cookie
-        .split("; ")
-        .find(row => row.startsWith("jwtToken="));
+      .split("; ")
+      .find((row) => row.startsWith("jwtToken="));
     if (tokenCookie) {
       token = tokenCookie.split("=")[1];
       localStorage.setItem("token", token);
