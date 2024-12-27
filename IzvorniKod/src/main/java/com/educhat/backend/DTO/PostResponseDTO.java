@@ -20,6 +20,5 @@ public class PostResponseDTO {
     private int downvotes;
     private int reports;
     private boolean active;
-    private PostType type;
     private boolean isEditable; // korisnik moze editat/brisat post
 }

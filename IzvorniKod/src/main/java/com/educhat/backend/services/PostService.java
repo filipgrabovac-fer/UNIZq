@@ -50,7 +50,6 @@ public class PostService {
                         post.getDownvotes(),
                         post.getReports(),
                         post.isActive(),
-                        post.getType(),
                         isUserAdmin(subjectId,userId) || isUserAuthor(post,userId)))
                 .collect(Collectors.toList());
     }
@@ -107,7 +106,6 @@ public class PostService {
         post.setReports(0);
         post.setActive(true);
         //type - treba li?
-        post.setType(PostType.QUESTION);
 
         Post savedPost = postRepository.save(post);
 

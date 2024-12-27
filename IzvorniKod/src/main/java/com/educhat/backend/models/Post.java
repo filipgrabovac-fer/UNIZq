@@ -30,7 +30,4 @@ public class Post {
     private int reports;
     private boolean active;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private PostType type;
 }
