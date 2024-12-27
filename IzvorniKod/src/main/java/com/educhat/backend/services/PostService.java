@@ -1,16 +1,19 @@
 package com.educhat.backend.services;
 
+import com.educhat.backend.DTO.PostCreateDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.exceptions.FacultyUserNotFoundException;
 import com.educhat.backend.exceptions.FacultyYearNotFoundException;
 import com.educhat.backend.exceptions.SubjectNotFoundException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.models.*;
+import com.educhat.backend.models.enums.PostType;
 import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,7 @@ public class PostService {
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyYearRepository facultyYearRepository;
     private final AnswerRepository answerRepository;
+    private final PostImageRepository postImageRepository;
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
         if(!userRepository.existsById(userId)) {
@@ -86,4 +90,36 @@ public class PostService {
         return answers;
     }
 
+    public Post createPostAndImages(Long userId, PostCreateDTO postCreateDTO) {
+        if(!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("User not found");
+        }
+        FacultyUser facultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId, postCreateDTO.getFacultyId())
+                .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
+
+        Post post = new Post();
+        post.setTitle(postCreateDTO.getPostHeader());
+        post.setDescription(postCreateDTO.getPostContent());
+        post.setFacutlyUserId(facultyUser.getId());
+        post.setSubjectId(postCreateDTO.getSubjectId());
+        post.setUpvotes(0);
+        post.setDownvotes(0);
+        post.setReports(0);
+        post.setActive(true);
+        //type - treba li?
+        post.setType(PostType.QUESTION);
+
+        Post savedPost = postRepository.save(post);
+
+        List<PostImage> postImagesForSave = new ArrayList<>();
+        for(String url : postCreateDTO.getImages()) {
+            PostImage postImage = new PostImage();
+            postImage.setPostId(savedPost.getId());
+            postImage.setLink(url);
+            postImagesForSave.add(postImage);
+        }
+        postImageRepository.saveAll(postImagesForSave);
+
+        return savedPost;
+    }
 }
