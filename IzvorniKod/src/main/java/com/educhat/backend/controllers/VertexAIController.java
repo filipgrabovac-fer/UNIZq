@@ -2,9 +2,11 @@ package com.educhat.backend.controllers;
 import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.generativeai.preview.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.preview.ResponseHandler;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin("*")
@@ -26,9 +28,11 @@ public class VertexAIController {
     // Passes the provided text input to the Gemini model and returns the text-only response.
     // For the specified textPrompt, the model returns a list of possible store names.
     @PostMapping(path = "/test")
-    public String generateGeminiResponse(@RequestBody String question) throws IOException {
+    public ResponseEntity<String> generateGeminiResponse(@RequestBody String question) throws IOException {
+
+        if (question == null || question.isEmpty()) ResponseEntity.badRequest();
 
         GenerateContentResponse contentResponse = this.generativeModel.generateContent(promptContext + question);
-        return ResponseHandler.getText(contentResponse);
+        return ResponseEntity.ok(ResponseHandler.getText(contentResponse));
     }
 }
