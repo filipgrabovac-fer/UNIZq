@@ -18,10 +18,25 @@ type MyProfileType = {
 export const MyProfile = ({ likes, posts, username, email }: MyProfileType) => {
   return (
     <div className="flex justify-center items-center min-h-full">
-      <div>
+      <div className="shadow-2xl w-full max-w-lg mx-auto">
         <p className="text-lg text-center">My profile</p>
         <br />
-        <Card hoverable cover={<UserIcon />}>
+        <Card
+          style={{
+            border: "none",
+          }}
+          cover={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <UserIcon style={{ width: "300px", height: "300px" }} />
+            </div>
+          }
+        >
           <div className="flex justify-evenly">
             <Statistic
               title="Likes"
