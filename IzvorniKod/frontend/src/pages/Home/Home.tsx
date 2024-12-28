@@ -2,7 +2,6 @@ import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
 import { UserTableRow } from "../../components/UserTableRow/UserTableRow";
 
 export const Home = () => {
-  const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(true);
   return (
     <div className=" bg-secondary overflow-hidden">
       Home page
