@@ -12,7 +12,10 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div onClick={onClick} className="h-[40px] flex justify-center gap-[3%]">
+    <div
+      onClick={onClick}
+      className="min-[501px]:h-[40px] min-[501px]:flex justify-center min-[501px]:gap-[3%] max-[500px]:gap-y-2 max-[500px]:grid grid-cols-3 grid-rows-[40px_40px]"
+    >
       <ConfigProvider
         theme={{
           components: {
@@ -30,7 +33,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
         }}
       >
         <Input
-          className="rounded-[20px] w-[50%]"
+          className=" rounded-[20px] w-[50%] max-[500px]:w-full col-start-1 col-end-4"
           size="large"
           placeholder="Search..."
           prefix={
@@ -41,6 +44,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           }
         />
         <Select
+          className="row-start-2 col-start-1 col-end-2"
           showSearch
           style={{
             width: 120,
@@ -74,7 +78,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
       </ConfigProvider>
 
       {withAddPost && (
-        <div className="flex">
+        <div className="flex max-[500px]:w-20">
           <CustomButton variant="primary" title="Add post" onClick={() => {}} />
         </div>
       )}
