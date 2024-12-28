@@ -36,7 +36,15 @@ export const Profile = () => {
       case "2":
         return <MyActivity />;
       case "3":
-        return <Settings />;
+        return (
+          <Settings
+            username={"peroPeric1"}
+            email={"pero@gmail.com"}
+            postsValue={"1234"}
+            likesValue={"100"}
+            facultiesValue={"50"}
+          />
+        );
       default:
         return <div>Default Content</div>;
     }
