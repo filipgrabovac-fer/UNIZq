@@ -18,15 +18,13 @@ export const UserTableRow = ({
   onClick,
 }: UserTableRowType) => {
   return (
-    <div
-      onClick={onClick}
-      className="bg-white flex justify-between items-center"
-    >
+    <div className="bg-white flex justify-between items-center px-4 py-1 scroll-py-14 border-y-gray_border border-y-[1px]">
       <div>{userID}</div>
       <div className="w-[20%] truncate">{username}</div>
       <div className="w-[20%] truncate">{email}</div>
       <div>{postsReported}</div>
       <div
+        onClick={onClick}
         className={cn(
           isKicked
             ? "text-red"
