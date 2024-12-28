@@ -5,9 +5,11 @@ import {
   PaperAirplaneIcon,
   CpuChipIcon,
 } from "@heroicons/react/24/solid";
+import { cn } from "../../utils/cn.util";
 
 const SearchComponent: React.FC = () => {
   const [answerContent, setAnswerContent] = useState("");
+  const [isAIEnabled, setIsAIEnabled] = useState(false);
 
   const handleIconClick = () => {
     // Handle the logic for adding images here
@@ -47,6 +49,10 @@ const SearchComponent: React.FC = () => {
     }
   };
 
+  const handleCpuChipClick = () => {
+    setIsAIEnabled(!isAIEnabled);
+  };
+
   return (
     <div>
       <input
@@ -74,14 +80,25 @@ const SearchComponent: React.FC = () => {
         }
         suffix={
           <div className="flex flex-row items-center space-x-2">
-            <div className="bg-yellow-400 p-1 rounded hover:scale-110 duration-75 cursor-pointer">
-              <CpuChipIcon className="h-5 w-5 text-yellow-900" />
+            <div
+              className={cn(
+                "p-1 rounded cursor-pointer hover:scale-110 duration-75 ",
+                isAIEnabled && "bg-yellow-400"
+              )}
+              onClick={handleCpuChipClick}
+            >
+              <CpuChipIcon
+                className={cn(
+                  "h-5 w-5",
+                  isAIEnabled ? "text-yellow" : "text-gray-400"
+                )}
+              />
             </div>
             <div
               className="bg-purple-500 p-1 rounded hover:scale-110 duration-75 cursor-pointer"
               onClick={handleIconClick}
             >
-              <PaperAirplaneIcon className="h-5 w-5 text-purple-700" />
+              <PaperAirplaneIcon className="h-5 w-5 text-purple-900" />
             </div>
           </div>
         }
