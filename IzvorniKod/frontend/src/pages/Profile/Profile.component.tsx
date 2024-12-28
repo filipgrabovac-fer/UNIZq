@@ -26,6 +26,7 @@ import type { TabsProps } from "antd";
 import { PostPreview } from "../../components/PostPreview/PostPreview";
 
 const { Sider, Content } = Layout;
+const { Meta } = Card;
 
 const data = [
   {
@@ -179,42 +180,27 @@ export const Profile = () => {
     switch (selectedKey) {
       case "1":
         return (
-          <div className="w-full flex items-center justify-center h-screen">
-            <div>
+          <div className="flex justify-center items-center min-h-full">
+            <div className="">
               <p className="text-lg text-center">My profile</p>
-              <UserIcon />
               <br />
-              <hr />
-              <br />
-              <Form>
-                <Form.Item name="username">
-                  <p>Username</p>
-                  <div className="flex">
-                    <Input
-                      className="h-10"
-                      prefix={<UserIcon className="w-5" />}
-                      placeholder="Username"
-                    />
-                    <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
-                      <PencilSquareIcon className="w-5 fill-white" />
+              <Card hoverable cover={<UserIcon />}>
+                <Meta
+                  title="Profile information"
+                  description={
+                    <div>
+                      <div className="flex justify-between">
+                        <p>Username:</p>
+                        <p>exampleusername1</p>
+                      </div>
+                      <div className="flex justify-between">
+                        <p>Email:</p>
+                        <p>email@email.com</p>
+                      </div>
                     </div>
-                  </div>
-                </Form.Item>
-                <Form.Item name="email">
-                  <p>Email</p>
-                  <div className="flex">
-                    <Input
-                      className="h-10"
-                      prefix={<InboxIcon className="w-5" />}
-                      type="email"
-                      placeholder="Email"
-                    />
-                    <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
-                      <PencilSquareIcon className="w-5 fill-white" />
-                    </div>
-                  </div>
-                </Form.Item>
-              </Form>
+                  }
+                />
+              </Card>
             </div>
           </div>
         );
@@ -238,7 +224,39 @@ export const Profile = () => {
           </div>
         );
       case "3":
-        return <div>set</div>;
+        return (
+          <div>
+            <Form>
+              <Form.Item name="username">
+                <p>Username</p>
+                <div className="flex">
+                  <Input
+                    className="h-10"
+                    prefix={<UserIcon className="w-5" />}
+                    placeholder="Username"
+                  />
+                  <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
+                    <PencilSquareIcon className="w-5 fill-white" />
+                  </div>
+                </div>
+              </Form.Item>
+              <Form.Item name="email">
+                <p>Email</p>
+                <div className="flex">
+                  <Input
+                    className="h-10"
+                    prefix={<InboxIcon className="w-5" />}
+                    type="email"
+                    placeholder="Email"
+                  />
+                  <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
+                    <PencilSquareIcon className="w-5 fill-white" />
+                  </div>
+                </div>
+              </Form.Item>
+            </Form>
+          </div>
+        );
       default:
         return <div>Default Content</div>;
     }
