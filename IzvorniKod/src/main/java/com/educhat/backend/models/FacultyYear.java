@@ -20,4 +20,8 @@ public class FacultyYear {
 
     @NotNull
     private Long facultyId;
+
+    @NotNull
+    private String title;
+    
 }
