@@ -1,3 +1,5 @@
+import { cn } from "../../utils/cn.util";
+
 type UserTableRowType = {
   userID: number;
   username: string;
@@ -16,17 +18,20 @@ export const UserTableRow = ({
   onClick,
 }: UserTableRowType) => {
   return (
-    <div className="w-full flex justify-between items-center border-[1px] border-gray-100">
+    <div
+      onClick={onClick}
+      className="w-full bg-white flex justify-between items-center"
+    >
       <div>{userID}</div>
-      <div>{username}</div>
-      <div>{email}</div>
+      <div className="w-[20%] truncate">{username}</div>
+      <div className="w-[20%] truncate">{email}</div>
       <div>{postsReported}</div>
       <div
-        className={`${
+        className={cn(
           isKicked
             ? "text-red"
-            : "text-white bg-red rounded-[15px] w-[7%] p-1 text-center"
-        }`}
+            : "text-white bg-red rounded-[15px] w-[60px] p-1 text-center"
+        )}
       >
         {isKicked ? "Kicked" : "Kick"}
       </div>
