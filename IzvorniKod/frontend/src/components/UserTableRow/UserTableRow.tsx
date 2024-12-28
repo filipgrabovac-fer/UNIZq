@@ -20,7 +20,7 @@ export const UserTableRow = ({
   return (
     <div
       onClick={onClick}
-      className="w-full bg-white flex justify-between items-center"
+      className="bg-white flex justify-between items-center"
     >
       <div>{userID}</div>
       <div className="w-[20%] truncate">{username}</div>
