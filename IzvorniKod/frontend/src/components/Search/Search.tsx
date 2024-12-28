@@ -13,18 +13,6 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
 
   return (
     <div onClick={onClick} className="h-[40px] flex justify-center gap-[3%]">
-      <Input
-        className="rounded-[20px]"
-        size="large"
-        placeholder="Search..."
-        prefix={
-          <div className="flex">
-            <MagnifyingGlassIcon className="w-5 mr-2" />
-            <div className="h-[21px] border-l-[1px] border-black"></div>
-          </div>
-        }
-      />
-
       <ConfigProvider
         theme={{
           components: {
@@ -34,9 +22,24 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
               fontSize: 18,
               optionFontSize: 14,
             },
+            Input: {
+              activeBorderColor: "white",
+              hoverBorderColor: "white",
+            },
           },
         }}
       >
+        <Input
+          className="rounded-[20px]"
+          size="large"
+          placeholder="Search..."
+          prefix={
+            <div className="flex">
+              <MagnifyingGlassIcon className="w-5 mr-2" />
+              <div className="h-[21px] border-l-[1px] border-black"></div>
+            </div>
+          }
+        />
         <Select
           showSearch
           style={{
@@ -58,8 +61,15 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           }
           placeholder="Filter by"
           open={isOpen}
-          onMouseEnter={() => setIsOpen(true)} // Otvori dropdown kad hovera
-          onMouseLeave={() => setIsOpen(false)} // zatvori dropdown kad ne hovera
+          onMouseEnter={() => setIsOpen(true)}
+          dropdownRender={(menu) => (
+            <div
+              onMouseLeave={() => setIsOpen(false)}
+              style={{ borderRadius: "10px", overflow: "hidden" }}
+            >
+              {menu}
+            </div>
+          )}
         />
       </ConfigProvider>
 
