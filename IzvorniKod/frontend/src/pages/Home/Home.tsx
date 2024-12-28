@@ -10,16 +10,16 @@ export const Home = () => {
         subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
         onClick={() => 0}
       />
-      <UserTableRow
-        userID={0}
-        username={"someRandomLongUsernameThatNeedsToBeTruncated"}
-        email={"someEmailthatalsoneedtstobetruncated@gmail.com"}
-        postsReported={1}
-        isKicked={false}
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <div className="w-[70%]">
+        <UserTableRow
+          facultyUserId={0}
+          username={"someRandomLongUsernameThatNeedsToBeTruncated"}
+          email={"someEmailthatalsoneedtstobetruncated@gmail.com"}
+          postsReported={1}
+          isKicked={false}
+          onKick={() => console.log("Kick this player")}
+        />
+      </div>
     </div>
   );
 };
