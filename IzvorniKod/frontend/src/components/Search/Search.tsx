@@ -19,7 +19,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
             Select: {
               borderRadius: 20,
               colorBorder: "#fffff",
-              fontSize: 18,
+              fontSize: 16,
               optionFontSize: 14,
             },
             Input: {
@@ -30,7 +30,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
         }}
       >
         <Input
-          className="rounded-[20px]"
+          className="rounded-[20px] w-[50%]"
           size="large"
           placeholder="Search..."
           prefix={
