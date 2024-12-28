@@ -1,5 +1,5 @@
 import { CustomButton } from "../../components/CustomButton/CustomButton";
-import { Select, ConfigProvider } from "antd";
+import { Select, ConfigProvider, Input } from "antd";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
@@ -9,22 +9,21 @@ type SearchType = {
 };
 
 export const Search = ({ withAddPost, onClick }: SearchType) => {
-  const [searchContent, setsearchContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div onClick={onClick} className="h-[45px] flex justify-center gap-[3%]">
-      <div className="p-[5px] w-[50%] rounded-[20px] bg-white flex  items-center gap-2">
-        <MagnifyingGlassIcon className="h-6 text-black" />
-        <div className="h-[80%] border-l-[1px] border-black"></div>
-        <input
-          type="text"
-          value={searchContent}
-          onChange={(event) => setsearchContent(event.target.value)}
-          placeholder="Search..."
-          className="h-full focus:outline-none w-full rounded-[20px]"
-        />
-      </div>
+    <div onClick={onClick} className="h-[40px] flex justify-center gap-[3%]">
+      <Input
+        className="rounded-[20px]"
+        size="large"
+        placeholder="Search..."
+        prefix={
+          <div className="flex">
+            <MagnifyingGlassIcon className="w-5 mr-2" />
+            <div className="h-[21px] border-l-[1px] border-black"></div>
+          </div>
+        }
+      />
 
       <ConfigProvider
         theme={{
