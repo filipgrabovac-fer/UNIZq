@@ -13,7 +13,7 @@ export const sidebarDataMock = [
     label: "Faculties",
     children: [
       {
-        key: "fer1",
+        key: 1,
         label: "FER",
         children: [
           { key: 1, label: "First Year" },
@@ -22,7 +22,7 @@ export const sidebarDataMock = [
         ],
       },
       {
-        key: "pmf1",
+        key: 2,
         label: "PMF",
         children: [
           { key: 4, label: "First Year" },
@@ -31,7 +31,7 @@ export const sidebarDataMock = [
         ],
       },
       {
-        key: "fsb1",
+        key: 3,
         label: "FSB",
         children: [
           { key: 7, label: "First Year" },
@@ -57,7 +57,8 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
     {
       onClick: () => {
         localStorage.removeItem("token");
-        document.cookie = "jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Secure";
+        document.cookie =
+          "jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Secure";
         navigate({ to: "/login" });
       },
       label: "Logout",

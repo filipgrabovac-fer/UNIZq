@@ -26,14 +26,14 @@ export const Login = () => {
           required={true}
           title="email or username"
           placeholder="email@example.com"
-          setValue={setUsernameOrEmail}
+          onChange={(value) => setUsernameOrEmail(value.target.value)}
         />
         <CustomInput
           required={true}
           title="password"
           placeholder="password"
           type="password"
-          setValue={setPassword}
+          onChange={(value) => setPassword(value.target.value)}
         />
 
         <div className="mt-5">

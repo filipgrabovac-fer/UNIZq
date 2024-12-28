@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { cn } from "../../utils/cn.util";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
@@ -7,11 +7,13 @@ type CustomInputType = {
   errorMessage?: string;
   placeholder: string;
   value?: string;
-  setValue: Dispatch<SetStateAction<string>>;
   readOnly?: boolean;
   title: string;
   required?: boolean;
   type?: "password" | "email" | "text";
+  onChange:
+    | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
 };
 
 export const CustomInput = ({
@@ -20,9 +22,9 @@ export const CustomInput = ({
   type,
   placeholder,
   value,
-  setValue,
   readOnly,
   title,
+  onChange,
   required = false,
 }: CustomInputType) => {
   const [togglePassword, setTogglePassword] = useState(true);
@@ -41,7 +43,7 @@ export const CustomInput = ({
           rows={rows}
           value={value}
           placeholder={placeholder}
-          onChange={(event) => setValue(event.target.value ?? "")}
+          onChange={onChange}
           className={cn(
             "rounded-lg border-[1px] border-gray_border text-sm px-4 py-2 w-full focus:border-gray focus:outline-none",
             errorMessage
@@ -52,7 +54,7 @@ export const CustomInput = ({
       ) : (
         <div
           className={cn(
-            "rounded-lg border-[1px] border-gray_border text-sm h-[40px] flex align-middle pl-4 w-full focus-within:border-gray",
+            "rounded-lg border-[1px] border-gray_border text-sm h-[40px] flex align-middle px-4 w-full focus-within:border-gray bg-white",
             errorMessage
               ? "border-red text-red placeholder:text-red placeholder:opacity-60 focus-within:border-gray_border focus-within:border-[1px]"
               : ""
@@ -63,9 +65,9 @@ export const CustomInput = ({
             readOnly={readOnly}
             placeholder={placeholder}
             value={value}
-            className="bg-transparent w-full focus:outline-none"
+            className=" w-full focus:outline-none"
             type={type && togglePassword ? type : "text"}
-            onChange={(event) => setValue(event.target.value ?? "")}
+            onChange={onChange}
           />
 
           {type === "password" ? (
