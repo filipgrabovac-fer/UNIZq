@@ -12,6 +12,7 @@ import {
   Form,
   Input,
   Modal,
+  Statistic,
 } from "antd";
 import {
   UserIcon,
@@ -21,6 +22,8 @@ import {
   PencilSquareIcon,
   ArrowLeftIcon,
   Cog6ToothIcon,
+  HandThumbUpIcon,
+  ArrowUpOnSquareStackIcon,
 } from "@heroicons/react/24/solid";
 import type { TabsProps } from "antd";
 import { PostPreview } from "../../components/PostPreview/PostPreview";
@@ -185,6 +188,19 @@ export const Profile = () => {
               <p className="text-lg text-center">My profile</p>
               <br />
               <Card hoverable cover={<UserIcon />}>
+                <div className="flex justify-evenly">
+                  <Statistic
+                    title="Likes"
+                    value={1128}
+                    prefix={<HandThumbUpIcon className="w-5" />}
+                  />
+                  <Statistic
+                    title="Posts"
+                    value={100}
+                    prefix={<ArrowUpOnSquareStackIcon className="w-5" />}
+                  />
+                </div>
+                <br />
                 <Meta
                   title="Profile information"
                   description={
@@ -313,7 +329,7 @@ export const Profile = () => {
                     selectedKey === "2" ? "text-blue-500" : "text-white"
                   } hover:text-blue-500`}
                 >
-                  Activity
+                  My activity
                 </p>
               ),
             },
