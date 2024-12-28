@@ -1,4 +1,4 @@
-import { Card, Form, Input, Statistic, Popover } from "antd";
+import { Card, Form, Input } from "antd";
 import {
   UserIcon,
   InboxIcon,
@@ -8,13 +8,15 @@ import {
   BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
 
+import { StatisticsComponent } from "../StatisticsComponent/StatisticsComponent";
+
 type SettingsType = {};
 
 export const Settings = ({}: SettingsType) => {
   return (
     <div>
       <Card
-        className="w-[50%] transition-transform duration-300 hover:shadow-md"
+        className="w-[60%] transition-transform duration-300 hover:shadow-md"
         title="Edit your account"
         bordered={false}
       >
@@ -55,49 +57,25 @@ export const Settings = ({}: SettingsType) => {
         bordered={false}
       >
         <Card.Grid style={{ width: "33.33%" }}>
-          <Popover
-            content={
-              <div>
-                <p>You have posted a total of {100} posts on your profile.</p>
-              </div>
-            }
-          >
-            <Statistic
-              title="Posts"
-              value={1128}
-              prefix={<ArrowUpOnSquareStackIcon className="w-5" />}
-            />
-          </Popover>
+          <StatisticsComponent
+            icon={ArrowUpOnSquareStackIcon}
+            title={"Posts"}
+            value={"1234"}
+          />
         </Card.Grid>
         <Card.Grid style={{ width: "33.33%" }}>
-          <Popover
-            content={
-              <div>
-                <p>Your profile posts have received a total of 100 likes.</p>
-              </div>
-            }
-          >
-            <Statistic
-              title="Likes"
-              value={112}
-              prefix={<HandThumbUpIcon className="w-5" />}
-            />
-          </Popover>
+          <StatisticsComponent
+            icon={HandThumbUpIcon}
+            title={"Likes"}
+            value={"120"}
+          />
         </Card.Grid>
         <Card.Grid style={{ width: "33.33%" }}>
-          <Popover
-            content={
-              <div>
-                <p>You have added 100 faculties to your profile.</p>
-              </div>
-            }
-          >
-            <Statistic
-              title="Faculties"
-              value={30}
-              prefix={<BuildingLibraryIcon className="w-5" />}
-            />
-          </Popover>
+          <StatisticsComponent
+            icon={BuildingLibraryIcon}
+            title={"Faculties"}
+            value={"50"}
+          />
         </Card.Grid>
       </Card>
     </div>
