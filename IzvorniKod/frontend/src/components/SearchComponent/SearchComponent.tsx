@@ -73,7 +73,7 @@ const SearchComponent: React.FC = () => {
         prefix={
           <div
             onClick={handlePaperClipClick}
-            className="hover:scale-110 duration-75 cursor-pointer"
+            className="hover:scale-110 hover:duration-75 cursor-pointer"
           >
             <PaperClipIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
           </div>
@@ -82,7 +82,7 @@ const SearchComponent: React.FC = () => {
           <div className="flex flex-row items-center space-x-2">
             <div
               className={cn(
-                "p-1 rounded cursor-pointer hover:scale-110 duration-75 ",
+                "p-1 rounded cursor-pointer hover:scale-110 hover:duration-75 ",
                 isAIEnabled && "bg-yellow-400"
               )}
               onClick={handleCpuChipClick}
@@ -95,7 +95,7 @@ const SearchComponent: React.FC = () => {
               />
             </div>
             <div
-              className="bg-purple-500 p-1 rounded hover:scale-110 duration-75 cursor-pointer"
+              className="bg-purple-500 p-1 rounded hover:scale-110 hover:duration-75 cursor-pointer"
               onClick={handleIconClick}
             >
               <PaperAirplaneIcon className="h-5 w-5 text-purple-900" />
