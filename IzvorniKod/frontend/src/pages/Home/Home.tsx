@@ -4,7 +4,7 @@ import SearchComponent from "../../components/SearchComponent/SearchComponent";
 export const Home = () => {
   return (
     <div className=" bg-secondary overflow-hidden">
-      <SearchComponent />
+      <SearchComponent postContent="Your post content here" />
     </div>
   );
 };

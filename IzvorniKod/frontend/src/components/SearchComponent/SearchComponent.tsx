@@ -7,10 +7,14 @@ import {
 } from "@heroicons/react/24/solid";
 import { cn } from "../../utils/cn.util";
 
-const SearchComponent: React.FC = () => {
+interface SearchComponentProps {
+  postContent: string;
+}
+
+const SearchComponent = ({ postContent }: SearchComponentProps) => {
   const [answerContent, setAnswerContent] = useState("");
   const [isAIEnabled, setIsAIEnabled] = useState(false);
-
+  const [imageList, setImageList] = useState<FileList | null>(null);
   const handleIconClick = () => {
     // Handle the logic for adding images here
     console.log("Icon clicked to add images");
@@ -43,7 +47,7 @@ const SearchComponent: React.FC = () => {
           return;
         }
       }
-
+      setImageList(files); // Store the selected files in the state
       console.log("Selected files:", files);
       // Handle the selected files here
     }
@@ -71,31 +75,32 @@ const SearchComponent: React.FC = () => {
           console.log(e.target.value);
         }}
         prefix={
-          <div
-            onClick={handlePaperClipClick}
-            className="hover:scale-110 hover:duration-75 cursor-pointer"
-          >
-            <PaperClipIcon className="h-5 w-5 text-gray-400 cursor-pointer" />
+          <div onClick={handlePaperClipClick}>
+            <PaperClipIcon className="h-5 w-5 text-gray-400 cursor-pointer hover:scale-110 transition-transform" />
           </div>
         }
         suffix={
           <div className="flex flex-row items-center space-x-2">
             <div
               className={cn(
-                "p-1 rounded cursor-pointer hover:scale-110 hover:duration-75 ",
-                isAIEnabled && "bg-yellow-400"
+                "p-1 rounded cursor-pointer hover:scale-110 transition-transform",
+                isAIEnabled && "bg-yellow-400",
+                "hover:bg-yellow-300 hover:text-yellow-900"
               )}
               onClick={handleCpuChipClick}
             >
               <CpuChipIcon
                 className={cn(
                   "h-5 w-5",
-                  isAIEnabled ? "text-yellow" : "text-gray-400"
+                  isAIEnabled ? "text-yellow-900" : "text-gray-400"
                 )}
               />
             </div>
             <div
-              className="bg-purple-500 p-1 rounded hover:scale-110 hover:duration-75 cursor-pointer"
+              className={cn(
+                "bg-purple-500 p-1 rounded hover:scale-110 transition-transform cursor-pointer",
+                !answerContent && "opacity-50 cursor-not-allowed"
+              )}
               onClick={handleIconClick}
             >
               <PaperAirplaneIcon className="h-5 w-5 text-purple-900" />
