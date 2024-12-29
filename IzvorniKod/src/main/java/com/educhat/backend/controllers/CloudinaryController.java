@@ -17,15 +17,14 @@ public class CloudinaryController {
     private CloudinaryService cloudinaryService;
 
     @PostMapping
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
-                                             @RequestParam("postId") Long postId) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             // Save the file locally (temporarily)
             File tempFile = File.createTempFile("upload", file.getOriginalFilename());
             file.transferTo(tempFile);
 
             // Upload to Cloudinary and save to the database
-            String uploadedUrl = cloudinaryService.uploadFileAndSaveToDatabase(tempFile, postId);
+            String uploadedUrl = cloudinaryService.uploadFile(tempFile);
 
             // Delete temporary file
             tempFile.delete();
