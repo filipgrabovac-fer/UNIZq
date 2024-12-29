@@ -47,10 +47,15 @@ export const MyActivity = ({}: MyActivityType) => {
       label: "My faculties",
       children: (
         <List
-          className="w-[90%]"
+          className="md:w-[90%] sm:w-[100%]"
           grid={{
             gutter: 30,
-            column: 2,
+            xs: 1,
+            sm: 1,
+            md: 1,
+            lg: 2,
+            xl: 2,
+            xxl: 2,
           }}
           dataSource={data}
           renderItem={(item) => (
@@ -59,7 +64,7 @@ export const MyActivity = ({}: MyActivityType) => {
             /*actions*/
             >
               <Card
-                className="h-[150px] transition-transform duration-300 hover:scale-105 hover:shadow-md"
+                className="max-sm:h-[170px] h-[150px] transition-transform duration-300 hover:scale-105 hover:shadow-md"
                 title={
                   <div className="flex justify-between">
                     <p>{item.faculty}</p>
@@ -89,7 +94,9 @@ export const MyActivity = ({}: MyActivityType) => {
                   </div>
                 }
               >
-                <p className="line-clamp-2">{item.description}</p>
+                <p className="line-clamp-2 max-sm:line-clamp-3">
+                  {item.description}
+                </p>
               </Card>
             </List.Item>
           )}
@@ -100,7 +107,7 @@ export const MyActivity = ({}: MyActivityType) => {
       key: "2",
       label: "My posts",
       children: (
-        <div className="mb-3 w-[90%]">
+        <div className="mb-3 md:w-[90%] sm:w-[100%]">
           <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
             <PostPreview
               postTitle={

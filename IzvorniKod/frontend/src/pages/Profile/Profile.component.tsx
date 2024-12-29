@@ -27,10 +27,11 @@ export const Profile = () => {
       case "1":
         return (
           <MyProfile
-            likes={1234}
-            posts={100}
+            likesValue={1234}
+            postsValue={100}
             username={"username1"}
             email={"email@email.com"}
+            facultiesValue={"10"}
           />
         );
       case "2":
@@ -53,6 +54,11 @@ export const Profile = () => {
   return (
     <Layout className="h-screen">
       <Sider
+        breakpoint="sm"
+        collapsedWidth="100"
+        onBreakpoint={(broken) => {
+          setCollapsed(broken); // Collapse when the screen size is smaller than 'lg'
+        }}
         style={{ background: "#111D4A" }}
         trigger={null}
         collapsible
@@ -126,7 +132,7 @@ export const Profile = () => {
             },
           ]}
         />
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end p-4 max-[501px]:hidden">
           <Button
             type="text"
             icon={

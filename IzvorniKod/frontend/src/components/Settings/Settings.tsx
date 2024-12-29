@@ -3,12 +3,8 @@ import {
   UserIcon,
   InboxIcon,
   PencilSquareIcon,
-  HandThumbUpIcon,
-  ArrowUpOnSquareStackIcon,
-  BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
 
-import { StatisticsComponent } from "../StatisticsComponent/StatisticsComponent";
 import { valueType } from "antd/es/statistic/utils";
 
 const { Meta } = Card;
@@ -21,13 +17,7 @@ type SettingsType = {
   facultiesValue: valueType;
 };
 
-export const Settings = ({
-  username,
-  email,
-  postsValue,
-  likesValue,
-  facultiesValue,
-}: SettingsType) => {
+export const Settings = ({ username, email }: SettingsType) => {
   return (
     <div>
       <Card
@@ -35,7 +25,7 @@ export const Settings = ({
         title="Edit your account"
         bordered={false}
       >
-        <div className="flex justify-center items-center min-h-full">
+        <div className="grid grid-cols-2 max-md:grid-cols-1">
           <Card
             className="shadow-md"
             style={{
@@ -79,7 +69,7 @@ export const Settings = ({
             />
           </Card>
 
-          <Form className="ml-20">
+          <Form className="max-md:ml-0 ml-20 max-md:mt-5">
             <Form.Item name="username">
               <p>Username</p>
               <div className="flex">
@@ -109,34 +99,6 @@ export const Settings = ({
             </Form.Item>
           </Form>
         </div>
-      </Card>
-      <br />
-      <Card
-        className="transition-transform duration-300 hover:shadow-md"
-        title="Statistics"
-        bordered={false}
-      >
-        <Card.Grid style={{ width: "33.33%" }}>
-          <StatisticsComponent
-            icon={ArrowUpOnSquareStackIcon}
-            title={"Posts"}
-            value={postsValue}
-          />
-        </Card.Grid>
-        <Card.Grid style={{ width: "33.33%" }}>
-          <StatisticsComponent
-            icon={HandThumbUpIcon}
-            title={"Likes"}
-            value={likesValue}
-          />
-        </Card.Grid>
-        <Card.Grid style={{ width: "33.33%" }}>
-          <StatisticsComponent
-            icon={BuildingLibraryIcon}
-            title={"Faculties"}
-            value={facultiesValue}
-          />
-        </Card.Grid>
       </Card>
     </div>
   );
