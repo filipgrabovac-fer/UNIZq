@@ -1,9 +1,9 @@
 import { createRoute } from "@tanstack/react-router";
 import { Users } from "../pages/Users/Users";
-import { sidebarLayoutRoute } from "./layout.routes";
+import { rootRoute } from "./root.routes";
 
 export const usersRoute = createRoute({
-  getParentRoute: () => sidebarLayoutRoute,
+  getParentRoute: () => rootRoute,
   path: "/users",
   component: Users,
 });
