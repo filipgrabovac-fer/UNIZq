@@ -62,7 +62,7 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
       <input
         type="file"
         id="file"
-        style={{ display: "none" }}
+        className="hidden"
         onChange={handleFileChange}
         multiple
         accept="image/*"
