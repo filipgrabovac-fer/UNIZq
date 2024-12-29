@@ -21,40 +21,42 @@ export const Users = () => {
           "Fakultet strojarstva i brodogradnje",
         ]}
       />
-      <UsersTable
-        users={[
-          {
-            facultyUserId: 1,
-            username: "username1",
-            email: "email1",
-            postsReported: 0,
-            isKicked: true,
-            onKick: function (): void {
-              throw new Error("Function not implemented.");
+      <div className="w-[80%]">
+        <UsersTable
+          users={[
+            {
+              facultyUserId: 1,
+              username: "username1",
+              email: "email1",
+              postsReported: 0,
+              isKicked: true,
+              onKick: function (): void {
+                throw new Error("Function not implemented.");
+              },
             },
-          },
-          {
-            facultyUserId: 1,
-            username: "username1",
-            email: "email1",
-            postsReported: 0,
-            isKicked: false,
-            onKick: function (): void {
-              throw new Error("Function not implemented.");
+            {
+              facultyUserId: 2,
+              username: "username2",
+              email: "email2",
+              postsReported: 0,
+              isKicked: false,
+              onKick: function (): void {
+                throw new Error("Function not implemented.");
+              },
             },
-          },
-          {
-            facultyUserId: 1,
-            username: "username1",
-            email: "email1",
-            postsReported: 0,
-            isKicked: false,
-            onKick: function (): void {
-              throw new Error("Function not implemented.");
+            {
+              facultyUserId: 3,
+              username: "username3",
+              email: "email3",
+              postsReported: 0,
+              isKicked: false,
+              onKick: function (): void {
+                throw new Error("Function not implemented.");
+              },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </div>
     </div>
   );
 };
