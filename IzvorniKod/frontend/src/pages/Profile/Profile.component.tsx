@@ -12,7 +12,7 @@ import { MyProfile } from "../../components/MyProfile/MyProfile";
 import { MyActivity } from "../../components/MyActivity/MyActivity";
 import { Settings } from "../../components/Settings/Settings";
 
-const { Sider, Content } = Layout;
+const { Sider } = Layout;
 
 export const Profile = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -29,7 +29,7 @@ export const Profile = () => {
           <MyProfile
             likesValue={1234}
             postsValue={100}
-            username={"username1"}
+            username={"username1username1username1username1username1"}
             email={"email@email.com"}
             facultiesValue={"10"}
           />
@@ -55,7 +55,7 @@ export const Profile = () => {
     <Layout className="h-screen">
       <Sider
         breakpoint="sm"
-        collapsedWidth="100"
+        collapsedWidth="70"
         onBreakpoint={(broken) => {
           setCollapsed(broken); // Collapse when the screen size is smaller than 'lg'
         }}
@@ -147,7 +147,7 @@ export const Profile = () => {
         </div>
       </Sider>
       <Layout>
-        <Content
+        <div
           style={{
             margin: "10px 16px",
             padding: 20,
@@ -156,9 +156,10 @@ export const Profile = () => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
+          className="overflow-y-scroll overfow-hidden"
         >
           {renderContent()}
-        </Content>
+        </div>
       </Layout>
     </Layout>
   );
