@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { CreatePostModal } from "../../components/CreatePostModal/CreatePostModal";
-import SelectFacultyModal from "../../components/SelectFacultyModal/SelectFacultyModal";
-import { Button } from "antd";
+import SelectedPostHeader from "../../components/SelectedPostHeader/SelectedPostHeader";
 
 export const Home = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isSelectFacultyModalOpen, setIsSelectFacultyModalOpen] =
-    useState(false);
-
   return (
     <div className="bg-secondary overflow-hidden">
-      <Button type="primary" onClick={() => setIsSelectFacultyModalOpen(true)}>
-        Select Faculties
-      </Button>
-      <SelectFacultyModal
-        isModalOpen={isSelectFacultyModalOpen}
-        setIsModalOpen={setIsSelectFacultyModalOpen}
+      <SelectedPostHeader
+        postName="Post Name"
+        postData="Politički analitičari Višeslav Raos i Davor Gjenero smatraju da 
+        je prednost koju je Zoran Milanović u prvom krugu izbora ostvario 
+        ispred kandidata HDZ-a Dragana Primorca gotovo nedostižna te kao ključno 
+        postizborno pitanje ističu suradnju izglednog pobjednika Milanovića s HDZ-ovom 
+        vladom."
+        postAuthor="Post Author"
+        images={[
+          "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
+          "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
+          "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
+        ]}
       />
     </div>
   );
