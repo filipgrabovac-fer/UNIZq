@@ -1,5 +1,6 @@
 package com.educhat.backend.repository;
 
+import com.educhat.backend.models.Faculty;
 import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.models.enums.Role;
 import jakarta.validation.constraints.NotNull;
@@ -21,4 +22,5 @@ public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> 
     Optional<FacultyUser> findByUserIdAndFacultyIdAndRole(Long userId, Long facultyId, Role role);
 
     Optional<FacultyUser> findByUserIdAndFacultyId(Long userId, Long facultyId);
-}
+
+    List<FacultyUser> findFacultyUsersByUserId(Long userId);}

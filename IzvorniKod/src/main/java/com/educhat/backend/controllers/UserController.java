@@ -3,6 +3,7 @@ package com.educhat.backend.controllers;
 import com.educhat.backend.DTO.FacultyUserCreateDTO;
 import com.educhat.backend.DTO.UserLoginDTO;
 import com.educhat.backend.DTO.UserRegistrationDTO;
+import com.educhat.backend.DTO.SelectedFacultiesDTO;
 import com.educhat.backend.auth.AuthenticationResponse;
 import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.services.UserService;
@@ -48,6 +49,11 @@ public class UserController {
             @RequestBody List<FacultyUserCreateDTO> facultyUserCreateDTOs) {
         List<FacultyUser> createdFacultyUsers = userService.createFacultyUser(userId, facultyUserCreateDTOs);
         return ResponseEntity.ok(createdFacultyUsers);
+    }
+    @GetMapping("/user/{userId}/selected-faculties")
+    public ResponseEntity<List<SelectedFacultiesDTO>> getSelectedFacultiesAndItsData(@PathVariable Long userId) {
+        List<SelectedFacultiesDTO> response = userService.getSelectedFaculties(userId);
+        return ResponseEntity.ok((response));
     }
 
 }
