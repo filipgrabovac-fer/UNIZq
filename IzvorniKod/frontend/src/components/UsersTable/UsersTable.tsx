@@ -30,7 +30,7 @@ export const UsersTable = ({ users: initialUsers }: UsersTableType) => {
   }, [initialUsers]);
 
   return (
-    <div className="border-gray_border border-[1px] rounded-[10px]">
+    <div className=" border-gray_border border-[1px] rounded-[10px]">
       <div className="flex items-center p-2">
         <div className="w-[20%]">userId</div>
         <div className="w-[20%] truncate">username</div>

@@ -11,7 +11,7 @@ export const SelectFacultyComponent = ({
 }: SelectFacultyComponentType) => {
   const generateItems = (): MenuProps["items"] => {
     return faculties.map((faculty, index) => ({
-      label: faculty,
+      label: `${faculty}`,
       key: `${index + 1}`,
     }));
   };
@@ -30,14 +30,14 @@ export const SelectFacultyComponent = ({
         items: items || [], // Ensure items is always defined
         onClick,
         style: {
-          marginTop: 10,
           boxShadow: "0 8px 8px rgba(0, 0, 0, 0.1)",
+          width: "55%",
         },
       }}
     >
       <a onClick={(e) => e.preventDefault()} style={{ borderRadius: "20px" }}>
         <Space
-          className="shadow-lg p-2 hover:cursor-pointer"
+          className="p-2 hover:cursor-pointer"
           style={{ borderRadius: "20px" }}
         >
           Select a faculty
