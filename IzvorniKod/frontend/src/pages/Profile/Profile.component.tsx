@@ -11,6 +11,7 @@ import {
 import { MyProfile } from "../../components/MyProfile/MyProfile";
 import { MyActivity } from "../../components/MyActivity/MyActivity";
 import { Settings } from "../../components/Settings/Settings";
+import { useGetUserInfo } from "./hooks/useGetUserInfo.hook";
 
 const { Sider } = Layout;
 
@@ -22,6 +23,7 @@ export const Profile = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const { data } = useGetUserInfo();
   const renderContent = () => {
     switch (selectedKey) {
       case "1":
@@ -29,8 +31,8 @@ export const Profile = () => {
           <MyProfile
             likesValue={1234}
             postsValue={100}
-            username={"username1username1username1username1username1"}
-            email={"email@email.com"}
+            username={data?.username ?? ""}
+            email={data?.email ?? ""}
             facultiesValue={"10"}
           />
         );
