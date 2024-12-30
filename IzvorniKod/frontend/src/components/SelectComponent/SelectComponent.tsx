@@ -1,6 +1,7 @@
-import { Tabs, ConfigProvider, message, Modal } from "antd";
+import { Tabs, ConfigProvider, message, Modal, Popover } from "antd";
 import { UsersTable } from "../UsersTable/UsersTable";
 import { useState } from "react";
+import { DivideIcon } from "@heroicons/react/24/solid";
 
 type SelectComponentType = {
   faculties: string[];
@@ -52,7 +53,21 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
             onChange={handleTabChange}
             items={faculties.map((faculty, index) => ({
               label: (
-                <p className="w-full max-md:w-[20vw] truncate">{faculty}</p>
+                //popover se pojavljuje samo kad se tekst izbornika smanji
+                <div>
+                  <Popover
+                    className="hidden max-md:block"
+                    key={index}
+                    content={<span>{faculty}</span>}
+                    title={null}
+                    trigger="hover"
+                  >
+                    <p className="w-full max-md:w-[20vw] truncate">{faculty}</p>
+                  </Popover>
+                  <p className="max-md:hidden w-full max-md:w-[20vw] truncate">
+                    {faculty}
+                  </p>
+                </div>
               ),
               key: String(index), // Unique key for each tab
               children: (
