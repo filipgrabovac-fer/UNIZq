@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { UserIcon, ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 import { Carousel, Modal } from "antd";
 import { CarouselRef } from "antd/es/carousel";
+import { useNavigate } from "@tanstack/react-router";
 
 interface PostProps {
   postName: string;
@@ -10,17 +11,18 @@ interface PostProps {
   images: string[]; // Array of image URLs
 }
 
-const SelectedPostHeader: React.FC<PostProps> = ({
+const SelectedPostHeader = ({
   postName,
   postData,
   postAuthor,
   images,
-}) => {
+}: PostProps) => {
+  const navigate = useNavigate();
   const carouselRef = useRef<CarouselRef>(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index);
     setIsModalVisible(true);
     carouselRef.current?.goTo(index);
   };
@@ -33,7 +35,10 @@ const SelectedPostHeader: React.FC<PostProps> = ({
     <div className="p-4 w-full bg-white ml-auto mx-0">
       {/* Header */}
       <div className="flex items-center space-x-2">
-        <button className="text-gray-600 hover:text-black font-bold">
+        <button
+          className="text-gray-600 hover:text-black font-bold"
+          onClick={() => window.history.back()}
+        >
           <ArrowLongLeftIcon className="h-6 w-6" />
         </button>
         <h1 className="text-lg font-bold">{postName}</h1>
@@ -68,18 +73,19 @@ const SelectedPostHeader: React.FC<PostProps> = ({
         centered
         onCancel={handleCancel}
       >
-        <Carousel arrows adaptiveHeight ref={carouselRef}>
+        <Carousel
+          arrows
+          adaptiveHeight
+          ref={carouselRef}
+          className="pt-10"
+          initialSlide={currentImageIndex}
+        >
           {images.map((image, index) => (
-            <div
-              key={index}
-              className="flex justify-center bg-primary items-center w-full h-full"
-            >
-              <img
-                src={image}
-                alt={`Image ${index + 1}`}
-                className="object-contain "
-              />
-            </div>
+            <img
+              src={image}
+              alt={`Image ${index + 1}`}
+              className="object-contain "
+            />
           ))}
         </Carousel>
       </Modal>
