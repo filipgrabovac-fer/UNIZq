@@ -1,6 +1,6 @@
 import { Header } from "../../components/Header/Header";
 
-import { SelectComponent } from "../../components/SelectComponent/SelectComponent";
+import { SelectComponent } from "./components/SelectComponent/SelectComponent";
 export const Users = () => {
   return (
     <div>

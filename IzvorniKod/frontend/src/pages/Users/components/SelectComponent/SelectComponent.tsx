@@ -1,5 +1,5 @@
 import { Tabs, ConfigProvider, message, Modal, Popover } from "antd";
-import { UsersTable } from "../UsersTable/UsersTable";
+import { UsersTable } from "../../../../components/UsersTable/UsersTable";
 import { useState } from "react";
 import { DivideIcon } from "@heroicons/react/24/solid";
 
