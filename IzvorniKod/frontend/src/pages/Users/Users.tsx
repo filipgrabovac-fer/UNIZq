@@ -1,23 +1,7 @@
 import { Header } from "../../components/Header/Header";
-import React, { useState } from "react";
-import { UsersTable } from "../../components/UsersTable/UsersTable";
-import { Modal } from "antd";
+
 import { SelectComponent } from "../../components/SelectComponent/SelectComponent";
 export const Users = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div>
       <Header
