@@ -66,6 +66,7 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
           }}
         >
           <Tabs
+            className="max-md:mx-[2%]"
             defaultActiveKey="0"
             tabPosition={isMediumScreen ? "top" : "left"}
             style={{ height: 220 }}
