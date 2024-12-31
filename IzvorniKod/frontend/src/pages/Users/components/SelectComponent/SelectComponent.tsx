@@ -1,14 +1,33 @@
 import { Tabs, ConfigProvider, message, Modal, Popover } from "antd";
 import { UsersTable } from "../../../../components/UsersTable/UsersTable";
-import { useState } from "react";
-import { DivideIcon } from "@heroicons/react/24/solid";
+import { useState, useEffect } from "react";
 
 type SelectComponentType = {
   faculties: string[];
 };
 
+// Custom Hook for Media Queries
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [matches, query]);
+
+  return matches;
+};
+
 export const SelectComponent = ({ faculties }: SelectComponentType) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Check if the screen size matches medium screen
+  const isMediumScreen = useMediaQuery("(max-width: 768px)");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -48,12 +67,11 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
         >
           <Tabs
             defaultActiveKey="0"
-            tabPosition="left"
+            tabPosition={isMediumScreen ? "top" : "left"}
             style={{ height: 220 }}
             onChange={handleTabChange}
             items={faculties.map((faculty, index) => ({
               label: (
-                //popover se pojavljuje samo kad se tekst izbornika smanji
                 <div>
                   <Popover
                     className="hidden max-md:block"
@@ -69,7 +87,7 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
                   </p>
                 </div>
               ),
-              key: String(index), // Unique key for each tab
+              key: String(index),
               children: (
                 <div className="flex justify-center max-md:justify-start">
                   <div className="w-[80%] max-md:w-[95%]">
