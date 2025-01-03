@@ -36,7 +36,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
   };
 
   const content = (
-    <div className="flex flex-col gap-3 p-1">
+    <div>
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -79,7 +79,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
             label: (
               <p
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent the menu from collapsing
+                  e.stopPropagation();
                   addYear(faculty.facultyId);
                 }}
               >
