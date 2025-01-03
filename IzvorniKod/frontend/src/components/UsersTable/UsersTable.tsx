@@ -41,7 +41,7 @@ export const UsersTable = ({ users: initialUsers }: UsersTableType) => {
       </div>
 
       {/* Scrollable Rows */}
-      <div className="max-h-[75vh] overflow-y-auto">
+      <div className="max-h-[75vh] overflow-y-auto max-md:max-h-[70vh]">
         {users.map((user) => (
           <UserTableRow
             key={user.facultyUserId}

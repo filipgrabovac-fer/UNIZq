@@ -12,7 +12,7 @@ export const Users = () => {
           throw new Error("Function not implemented.");
         }}
       />
-      <div className="mt-10">
+      <div className="mt-10 max-md:mt-5">
         <SelectComponent
           faculties={[
             "Fakultet elektrotehnike i računarstva",
