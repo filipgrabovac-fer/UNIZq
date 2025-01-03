@@ -84,23 +84,34 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
           <Input placeholder="enter meeting link" />
         </Form.Item>
         <div className="flex justify-end space-x-2 mt-4">
-          <CustomButton variant="secondary" title="Cancel" onClick={onCancel} />
-          <CustomButton
-            variant="primary"
-            title="Create"
-            onClick={() => {
-              form
-                .validateFields()
-                .then((values) => {
-                  form.resetFields();
-                  setFileList([]);
-                  onCreate({ ...values, images: fileList });
-                })
-                .catch((info) => {
-                  console.log("Validate Failed:", info);
-                });
-            }}
-          />
+          <div
+            className="w-32
+          "
+          >
+            <CustomButton
+              variant="secondary"
+              title="Cancel"
+              onClick={onCancel}
+            />
+          </div>
+          <div className="w-32">
+            <CustomButton
+              variant="primary"
+              title="Create"
+              onClick={() => {
+                form
+                  .validateFields()
+                  .then((values) => {
+                    form.resetFields();
+                    setFileList([]);
+                    onCreate({ ...values, images: fileList });
+                  })
+                  .catch((info) => {
+                    console.log("Validate Failed:", info);
+                  });
+              }}
+            />
+          </div>
         </div>
       </Form>
     </Modal>
