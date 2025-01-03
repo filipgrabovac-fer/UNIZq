@@ -24,34 +24,6 @@ export const Profile = () => {
   } = theme.useToken();
 
   const { data } = useGetUserInfo();
-  const renderContent = () => {
-    switch (selectedKey) {
-      case "1":
-        return (
-          <MyProfile
-            likesValue={1234}
-            postsValue={100}
-            username={data?.username ?? ""}
-            email={data?.email ?? ""}
-            facultiesValue={"10"}
-          />
-        );
-      case "2":
-        return <MyActivity />;
-      case "3":
-        return (
-          <Settings
-            username={"peroPeric1"}
-            email={"pero@gmail.com"}
-            postsValue={"1234"}
-            likesValue={"100"}
-            facultiesValue={"50"}
-          />
-        );
-      default:
-        return <div>Default Content</div>;
-    }
-  };
 
   return (
     <Layout className="h-screen">
@@ -160,7 +132,27 @@ export const Profile = () => {
           }}
           className="overflow-y-scroll overfow-hidden"
         >
-          {renderContent()}
+          {selectedKey === "1" && (
+            <MyProfile
+              likesValue={1234}
+              postsValue={100}
+              username={data?.username ?? ""}
+              email={data?.email ?? ""}
+              facultiesValue={"10"}
+            />
+          )}
+
+          {selectedKey === "2" && <MyActivity />}
+
+          {selectedKey === "3" && (
+            <Settings
+              username={data?.username ?? ""}
+              email={data?.email ?? ""}
+              postsValue={"1234"}
+              likesValue={"100"}
+              facultiesValue={"50"}
+            />
+          )}
         </div>
       </Layout>
     </Layout>

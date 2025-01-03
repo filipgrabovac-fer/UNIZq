@@ -42,7 +42,7 @@ export const MyProfile = ({
                 width: "100%",
               }}
             >
-              <UserIcon style={{ width: "300px", height: "300px" }} />
+              <UserIcon className="max-md:w-[200px] w-[300px]" />
             </div>
           }
         >
@@ -50,13 +50,13 @@ export const MyProfile = ({
             title="Profile information"
             description={
               <div>
-                <div className="flex justify-between">
+                <div className="max-md:block flex justify-between">
                   <p>Username:</p>
-                  <p>{username}</p>
+                  <p className="truncate ">{username}</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="max-md:block flex justify-between">
                   <p>Email:</p>
-                  <p>{email}</p>
+                  <p className="truncate ">{email}</p>
                 </div>
               </div>
             }
