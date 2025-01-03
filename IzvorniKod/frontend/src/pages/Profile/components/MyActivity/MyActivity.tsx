@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Tabs, ConfigProvider, List, Card, Modal } from "antd";
 import { TrashIcon } from "@heroicons/react/24/solid";
-import type { TabsProps } from "antd";
 import { PostPreview } from "../../../../components/PostPreview/PostPreview";
+
 type MyActivityType = {};
 
 export const MyActivity = ({}: MyActivityType) => {
@@ -74,8 +74,6 @@ export const MyActivity = ({}: MyActivityType) => {
     },
   ];
 
-  const [isHovered, setIsHovered] = useState(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -89,117 +87,6 @@ export const MyActivity = ({}: MyActivityType) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "My faculties",
-      children: (
-        <List
-          className="md:w-[90%] sm:w-[100%]"
-          grid={{
-            gutter: 30,
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 2,
-            xl: 2,
-            xxl: 2,
-          }}
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item
-
-            /*actions*/
-            >
-              <Card
-                className="max-sm:h-[170px] h-[150px] transition-transform duration-300 hover:scale-105 hover:shadow-md"
-                title={
-                  <div className="flex justify-between">
-                    <p>{item.faculty}</p>
-                    <TrashIcon
-                      onClick={showModal}
-                      className="w-5 hover:cursor-pointer transition-transform duration-300 hover:scale-105"
-                    />
-
-                    <Modal
-                      open={isModalOpen}
-                      onOk={handleOk}
-                      onCancel={handleCancel}
-                      okButtonProps={{
-                        style: {
-                          background: "#111D4A",
-                          opacity: isHovered ? 0.8 : 1,
-                        },
-                        onMouseEnter: () => setIsHovered(true),
-                        onMouseLeave: () => setIsHovered(false),
-                      }}
-                    >
-                      <p>
-                        Are you sure you want to remove this faculty from your
-                        list?
-                      </p>
-                    </Modal>
-                  </div>
-                }
-              >
-                <p className="line-clamp-2 max-sm:line-clamp-3">
-                  {item.description}
-                </p>
-              </Card>
-            </List.Item>
-          )}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: "My posts",
-      children: (
-        <div className="mb-3 md:w-[90%] sm:w-[100%]">
-          <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
-            <PostPreview
-              postTitle={
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
-              }
-              postID={0}
-              canDelete={false}
-              canModify={false}
-              onClick={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          </div>
-          <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
-            <PostPreview
-              postTitle={
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
-              }
-              postID={0}
-              canDelete={false}
-              canModify={false}
-              onClick={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          </div>
-          <div className="transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
-            <PostPreview
-              postTitle={
-                "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
-              }
-              postID={0}
-              canDelete={false}
-              canModify={false}
-              onClick={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          </div>
-        </div>
-      ),
-    },
-  ];
 
   return (
     <div>
@@ -215,7 +102,111 @@ export const MyActivity = ({}: MyActivityType) => {
           },
         }}
       >
-        <Tabs className="w-full" defaultActiveKey="1" items={items} />
+        <Tabs
+          className="w-full"
+          defaultActiveKey="1"
+          items={[
+            {
+              key: "1",
+              label: "My faculties",
+              children: (
+                <List
+                  className="md:w-[90%] sm:w-[100%]"
+                  grid={{
+                    gutter: 30,
+                    xs: 1,
+                    sm: 1,
+                    md: 1,
+                    lg: 2,
+                    xl: 2,
+                    xxl: 2,
+                  }}
+                  dataSource={data}
+                  renderItem={(item) => (
+                    <List.Item>
+                      <Card
+                        className="max-sm:h-[170px] h-[150px] transition-transform duration-300 hover:scale-105 hover:shadow-md"
+                        title={
+                          <div className="flex justify-between">
+                            <p>{item.faculty}</p>
+                            <TrashIcon
+                              onClick={showModal}
+                              className="w-5 hover:cursor-pointer transition-transform duration-300 hover:scale-105"
+                            />
+                            <Modal
+                              okButtonProps={{
+                                style: { backgroundColor: "#111D4A" },
+                              }}
+                              open={isModalOpen}
+                              onOk={handleOk}
+                              onCancel={handleCancel}
+                            >
+                              <p>
+                                Are you sure you want to remove this faculty
+                                from your list?
+                              </p>
+                            </Modal>
+                          </div>
+                        }
+                      >
+                        <p className="line-clamp-2 max-sm:line-clamp-3">
+                          {item.description}
+                        </p>
+                      </Card>
+                    </List.Item>
+                  )}
+                />
+              ),
+            },
+            {
+              key: "2",
+              label: "My posts",
+              children: (
+                <div className="mb-3 md:w-[90%] sm:w-[100%]">
+                  <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+                    <PostPreview
+                      postTitle={
+                        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+                      }
+                      postID={0}
+                      canDelete={false}
+                      canModify={false}
+                      onClick={function (): void {
+                        throw new Error("Function not implemented.");
+                      }}
+                    />
+                  </div>
+                  <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+                    <PostPreview
+                      postTitle={
+                        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+                      }
+                      postID={0}
+                      canDelete={false}
+                      canModify={false}
+                      onClick={function (): void {
+                        throw new Error("Function not implemented.");
+                      }}
+                    />
+                  </div>
+                  <div className="transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
+                    <PostPreview
+                      postTitle={
+                        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
+                      }
+                      postID={0}
+                      canDelete={false}
+                      canModify={false}
+                      onClick={function (): void {
+                        throw new Error("Function not implemented.");
+                      }}
+                    />
+                  </div>
+                </div>
+              ),
+            },
+          ]}
+        />
       </ConfigProvider>
     </div>
   );
