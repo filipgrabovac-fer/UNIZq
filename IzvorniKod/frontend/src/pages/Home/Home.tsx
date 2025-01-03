@@ -1,8 +1,8 @@
-import SearchComponent from "../../components/SearchComponent/SearchComponent";
+import { AddAnswerComponent } from "../../components/SearchComponent/AddAnswerComponent";
 export const Home = () => {
   return (
     <div className=" bg-secondary overflow-hidden">
-      <SearchComponent postContent="Explain theory of relativity" />
+      <AddAnswerComponent postContent="Explain theory of relativity" />
     </div>
   );
 };

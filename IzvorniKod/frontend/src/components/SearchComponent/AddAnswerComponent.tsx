@@ -12,7 +12,7 @@ interface SearchComponentProps {
   postContent: string;
 }
 
-const SearchComponent = ({ postContent }: SearchComponentProps) => {
+export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
   const [answerContent, setAnswerContent] = useState("");
   const [imageList, setImageList] = useState<FileList | null>(null);
   const [isGenerateAnswerLoading, setIsGenerateAnswerLoading] = useState(false);
@@ -117,5 +117,3 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
     </div>
   );
 };
-
-export default SearchComponent;
