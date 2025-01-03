@@ -30,7 +30,8 @@ export const UsersTable = ({ users: initialUsers }: UsersTableType) => {
   }, [initialUsers]);
 
   return (
-    <div className=" border-gray_border border-[1px] rounded-[10px]">
+    <div className="border-gray_border border-[1px] rounded-[10px]">
+      {/* Header Row */}
       <div className="flex items-center p-2">
         <div className="w-[20%]">userId</div>
         <div className="w-[20%] truncate">username</div>
@@ -38,17 +39,21 @@ export const UsersTable = ({ users: initialUsers }: UsersTableType) => {
         <div className="w-[20%] text-center truncate">posts reported</div>
         <p className="w-[20%] text-end">kick</p>
       </div>
-      {users.map((user) => (
-        <UserTableRow
-          key={user.facultyUserId}
-          facultyUserId={user.facultyUserId}
-          username={user.username}
-          email={user.email}
-          postsReported={user.postsReported}
-          isKicked={user.isKicked}
-          onKick={user.onKick}
-        />
-      ))}
+
+      {/* Scrollable Rows */}
+      <div className="max-h-[75vh] overflow-y-auto">
+        {users.map((user) => (
+          <UserTableRow
+            key={user.facultyUserId}
+            facultyUserId={user.facultyUserId}
+            username={user.username}
+            email={user.email}
+            postsReported={user.postsReported}
+            isKicked={user.isKicked}
+            onKick={user.onKick}
+          />
+        ))}
+      </div>
     </div>
   );
 };

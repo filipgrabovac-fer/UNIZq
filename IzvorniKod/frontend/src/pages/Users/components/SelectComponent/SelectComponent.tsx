@@ -120,6 +120,150 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
                           isKicked: false,
                           onKick: showModal,
                         },
+                        {
+                          facultyUserId: 4,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 5,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 6,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 7,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 8,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 9,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 10,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 11,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 12,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 13,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 14,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 15,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 16,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 17,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 18,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
+                        {
+                          facultyUserId: 19,
+                          username: "someextralongusername4",
+                          email:
+                            "someextralongemailsothaticanseewetherittruncatesemail4",
+                          postsReported: 0,
+                          isKicked: false,
+                          onKick: showModal,
+                        },
                       ]}
                     />
                   </div>
