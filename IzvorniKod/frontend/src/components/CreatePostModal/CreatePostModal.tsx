@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Modal, Form, Input, Upload, message } from "antd";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { CustomButton } from "../CustomButton/CustomButton"; // Adjust the path as necessary
@@ -7,12 +7,18 @@ const { TextArea } = Input;
 
 interface NewPostModalProps {
   onCreate: (values: any) => void;
+  isModalVisible: boolean;
+  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const NewPostModal = ({ onCreate }: NewPostModalProps) => {
+export const CreatePostModal = ({
+  onCreate,
+  isModalVisible,
+  setIsModalVisible,
+}: NewPostModalProps) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(true);
+
   const handleUploadChange = ({ fileList }: any) => {
     const isImage = fileList.every((file: any) =>
       file.type.startsWith("image/")
@@ -28,6 +34,7 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
     form.resetFields();
     setFileList([]);
   };
+
   return (
     <Modal
       footer={null}
@@ -99,7 +106,6 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
                     message.error(
                       "Validation Failed: Please check the form fields and try again."
                     );
-                    console.log("Validate Failed:", info);
                   });
               }}
             />
@@ -109,5 +115,3 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
     </Modal>
   );
 };
-
-export default NewPostModal;
