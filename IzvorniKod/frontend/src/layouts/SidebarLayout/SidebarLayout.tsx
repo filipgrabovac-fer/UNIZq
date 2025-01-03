@@ -12,11 +12,32 @@ export const SidebarLayout = () => {
     const handleScreenResize = (e: MediaQueryListEvent) =>
       setIsSmallScreen(e.matches);
 
-    setIsSmallScreen(mediaQuery.matches); // Set initial value
+    setIsSmallScreen(mediaQuery.matches);
     mediaQuery.addEventListener("change", handleScreenResize);
 
     return () => mediaQuery.removeEventListener("change", handleScreenResize);
   }, []);
+
+  const sidebarData = [
+    {
+      facultyId: 1,
+      title: "FSB",
+      canEditFaculty: true,
+      canEditFacultyYear: false,
+    },
+    {
+      facultyId: 2,
+      title: "FER",
+      canEditFaculty: false,
+      canEditFacultyYear: true,
+    },
+    {
+      facultyId: 3,
+      title: "FOI",
+      canEditFaculty: true,
+      canEditFacultyYear: false,
+    },
+  ];
 
   return (
     <div>
@@ -27,7 +48,7 @@ export const SidebarLayout = () => {
       {isSmallScreen ? (
         isSidebarOpen ? (
           <div className={"absolute left-0 top-[60px] w-full h-full bg-white"}>
-            <Sidebar />
+            <Sidebar list={sidebarData} events={[]} />
           </div>
         ) : (
           <Outlet />
@@ -35,7 +56,7 @@ export const SidebarLayout = () => {
       ) : (
         <div className="flex w-full">
           <div className="w-[300px]">
-            <Sidebar />
+            <Sidebar list={sidebarData} events={[]} />
           </div>
           <Outlet />
         </div>
