@@ -87,9 +87,9 @@ const SelectFacultyModal = ({
       ]}
       className="max-w-6xl p-6"
     >
-      <div className="flex gap-8 max-[500px]:flex-col ">
+      <div className="flex gap-8 max-[750px]:flex-col ">
         {/* Left Panel: List of Faculties */}
-        <div className="w-3/5 max-[500px]:w-full ">
+        <div className="w-3/5 max-[750px]:w-full ">
           <Input
             placeholder="Search"
             className="mb-4"
@@ -116,7 +116,7 @@ const SelectFacultyModal = ({
                     className={cn(
                       "px-3 py-1 rounded-full border cursor-pointer",
                       faculty.userRole === "ADMIN"
-                        ? "bg-primary text-white"
+                        ? "bg-primary text-white pointer-events-none cursor-default"
                         : requestingFaculties.includes(faculty.facultyId)
                         ? "bg-red text-white border-red"
                         : "bg-white text-red border-red"
@@ -136,7 +136,7 @@ const SelectFacultyModal = ({
         </div>
 
         {/* Right Panel: Selected Faculties */}
-        <div className="w-2/5 bg-gray-50 p-4 rounded-lg max-[500px]:w-full">
+        <div className="w-2/5 bg-gray-50 p-4 rounded-lg max-[750px]:w-full">
           <h4 className="text-lg font-medium mb-2">Selected faculties:</h4>
           <List
             dataSource={selectedFaculties}
