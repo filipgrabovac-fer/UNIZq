@@ -36,17 +36,6 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
       okText="Create"
       cancelText="Cancel"
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate({ ...values, images: fileList });
-          })
-          .catch((info) => {
-            console.log("Validate Failed:", info);
-          });
-      }}
     >
       <Form form={form} layout="vertical" name="new_post_form">
         <Form.Item
@@ -107,6 +96,9 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
                     onCreate({ ...values, images: fileList });
                   })
                   .catch((info) => {
+                    message.error(
+                      "Validation Failed: Please check the form fields and try again."
+                    );
                     console.log("Validate Failed:", info);
                   });
               }}
