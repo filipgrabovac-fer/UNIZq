@@ -28,10 +28,10 @@ export const Profile = () => {
   return (
     <Layout className="h-screen">
       <Sider
-        breakpoint="md"
+        breakpoint="sm"
         collapsedWidth="70"
         onBreakpoint={(broken) => {
-          setCollapsed(broken); // Collapse when the screen size is smaller than 'sm'
+          setCollapsed(broken);
         }}
         style={{ background: "#111D4A" }}
         trigger={null}
@@ -106,7 +106,7 @@ export const Profile = () => {
             },
           ]}
         />
-        <div className="flex justify-end p-4 max-sm:hidden">
+        <div className="flex justify-end p-4 max-[576px]:hidden">
           <Button
             type="text"
             icon={
