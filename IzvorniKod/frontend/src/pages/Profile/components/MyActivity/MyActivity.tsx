@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Tabs, ConfigProvider, List, Card, Modal } from "antd";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import type { TabsProps } from "antd";
-import { PostPreview } from "../../components/PostPreview/PostPreview";
-
+import { PostPreview } from "../../../../components/PostPreview/PostPreview";
 type MyActivityType = {};
 
 export const MyActivity = ({}: MyActivityType) => {

@@ -8,9 +8,9 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 
-import { MyProfile } from "../../components/MyProfile/MyProfile";
-import { MyActivity } from "../../components/MyActivity/MyActivity";
-import { Settings } from "../../components/Settings/Settings";
+import { MyProfile } from "./components/MyProfile/MyProfile";
+import { MyActivity } from "./components/MyActivity/MyActivity";
+import { Settings } from "./components/Settings/Settings";
 import { useGetUserInfo } from "./hooks/useGetUserInfo.hook";
 
 const { Sider } = Layout;
