@@ -4,14 +4,7 @@ import { SelectComponent } from "./components/SelectComponent/SelectComponent";
 export const Users = () => {
   return (
     <div>
-      <Header
-        isSidebarOpen={false}
-        setIsSidebarOpen={function (
-          value: React.SetStateAction<boolean>
-        ): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <Header isSidebarOpen={false} setIsSidebarOpen={() => null} />
       <div className="mt-10 max-md:mt-5">
         <SelectComponent
           faculties={[

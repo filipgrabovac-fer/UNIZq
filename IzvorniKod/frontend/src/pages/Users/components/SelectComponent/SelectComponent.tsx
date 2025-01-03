@@ -83,11 +83,9 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
                     title={null}
                     trigger="hover"
                   >
-                    <p className="w-full max-md:w-[20vw] truncate">{faculty}</p>
+                    <p className="w-full truncate">{faculty}</p>
                   </Popover>
-                  <p className="max-md:hidden w-full max-md:w-[20vw] truncate">
-                    {faculty}
-                  </p>
+                  <p className="max-md:hidden w-full">{faculty}</p>
                 </div>
               ),
               key: String(index),
