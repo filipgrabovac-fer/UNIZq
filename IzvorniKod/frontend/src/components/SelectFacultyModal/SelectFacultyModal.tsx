@@ -76,15 +76,20 @@ const SelectFacultyModal = ({
         <Button key="cancel" onClick={() => setIsModalOpen(false)}>
           Cancel
         </Button>,
-        <Button key="save" type="primary" onClick={() => setIsModalOpen(false)}>
+        <Button
+          key="save"
+          type="primary"
+          className="bg-primary"
+          onClick={() => setIsModalOpen(false)}
+        >
           Save
         </Button>,
       ]}
       className="max-w-6xl p-6"
     >
-      <div className="flex gap-8">
+      <div className="flex gap-8 max-[500px]:flex-col ">
         {/* Left Panel: List of Faculties */}
-        <div className="flex-3">
+        <div className="w-3/5 max-[500px]:w-full ">
           <Input
             placeholder="Search"
             className="mb-4"
@@ -107,22 +112,23 @@ const SelectFacultyModal = ({
                 </div>
 
                 <div>
-                  {faculty.userRole === "ADMIN" && (
+                  {(faculty.userRole === "USER" ||
+                    faculty.userRole === undefined) && (
                     <span
                       className={cn(
-                        "px-3 py-1 rounded-full border cursor-pointer ",
+                        "px-3 py-1 rounded-full border cursor-pointer  ",
                         requestingFaculties.includes(faculty.facultyId)
-                          ? "bg-red-500 text-white border-red-500"
-                          : "bg-white text-red-500 border-red-500"
+                          ? "bg-red text-white border-red"
+                          : "bg-white text-red border-red"
                       )}
                       onClick={() => toggleRequest(faculty.facultyId)}
                     >
                       Admin
                     </span>
                   )}
-                  {faculty.userRole === "USER" && (
+                  {faculty.userRole === "ADMIN" && (
                     <span className="px-3 py-1 rounded-full bg-primary text-white ">
-                      User
+                      Admin
                     </span>
                   )}
                 </div>
@@ -133,12 +139,14 @@ const SelectFacultyModal = ({
         </div>
 
         {/* Right Panel: Selected Faculties */}
-        <div className="flex-2 bg-gray-50 p-4 rounded-lg ">
+        <div className="w-2/5 bg-gray-50 p-4 rounded-lg max-[500px]:w-full">
           <h4 className="text-lg font-medium mb-2">Selected faculties:</h4>
           <List
             dataSource={selectedFaculties}
             renderItem={(faculty) => (
-              <List.Item>{faculty.facultyName}</List.Item>
+              <List.Item className="break-normal">
+                {faculty.facultyName}
+              </List.Item>
             )}
             className="p-2 rounded-lg"
           />
