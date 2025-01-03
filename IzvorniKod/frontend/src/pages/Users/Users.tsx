@@ -18,6 +18,19 @@ export const Users = () => {
             "Fakultet elektrotehnike i računarstva",
             "Tehničko veleučilište u Zagrebu",
             "Fakultet strojarstva i brodogradnje",
+            "Ekonomski fakultet Zagreb",
+            "Fakultet elektrotehnike i računarstva",
+            "Tehničko veleučilište u Zagrebu",
+            "Fakultet strojarstva i brodogradnje",
+            "Ekonomski fakultet Zagreb",
+            "Fakultet elektrotehnike i računarstva",
+            "Tehničko veleučilište u Zagrebu",
+            "Fakultet strojarstva i brodogradnje",
+            "Ekonomski fakultet Zagreb",
+            "Fakultet elektrotehnike i računarstva",
+            "Tehničko veleučilište u Zagrebu",
+            "Fakultet strojarstva i brodogradnje",
+            "Ekonomski fakultet Zagreb",
           ]}
         />
       </div>

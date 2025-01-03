@@ -69,7 +69,9 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
             className="max-md:mx-[2%]"
             defaultActiveKey="0"
             tabPosition={isMediumScreen ? "top" : "left"}
-            style={{ height: 220 }}
+            style={{
+              height: "85vh",
+            }}
             onChange={handleTabChange}
             items={faculties.map((faculty, index) => ({
               label: (
@@ -90,7 +92,7 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
               ),
               key: String(index),
               children: (
-                <div className="flex justify-center max-md:justify-start">
+                <div className="flex justify-center">
                   <div className="w-[80%] max-md:w-[95%]">
                     <UsersTable
                       users={[
