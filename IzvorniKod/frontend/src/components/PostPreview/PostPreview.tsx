@@ -61,14 +61,14 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
       onClick={onClick}
       className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[10px]"
     >
-      <p className="cursor-default truncate text-[18px] w-[75%]">{postTitle}</p>
+      <p className="cursor-default truncate w-[75%]">{postTitle}</p>
       <div className="flex gap-1.5">
         <HeartIcon
           onClick={(e) => {
             e.stopPropagation();
             setIsHeartClicked(!isHeartClicked);
           }}
-          className="w-[25px] cursor-pointer"
+          className="w-[20px] cursor-pointer"
           style={getIconStyle({ color: "red", isClicked: isHeartClicked })}
         />
         <HandThumbUpIcon
@@ -76,7 +76,7 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
           }}
-          className="w-[25px] cursor-pointer"
+          className="w-[20px] cursor-pointer"
           style={getIconStyle({
             color: "#111D4A",
             isClicked: isThumbUpClicked,
@@ -87,7 +87,7 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
             e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
           }}
-          className="w-[25px] cursor-pointer"
+          className="w-[20px] cursor-pointer"
           style={getIconStyle({
             color: "#111D4A",
             isClicked: isThumbDownClicked,
