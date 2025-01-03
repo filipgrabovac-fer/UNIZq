@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Form, Input, Upload, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { CustomButton } from "../CustomButton/CustomButton"; // Adjust the path as necessary
 
 const { TextArea } = Input;
 
@@ -29,6 +30,7 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
   };
   return (
     <Modal
+      footer={null}
       open={isModalVisible}
       title="Create a new post"
       okText="Create"
@@ -72,7 +74,7 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
           >
             {fileList.length >= 5 ? null : (
               <div>
-                <PlusOutlined />
+                <PlusIcon />
                 <div style={{ marginTop: 8 }}>Upload</div>
               </div>
             )}
@@ -81,6 +83,25 @@ const NewPostModal = ({ onCreate }: NewPostModalProps) => {
         <Form.Item name="links" label="Add link to meeting">
           <Input placeholder="enter meeting link" />
         </Form.Item>
+        <div className="flex justify-end space-x-2 mt-4">
+          <CustomButton variant="secondary" title="Cancel" onClick={onCancel} />
+          <CustomButton
+            variant="primary"
+            title="Create"
+            onClick={() => {
+              form
+                .validateFields()
+                .then((values) => {
+                  form.resetFields();
+                  setFileList([]);
+                  onCreate({ ...values, images: fileList });
+                })
+                .catch((info) => {
+                  console.log("Validate Failed:", info);
+                });
+            }}
+          />
+        </div>
       </Form>
     </Modal>
   );
