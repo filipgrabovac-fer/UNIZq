@@ -112,25 +112,22 @@ const SelectFacultyModal = ({
                 </div>
 
                 <div>
-                  {(faculty.userRole === "USER" ||
-                    faculty.userRole === undefined) && (
-                    <span
-                      className={cn(
-                        "px-3 py-1 rounded-full border cursor-pointer  ",
-                        requestingFaculties.includes(faculty.facultyId)
-                          ? "bg-red text-white border-red"
-                          : "bg-white text-red border-red"
-                      )}
-                      onClick={() => toggleRequest(faculty.facultyId)}
-                    >
-                      Admin
-                    </span>
-                  )}
-                  {faculty.userRole === "ADMIN" && (
-                    <span className="px-3 py-1 rounded-full bg-primary text-white ">
-                      Admin
-                    </span>
-                  )}
+                  <span
+                    className={cn(
+                      "px-3 py-1 rounded-full border cursor-pointer",
+                      faculty.userRole === "ADMIN"
+                        ? "bg-primary text-white"
+                        : requestingFaculties.includes(faculty.facultyId)
+                        ? "bg-red text-white border-red"
+                        : "bg-white text-red border-red"
+                    )}
+                    onClick={() =>
+                      faculty.userRole !== "ADMIN" &&
+                      toggleRequest(faculty.facultyId)
+                    }
+                  >
+                    Admin
+                  </span>
                 </div>
               </List.Item>
             )}
