@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { CreateEventModal } from "../../components/CreateEventModal/CreateEventModal.component";
 import SearchComponent from "../../components/SearchComponent/SearchComponent";
 export const Home = () => {
   return (
     <div className=" bg-secondary overflow-hidden">
-      <SearchComponent postContent="Your post content here" />
+      <SearchComponent postContent="Explain theory of relativity" />
     </div>
   );
 };

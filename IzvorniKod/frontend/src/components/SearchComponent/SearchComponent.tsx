@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Input } from "antd";
+import { Input, Spin } from "antd";
 import {
   PaperClipIcon,
   PaperAirplaneIcon,
   CpuChipIcon,
 } from "@heroicons/react/24/solid";
 import { cn } from "../../utils/cn.util";
+import { usePostGenerateAnswerWithAI } from "./hooks/usePostGenerateAnswerWithAI.hook";
 
 interface SearchComponentProps {
   postContent: string;
@@ -13,8 +14,9 @@ interface SearchComponentProps {
 
 const SearchComponent = ({ postContent }: SearchComponentProps) => {
   const [answerContent, setAnswerContent] = useState("");
-  const [isAIEnabled, setIsAIEnabled] = useState(false);
   const [imageList, setImageList] = useState<FileList | null>(null);
+  const [isGenerateAnswerLoading, setIsGenerateAnswerLoading] = useState(false);
+
   const handleIconClick = () => {
     // Handle the logic for adding images here
     console.log("Icon clicked to add images");
@@ -22,10 +24,15 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
 
   const handlePaperClipClick = () => {
     const fileInput = document.getElementById("file") as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+    fileInput && fileInput.click();
   };
+
+  const { mutate: postGenerateAnswerWithAI } = usePostGenerateAnswerWithAI({
+    onSuccess: (data) => {
+      setIsGenerateAnswerLoading(false);
+      setAnswerContent(data);
+    },
+  });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -47,14 +54,13 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
           return;
         }
       }
-      setImageList(files); // Store the selected files in the state
-      console.log("Selected files:", files);
-      // Handle the selected files here
+      setImageList(files);
     }
   };
 
   const handleCpuChipClick = () => {
-    setIsAIEnabled(!isAIEnabled);
+    setIsGenerateAnswerLoading(true);
+    postGenerateAnswerWithAI({ question: postContent });
   };
 
   return (
@@ -70,9 +76,9 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
       <Input
         placeholder="Add your answer"
         value={answerContent}
+        disabled={isGenerateAnswerLoading}
         onChange={(e) => {
           setAnswerContent(e.target.value);
-          console.log(e.target.value);
         }}
         prefix={
           <div onClick={handlePaperClipClick}>
@@ -83,23 +89,23 @@ const SearchComponent = ({ postContent }: SearchComponentProps) => {
           <div className="flex flex-row items-center space-x-2">
             <div
               className={cn(
-                "p-1 rounded cursor-pointer hover:scale-110 transition-transform",
-                isAIEnabled && "bg-yellow-400",
-                "hover:bg-yellow-300 hover:text-yellow-900"
+                "p-1 rounded cursor-pointer hover:scale-110 transition-transform hover:text-yellow-900"
               )}
-              onClick={handleCpuChipClick}
             >
-              <CpuChipIcon
-                className={cn(
-                  "h-5 w-5",
-                  isAIEnabled ? "text-yellow-900" : "text-gray-400"
-                )}
-              />
+              {isGenerateAnswerLoading ? (
+                <Spin className="pointer-events-none cursor-default" />
+              ) : (
+                <CpuChipIcon
+                  className={cn("h-5 w-5 text-yellow-900")}
+                  onClick={handleCpuChipClick}
+                />
+              )}
             </div>
             <div
               className={cn(
                 "bg-purple-500 p-1 rounded hover:scale-110 transition-transform cursor-pointer",
-                !answerContent && "opacity-50 cursor-not-allowed"
+                !answerContent &&
+                  "opacity-50 cursor-not-allowed pointer-events-none"
               )}
               onClick={handleIconClick}
             >
