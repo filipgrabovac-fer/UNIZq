@@ -60,10 +60,6 @@ const SelectFacultyModal = ({
     }
   };
 
-  useEffect(() => {
-    console.log(requestingFaculties);
-  }, [requestingFaculties]);
-
   return (
     <Modal
       width={800}
