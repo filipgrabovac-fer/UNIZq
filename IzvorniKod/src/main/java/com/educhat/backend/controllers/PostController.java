@@ -1,6 +1,7 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.PostCreateDTO;
+import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.models.Answer;
 import com.educhat.backend.models.Post;
@@ -28,9 +29,9 @@ public class PostController {
     }
 
     @GetMapping("{postId}")
-    public ResponseEntity<List<Answer>> postResponses(@PathVariable Long postId) {
-        List<Answer> responses = postService.getPostResponses(postId);
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<PostDetailsAndAnswersDTO> postResponses(@PathVariable Long postId) {
+        PostDetailsAndAnswersDTO response = postService.getPostResponses(postId);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/user/{userId}")

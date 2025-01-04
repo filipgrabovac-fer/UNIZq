@@ -1,11 +1,9 @@
 package com.educhat.backend.services;
 
 import com.educhat.backend.DTO.PostCreateDTO;
+import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
-import com.educhat.backend.exceptions.FacultyUserNotFoundException;
-import com.educhat.backend.exceptions.FacultyYearNotFoundException;
-import com.educhat.backend.exceptions.SubjectNotFoundException;
-import com.educhat.backend.exceptions.UserNotFoundException;
+import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.*;
 import com.educhat.backend.models.enums.PostType;
 import com.educhat.backend.models.enums.Role;
@@ -29,6 +27,7 @@ public class PostService {
     private final FacultyYearRepository facultyYearRepository;
     private final AnswerRepository answerRepository;
     private final PostImageRepository postImageRepository;
+
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
         if(!userRepository.existsById(userId)) {
@@ -84,10 +83,36 @@ public class PostService {
         return facultyUserOptional.isPresent();
     }
 
-    public List<Answer> getPostResponses(Long postId) {
-        List<Answer> answers = answerRepository.findByPostId(postId);
-        return answers;
+
+
+    public PostDetailsAndAnswersDTO getPostResponses(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
+
+        PostDetailsAndAnswersDTO response = new PostDetailsAndAnswersDTO();
+        response.setPostHeader(post.getTitle());
+        response.setPostContent(post.getDescription());
+
+        // find author username
+        FacultyUser facultyUser = facultyUserRepository.findById(post.getFacutlyUserId())
+                .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
+        User user = userRepository.findById(facultyUser.getUserId())
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+        response.setAuthor(user.getUsername());
+
+        // post images
+        List<String> postImagesUrl = new ArrayList<>();
+        List<PostImage> postImages = postImageRepository.findByPostId(postId);
+        for(PostImage image : postImages) {
+            postImagesUrl.add(image.getLink());
+        }
+        response.setImages(postImagesUrl);
+
+        response.setAnswers(answerRepository.findByPostId(postId));
+
+        return response;
     }
+
+
 
     public Post createPostAndImages(Long userId, PostCreateDTO postCreateDTO) {
         if(!userRepository.existsById(userId)) {
@@ -120,4 +145,5 @@ public class PostService {
 
         return savedPost;
     }
+
 }
