@@ -1,5 +1,6 @@
 package com.educhat.backend.services;
 
+import com.educhat.backend.DTO.AnswerWithImagesDTO;
 import com.educhat.backend.DTO.PostCreateDTO;
 import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
@@ -27,6 +28,7 @@ public class PostService {
     private final FacultyYearRepository facultyYearRepository;
     private final AnswerRepository answerRepository;
     private final PostImageRepository postImageRepository;
+    private final AnswerImageRepository answerImageRepository;
 
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
@@ -86,8 +88,10 @@ public class PostService {
 
 
     public PostDetailsAndAnswersDTO getPostResponses(Long postId) {
+        // get post
         Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
 
+        // create main dto response
         PostDetailsAndAnswersDTO response = new PostDetailsAndAnswersDTO();
         response.setPostHeader(post.getTitle());
         response.setPostContent(post.getDescription());
@@ -101,13 +105,27 @@ public class PostService {
 
         // post images
         List<String> postImagesUrl = new ArrayList<>();
-        List<PostImage> postImages = postImageRepository.findByPostId(postId);
-        for(PostImage image : postImages) {
+        for(PostImage image : postImageRepository.findByPostId(postId)) {
             postImagesUrl.add(image.getLink());
         }
         response.setImages(postImagesUrl);
 
-        response.setAnswers(answerRepository.findByPostId(postId));
+        // connect answers with images
+        List<AnswerWithImagesDTO> answerAndImages = new ArrayList<>();
+        for(Answer answer : answerRepository.findByPostId(postId)) {
+            // set answer in dto
+            AnswerWithImagesDTO temp = new AnswerWithImagesDTO();
+            temp.setAnswer(answer);
+            //set images in dto
+            List<String> answerImagesUrl = new ArrayList<>();
+            for(AnswerImage image : answerImageRepository.findByAnswerId(answer.getId())) {
+                answerImagesUrl.add(image.getLink());
+            }
+            temp.setAnswerImages(answerImagesUrl);
+
+            answerAndImages.add(temp);
+        }
+        response.setAnswers(answerAndImages);
 
         return response;
     }

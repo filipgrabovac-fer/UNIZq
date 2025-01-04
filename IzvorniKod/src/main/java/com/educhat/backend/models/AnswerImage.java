@@ -20,8 +20,8 @@ public class AnswerImage {
     private Long id;
 
     @NotNull
-    private Long appAdminId;
+    private Long answerId;
 
     @NotNull
-    private String title;
+    private String link;
 }

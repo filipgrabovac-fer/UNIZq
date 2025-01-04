@@ -18,5 +18,5 @@ public class PostDetailsAndAnswersDTO {
     private String postContent;
     private String author;  // username
     private List<String> images;    // list of images urls connected to that post
-    private List<Answer> answers;
+    private List<AnswerWithImagesDTO> answers;
 }
