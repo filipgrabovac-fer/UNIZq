@@ -11,10 +11,22 @@ import { eventsRoute } from "./routes/events.routes";
 import { defaultRoute } from "./routes/default.routes";
 import { usersRoute } from "./routes/users.routes";
 import { profileRoute } from "./routes/profile.routes";
-import { facultySubjectsRoute } from "./routes/faculty-subjects.routes";
+import {
+  _facultySubjectsRoute,
+  _subjectPostsRoute,
+  facultySubjectsRoute,
+  postRoute,
+  subjectPostsRoute,
+} from "./routes/faculty-subjects.routes";
 
 const routeTree = rootRoute.addChildren([
-  sidebarLayoutRoute.addChildren([homeRoute, facultySubjectsRoute]),
+  sidebarLayoutRoute.addChildren([
+    homeRoute,
+    _facultySubjectsRoute.addChildren([facultySubjectsRoute]),
+    _subjectPostsRoute.addChildren([
+      subjectPostsRoute.addChildren([postRoute]),
+    ]),
+  ]),
   noSidebarLayoutRoute.addChildren([eventsRoute]),
   loginRoute,
   registerRoute,
