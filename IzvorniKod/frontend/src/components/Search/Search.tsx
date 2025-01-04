@@ -1,7 +1,7 @@
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import { Select, ConfigProvider, Input } from "antd";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SearchType = {
   withAddPost: boolean;
@@ -10,6 +10,20 @@ type SearchType = {
 
 export const Search = ({ withAddPost, onClick }: SearchType) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 500);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div
@@ -23,7 +37,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
               borderRadius: 20,
               colorBorder: "#fffff",
               fontSize: 16,
-              optionFontSize: 14,
+              optionFontSize: isMobile ? 13 : 14,
             },
             Input: {
               activeBorderColor: "white",
@@ -44,13 +58,8 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           }
         />
         <Select
-          className="row-start-2 col-start-1 col-end-2"
+          className="row-start-2 col-start-1 col-end-2 w-[120px] h-[100%] cursor-default"
           showSearch
-          style={{
-            width: 120,
-            height: "100%",
-            cursor: "default",
-          }}
           allowClear
           options={[
             { value: "Name", label: "Name" },
@@ -68,8 +77,8 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           onMouseEnter={() => setIsOpen(true)}
           dropdownRender={(menu) => (
             <div
+              className="overflow-hidden"
               onMouseLeave={() => setIsOpen(false)}
-              style={{ borderRadius: "10px", overflow: "hidden" }}
             >
               {menu}
             </div>
