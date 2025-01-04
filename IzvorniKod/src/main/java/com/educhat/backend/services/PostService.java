@@ -6,7 +6,6 @@ import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.*;
-import com.educhat.backend.models.enums.PostType;
 import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class PostService {
                         post.getId(),
                         post.getTitle(),
                         post.getDescription(),
-                        post.getFacutlyUserId(),
+                        post.getFacultyUserId(),
                         post.getSubjectId(),
                         post.getUpvotes(),
                         post.getDownvotes(),
@@ -57,7 +56,7 @@ public class PostService {
 
     // find if user is the author of post
     private boolean isUserAuthor(Post post, Long userId) {
-        Long facultyUserId = post.getFacutlyUserId();
+        Long facultyUserId = post.getFacultyUserId();
         FacultyUser facultyUser = facultyUserRepository.findById(facultyUserId)
                 .orElseThrow( () -> new FacultyUserNotFoundException("FacultyUser not found"));
         return facultyUser.getUserId().equals(userId);
@@ -97,7 +96,7 @@ public class PostService {
         response.setPostContent(post.getDescription());
 
         // find author username
-        FacultyUser facultyUser = facultyUserRepository.findById(post.getFacutlyUserId())
+        FacultyUser facultyUser = facultyUserRepository.findById(post.getFacultyUserId())
                 .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
         User user = userRepository.findById(facultyUser.getUserId())
                 .orElseThrow( () -> new UserNotFoundException("User not found"));
@@ -142,7 +141,7 @@ public class PostService {
         Post post = new Post();
         post.setTitle(postCreateDTO.getPostHeader());
         post.setDescription(postCreateDTO.getPostContent());
-        post.setFacutlyUserId(facultyUser.getId());
+        post.setFacultyUserId(facultyUser.getId());
         post.setSubjectId(postCreateDTO.getSubjectId());
         post.setLink(postCreateDTO.getLink());
         post.setUpvotes(0);
