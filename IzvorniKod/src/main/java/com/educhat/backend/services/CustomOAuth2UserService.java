@@ -36,4 +36,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userRepository.save(user);
         }
     }
+
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(User::getId) // Assuming `User` has a `getId()` method
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+    }
+
 }
