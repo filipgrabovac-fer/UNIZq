@@ -6,7 +6,8 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { Popover, Modal, Carousel } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { CarouselRef } from "antd/es/carousel";
 
 type AnswerComponentType = {
   answerAuthor: string;
@@ -37,7 +38,10 @@ export const AnswerComponent = ({
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAnswerModalVisible, setIsAnswerModalVisible] = useState(false);
+  const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const carouselRef = useRef<CarouselRef>(null);
 
   const content = (
     <div className="flex flex-col gap-3 p-1">
@@ -60,12 +64,22 @@ export const AnswerComponent = ({
     </div>
   );
 
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
+  const handleOpenAnswerModal = () => {
+    setIsAnswerModalVisible(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
+  const handleCloseAnswerModal = () => {
+    setIsAnswerModalVisible(false);
+  };
+
+  const handleCloseCarouselModal = () => {
+    setIsCarouselModalVisible(false);
+  };
+
+  const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsCarouselModalVisible(true);
+    carouselRef.current?.goTo(index);
   };
 
   return (
@@ -124,17 +138,19 @@ export const AnswerComponent = ({
               key={index}
               src={image}
               alt={`Image ${index + 1}`}
-              className="h-12 w-12 object-cover rounded-lg cursor-pointer"
+              className="h-12 w-12 object-cover rounded-lg cursor-pointer hover:ring-2 hover:ring-blue-500"
+              onClick={() => handleImageClick(index)}
             />
           ))}
         </div>
       )}
       <p
-        onClick={handleOpenModal}
+        onClick={handleOpenAnswerModal}
         className="cursor-pointer underline text-[#111D4A]"
       >
         View the whole answer
       </p>
+
       <Modal
         title={
           <div className="flex items-center">
@@ -142,23 +158,52 @@ export const AnswerComponent = ({
             <p>{answerAuthor}</p>
           </div>
         }
-        open={isModalVisible}
-        onCancel={handleCloseModal}
+        open={isAnswerModalVisible}
+        onCancel={handleCloseAnswerModal}
         footer={null}
       >
         <p className="mb-4">{answerText}</p>
+        <Carousel
+          className="mb-[12px]"
+          ref={carouselRef}
+          initialSlide={currentImageIndex}
+          adaptiveHeight
+          arrows
+        >
+          {pictures.map((image, index) => (
+            <div key={index}>
+              <img src={image} alt={`Image ${index + 1}`} />
+            </div>
+          ))}
+        </Carousel>
+      </Modal>
 
-        {pictures.length > 0 && (
-          <Carousel arrows adaptiveHeight>
-            {pictures.map((image, index) => (
-              <img
-                src={image}
-                alt={`Image ${index + 1}`}
-                className="w-[200px] h-auto"
-              />
-            ))}
-          </Carousel>
-        )}
+      <Modal
+        open={isCarouselModalVisible}
+        onCancel={handleCloseCarouselModal}
+        footer={null}
+        width="60%"
+        centered
+        title={
+          <div className="flex items-center">
+            <UserIcon className="w-5 mr-[10px]" />
+            <p>{answerAuthor}</p>
+          </div>
+        }
+      >
+        <Carousel
+          className="mb-[12px]"
+          ref={carouselRef}
+          initialSlide={currentImageIndex}
+          adaptiveHeight
+          arrows
+        >
+          {pictures.map((image, index) => (
+            <div key={index}>
+              <img src={image} alt={`Image ${index + 1}`} />
+            </div>
+          ))}
+        </Carousel>
       </Modal>
     </div>
   );
