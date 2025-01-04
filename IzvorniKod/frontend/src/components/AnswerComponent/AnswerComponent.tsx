@@ -5,12 +5,13 @@ import {
   HeartIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { Popover } from "antd";
+import { Popover, Modal, Carousel } from "antd";
 import { useState } from "react";
 
 type AnswerComponentType = {
   answerAuthor: string;
   answerText: string;
+  pictures: string[];
   onClick: () => void;
 };
 
@@ -30,11 +31,13 @@ const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
 export const AnswerComponent = ({
   answerAuthor,
   answerText,
+  pictures,
   onClick,
 }: AnswerComponentType) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const content = (
     <div className="flex flex-col gap-3 p-1">
@@ -46,8 +49,6 @@ export const AnswerComponent = ({
       >
         Report
       </button>
-
-      {/* napraviti validaciju može li korisnik obrisati ovaj post i ako ne može, onda ne prikazivati Delete gumb */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -58,6 +59,14 @@ export const AnswerComponent = ({
       </button>
     </div>
   );
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div className="bg-white">
@@ -107,7 +116,47 @@ export const AnswerComponent = ({
           </Popover>
         </div>
       </div>
-      <p>{answerText}</p>
+      <p className="line-clamp-2">{answerText}</p>
+      {pictures.length > 0 && (
+        <div className="flex flex-row space-x-2 m-3">
+          {pictures.slice(0, 5).map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Image ${index + 1}`}
+              className="h-12 w-12 object-cover rounded-lg cursor-pointer"
+            />
+          ))}
+        </div>
+      )}
+      <p onClick={handleOpenModal} className="cursor-pointer">
+        View the whole answer
+      </p>
+      <Modal
+        title={
+          <div className="flex items-center">
+            <UserIcon className="w-5 mr-[10px]" />
+            <p>{answerAuthor}</p>
+          </div>
+        }
+        open={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={null}
+      >
+        <p className="mb-4">{answerText}</p>
+
+        {pictures.length > 0 && (
+          <Carousel arrows adaptiveHeight>
+            {pictures.map((image, index) => (
+              <img
+                src={image}
+                alt={`Image ${index + 1}`}
+                className="w-[200px] h-auto"
+              />
+            ))}
+          </Carousel>
+        )}
+      </Modal>
     </div>
   );
 };
