@@ -22,9 +22,9 @@ export const FacultySubject = ({
   return (
     <div
       onClick={onClick}
-      className="w-[150px] h-[150px] bg-white rounded-[20px] p-[10px] min-[501px]:w-[250px] min-[501px]:h-[250px] min-[501px]:p-[15px]"
+      className="w-[150px] h-[150px] bg-white rounded-[20px] p-[10px] min-[501px]:w-[220px] min-[501px]:h-[220px] min-[501px]:p-[15px] border border-gray_border cursor-pointer hover:opacity-60"
     >
-      <p className="font-bold text-[18px] mb-[5px] min-[501px]:text-[26px] min-[501px]:mb-[10px]">
+      <p className="font-medium text-[15px] mb-[5px] min-[501px]:text-[26px] min-[501px]:mb-[10px]">
         {subjectTitle}
       </p>
       <hr />

@@ -1,14 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
+import { customFetch } from "../../../utils/customFetch";
 
 export type GetFacultySubjectsProps = {
-  facultyId: string;
+  facultyYearId: string;
+};
+
+export type FacultySubjectType = {
+  description: string;
+  facultyUserId: number;
+  facultyYearId: number;
+  id: number;
+  title: string;
 };
 
 export const useGetFacultySubjects = ({
-  facultyId,
+  facultyYearId,
 }: GetFacultySubjectsProps) => {
-  return useQuery({
-    queryKey: ["faculty-subjects", facultyId],
-    queryFn: async () => {},
+  return useQuery<FacultySubjectType[]>({
+    queryKey: ["faculty-subjects", facultyYearId],
+    queryFn: async () => {
+      const response = await customFetch({
+        endpointUrl: `subjects/year/${facultyYearId}`,
+        method: "GET",
+      });
+
+      return response;
+    },
   });
 };

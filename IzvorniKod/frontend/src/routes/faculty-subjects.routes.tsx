@@ -4,6 +4,6 @@ import { FacultySubjects } from "../pages/FacultySubjects/FacultySubjects.compon
 
 export const facultySubjectsRoute = createRoute({
   getParentRoute: () => sidebarLayoutRoute,
-  path: "/faculty/$facultyId",
+  path: "/faculty/$facultyId/year/$yearId/",
   component: FacultySubjects,
 });
