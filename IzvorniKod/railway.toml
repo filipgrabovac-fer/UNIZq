@@ -1,0 +1,9 @@
+[build]
+builder = "nixpacks"
+buildCommand = "bash build_script.bash.sh"
+
+[deploy]
+startCommand = "./gradlew clean build && ./gradlew bootRun"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "never"
