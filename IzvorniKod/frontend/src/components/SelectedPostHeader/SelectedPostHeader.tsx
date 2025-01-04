@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { UserIcon, ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 import { Carousel, Modal } from "antd";
 import { CarouselRef } from "antd/es/carousel";
-import { useNavigate } from "@tanstack/react-router";
 
 interface PostProps {
   postName: string;
@@ -17,10 +16,10 @@ const SelectedPostHeader = ({
   postAuthor,
   images,
 }: PostProps) => {
-  const navigate = useNavigate();
   const carouselRef = useRef<CarouselRef>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const handleImageClick = (index: number) => {
     setCurrentImageIndex(index);
     setIsModalVisible(true);
@@ -32,8 +31,7 @@ const SelectedPostHeader = ({
   };
 
   return (
-    <div className="p-4 w-full bg-white ml-auto mx-0">
-      {/* Header */}
+    <div className="p-4 w-full bg-white ml-auto mx-0 border-b border-b-gray_border">
       <div className="flex items-center space-x-2">
         <button
           className="text-gray-600 hover:text-black font-bold"
@@ -41,11 +39,9 @@ const SelectedPostHeader = ({
         >
           <ArrowLongLeftIcon className="h-6 w-6" />
         </button>
-        <h1 className="text-lg font-bold">{postName}</h1>
+        <h1 className="text-lg font-medium">{postName}</h1>
       </div>
-      {/* Post Data */}
       <p className="text-gray-700 mt-2">{postData}</p>
-      {/* Images and author */}
       <div className="flex justify-between flex-row space-x-2 mt-4">
         <div className="flex flex-row space-x-2">
           {images.slice(0, 5).map((image, index) => (

@@ -1,3 +1,4 @@
+import { AddAnswerComponent } from "../../components/SearchComponent/AddAnswerComponent";
 import SelectedPostHeader from "../../components/SelectedPostHeader/SelectedPostHeader";
 
 export const Home = () => {
@@ -17,6 +18,7 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
       />
+      <AddAnswerComponent postContent="Explain theory of Relativity" />
     </div>
   );
 };
