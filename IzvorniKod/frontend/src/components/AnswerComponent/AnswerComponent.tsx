@@ -129,7 +129,10 @@ export const AnswerComponent = ({
           ))}
         </div>
       )}
-      <p onClick={handleOpenModal} className="cursor-pointer">
+      <p
+        onClick={handleOpenModal}
+        className="cursor-pointer underline text-[#111D4A]"
+      >
         View the whole answer
       </p>
       <Modal
