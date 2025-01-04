@@ -16,5 +16,6 @@ public class PostCreateDTO {
     private String postContent;
     private Long subjectId;
     private List<String> images;
+    private String link;
     private Long facultyId;
 }
