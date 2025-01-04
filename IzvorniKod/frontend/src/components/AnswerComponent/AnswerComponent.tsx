@@ -61,9 +61,11 @@ export const AnswerComponent = ({
 
   return (
     <div className="bg-white">
-      <div className="flex">
-        <UserIcon className="w-5 mr-[1%]" />
-        <p>{answerAuthor}</p>
+      <div className="flex justify-between">
+        <div className="flex w-[50%]">
+          <UserIcon className="w-5 mr-[10px]" />
+          <p className="w-[50%] truncate">{answerAuthor}</p>
+        </div>
         <div className="flex gap-1.5">
           <HeartIcon
             onClick={(e) => {
