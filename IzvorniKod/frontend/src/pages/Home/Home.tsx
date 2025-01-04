@@ -1,6 +1,6 @@
 import { AddAnswerComponent } from "../../components/SearchComponent/AddAnswerComponent";
 import SelectedPostHeader from "../../components/SelectedPostHeader/SelectedPostHeader";
-
+import { AnswerComponent } from "../../components/AnswerComponent/AnswerComponent";
 export const Home = () => {
   return (
     <div className="bg-secondary overflow-hidden">
@@ -19,6 +19,16 @@ export const Home = () => {
         ]}
       />
       <AddAnswerComponent postContent="Explain theory of Relativity" />
+      <AnswerComponent
+        onClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        answerAuthor="Answer author"
+        answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
+        minus, dolore, laboriosam aliquid natus officia consequatur commodi
+        iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
+        similique."
+      />
     </div>
   );
 };
