@@ -1,25 +1,20 @@
-import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
-import { UserTableRow } from "../../components/UserTableRow/UserTableRow";
+import { useState } from "react";
+import { CreatePostModal } from "../../components/CreatePostModal/CreatePostModal";
 
 export const Home = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   return (
     <div className=" bg-secondary overflow-hidden">
       Home page
-      <FacultySubject
-        subjectTitle="Operative Systems"
-        subjectDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt..."
-        onClick={() => 0}
+      <button onClick={() => setIsModalVisible(true)}>Create post</button>
+      <CreatePostModal
+        onCreate={() => {
+          setIsModalVisible(false);
+        }}
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
       />
-      <div className="w-[70%]">
-        <UserTableRow
-          facultyUserId={0}
-          username={"someRandomLongUsernameThatNeedsToBeTruncated"}
-          email={"someEmailthatalsoneedtstobetruncated@gmail.com"}
-          postsReported={1}
-          isKicked={false}
-          onKick={() => console.log("Kick this player")}
-        />
-      </div>
     </div>
   );
 };
