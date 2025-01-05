@@ -96,7 +96,7 @@ export const AnswerComponent = ({
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white border-gray_border border-b-[1px] text-[14px] px-4 pt-3">
       <div className="flex justify-between">
         <div className="flex w-[50%]">
           <UserIcon className="w-5 mr-[10px]" />
@@ -149,9 +149,16 @@ export const AnswerComponent = ({
       >
         {answerText}
       </p>
-
+      {isClamped && (
+        <p
+          onClick={handleToggleText}
+          className="cursor-pointer underline text-[#111D4A] w-fit text-[14px] ml-auto mr-7"
+        >
+          {isExpanded ? "Show less" : "View more"}
+        </p>
+      )}
       {pictures.length > 0 && (
-        <div className="flex flex-row space-x-2 mt-3 mx-3">
+        <div className="flex flex-row space-x-2 m-3">
           {pictures.slice(0, 5).map((image, index) => (
             <img
               key={index}
@@ -164,14 +171,6 @@ export const AnswerComponent = ({
         </div>
       )}
 
-      {isClamped && (
-        <p
-          onClick={handleToggleText}
-          className="cursor-pointer underline text-[#111D4A] w-fit mt-3"
-        >
-          {isExpanded ? "Show less" : "View the whole answer"}
-        </p>
-      )}
       <Modal
         open={isCarouselModalVisible}
         onCancel={handleCloseCarouselModal}
