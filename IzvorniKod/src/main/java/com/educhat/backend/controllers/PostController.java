@@ -1,9 +1,9 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.PostCreateDTO;
-import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
+import com.educhat.backend.DTO.PostAnswersDTO;
+import com.educhat.backend.DTO.PostDetailsDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
-import com.educhat.backend.models.Answer;
 import com.educhat.backend.models.Post;
 import com.educhat.backend.services.PostService;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +29,20 @@ public class PostController {
     }
 
     @GetMapping("{postId}")
-    public ResponseEntity<PostDetailsAndAnswersDTO> postResponses(@PathVariable Long postId) {
-        PostDetailsAndAnswersDTO response = postService.getPostResponses(postId);
+    public ResponseEntity<PostAnswersDTO> postAnswers(@PathVariable Long postId) {
+        PostAnswersDTO response = postService.getPostAnswers(postId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/user/{userId}")
     public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody PostCreateDTO postCreateDTO) {
         Post response = postService.createPostAndImages(userId, postCreateDTO);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/details/{postId}")
+    public ResponseEntity<PostDetailsDTO> postDetails(@PathVariable Long postId, @RequestParam Long userId) {
+        PostDetailsDTO response = postService.getPostDetails(postId, userId);
         return ResponseEntity.ok(response);
     }
 

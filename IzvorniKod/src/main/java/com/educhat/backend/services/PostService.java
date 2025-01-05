@@ -1,9 +1,6 @@
 package com.educhat.backend.services;
 
-import com.educhat.backend.DTO.AnswerWithImagesDTO;
-import com.educhat.backend.DTO.PostCreateDTO;
-import com.educhat.backend.DTO.PostDetailsAndAnswersDTO;
-import com.educhat.backend.DTO.PostResponseDTO;
+import com.educhat.backend.DTO.*;
 import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.*;
 import com.educhat.backend.models.enums.Role;
@@ -86,12 +83,12 @@ public class PostService {
 
 
 
-    public PostDetailsAndAnswersDTO getPostResponses(Long postId) {
+    public PostAnswersDTO getPostAnswers(Long postId) {
         // get post
         Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
 
         // create main dto response
-        PostDetailsAndAnswersDTO response = new PostDetailsAndAnswersDTO();
+        PostAnswersDTO response = new PostAnswersDTO();
         response.setPostHeader(post.getTitle());
         response.setPostContent(post.getDescription());
 
@@ -100,7 +97,7 @@ public class PostService {
                 .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
         User user = userRepository.findById(facultyUser.getUserId())
                 .orElseThrow( () -> new UserNotFoundException("User not found"));
-        response.setAuthor(user.getUsername());
+        response.setAuthor(user.getRealUsername());
 
         // post images
         List<String> postImagesUrl = new ArrayList<>();
@@ -163,4 +160,61 @@ public class PostService {
         return savedPost;
     }
 
+    public PostDetailsDTO getPostDetails(Long postId, Long userId) {
+        // get post
+        Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
+
+        // create main dto response
+        PostDetailsDTO response = new PostDetailsDTO();
+        response.setPostHeader(post.getTitle());
+        response.setPostContent(post.getDescription());
+
+        // find post author username
+        FacultyUser facultyUser = facultyUserRepository.findById(post.getFacultyUserId())
+                .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
+        User userAuthor = userRepository.findById(facultyUser.getUserId())
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+        response.setAuthor(userAuthor.getRealUsername());
+
+        response.setUpvotes(post.getUpvotes());
+        response.setDownvotes(post.getDownvotes());
+        response.setReports(post.getReports());
+
+        // post images
+        List<String> postImagesUrl = new ArrayList<>();
+        for(PostImage image : postImageRepository.findByPostId(postId)) {
+            postImagesUrl.add(image.getLink());
+        }
+        response.setImages(postImagesUrl);
+
+        // check if current user is author of post
+        response.setEditable(userId.equals(userAuthor.getId()));
+
+        // find answers
+        List<AnswerDetailsDTO> answersDTO = new ArrayList<>();
+        for(Answer answer : answerRepository.findByPostId(postId)) {
+            // find answer author
+            FacultyUser facultyUserAnswer = facultyUserRepository.findById(answer.getFacultyUserId())
+                    .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
+            User userAuthorAnswer = userRepository.findById(facultyUserAnswer.getUserId())
+                    .orElseThrow( () -> new UserNotFoundException("User not found"));
+            // get answer images
+            List<String> answerImagesUrl = new ArrayList<>();
+            for(AnswerImage image : answerImageRepository.findByAnswerId(answer.getId())) {
+                answerImagesUrl.add(image.getLink());
+            }
+            // create answer dto
+            answersDTO.add(new AnswerDetailsDTO(
+                    answer.getDescription(),
+                    answerImagesUrl,
+                    userAuthorAnswer.getRealUsername(),
+                    userId.equals(userAuthorAnswer.getId()),
+                    false,
+                    false,
+                    answer.isLikedByAuthor()));
+        }
+        response.setAnswerDetails(answersDTO);
+
+        return response;
+    }
 }

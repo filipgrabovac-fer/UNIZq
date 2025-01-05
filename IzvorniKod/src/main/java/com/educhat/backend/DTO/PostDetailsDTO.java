@@ -1,6 +1,5 @@
 package com.educhat.backend.DTO;
 
-import com.educhat.backend.models.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +11,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDetailsAndAnswersDTO {
+public class PostDetailsDTO {
 
     private String postHeader;
     private String postContent;
     private String author;  // username
-    private List<String> images;    // list of images urls connected to that post
-    private List<AnswerWithImagesDTO> answers;
+    private int upvotes;
+    private int downvotes;
+    private int reports;
+    private List<String> images;    // list of images url connected to that post
+    private boolean isEditable; // true if current user is author of post
+    private List<AnswerDetailsDTO> answerDetails;
 }
