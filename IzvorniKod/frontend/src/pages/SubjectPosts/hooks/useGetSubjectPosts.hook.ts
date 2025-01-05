@@ -26,8 +26,6 @@ export const useGetSubjectPosts = ({ subjectId }: GetSubjectPostsProps) => {
         endpointUrl: `posts/subject/${subjectId}`,
         method: "GET",
       });
-
-      console.log(response);
       return response;
     },
   });

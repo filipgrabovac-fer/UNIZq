@@ -1,4 +1,3 @@
-import { Spin } from "antd";
 import { PostPreview } from "../../components/PostPreview/PostPreview";
 import { subjectPostsRoute } from "../../routes/faculty-subjects.routes";
 import { useGetSubjectPosts } from "./hooks/useGetSubjectPosts.hook";
@@ -6,7 +5,7 @@ import { useGetSubjectPosts } from "./hooks/useGetSubjectPosts.hook";
 export const SubjectPosts = () => {
   const { subjectId } = subjectPostsRoute.useParams();
 
-  const { data, isLoading } = useGetSubjectPosts({ subjectId: subjectId });
+  const { data } = useGetSubjectPosts({ subjectId: subjectId });
 
   return (
     <div className="w-full">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Button, Checkbox, List, Input } from "antd";
 import { cn } from "../../utils/cn.util";
 // Define the faculty type
