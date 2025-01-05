@@ -38,7 +38,6 @@ export const AnswerComponent = ({
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
-  const [isAnswerModalVisible, setIsAnswerModalVisible] = useState(false);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
@@ -64,14 +63,6 @@ export const AnswerComponent = ({
     </div>
   );
 
-  const handleOpenAnswerModal = () => {
-    setIsAnswerModalVisible(true);
-  };
-
-  const handleCloseAnswerModal = () => {
-    setIsAnswerModalVisible(false);
-  };
-
   const handleCloseCarouselModal = () => {
     setIsCarouselModalVisible(false);
   };
@@ -82,6 +73,11 @@ export const AnswerComponent = ({
     carouselRef.current?.goTo(index);
   };
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleToggleText = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <div className="bg-white">
       <div className="flex justify-between">
@@ -130,7 +126,7 @@ export const AnswerComponent = ({
           </Popover>
         </div>
       </div>
-      <p className="line-clamp-2">{answerText}</p>
+      <p className={isExpanded ? "" : "line-clamp-2"}>{answerText}</p>{" "}
       {pictures.length > 0 && (
         <div className="flex flex-row space-x-2 m-3">
           {pictures.slice(0, 5).map((image, index) => (
@@ -145,12 +141,11 @@ export const AnswerComponent = ({
         </div>
       )}
       <p
-        onClick={handleOpenAnswerModal}
+        onClick={handleToggleText}
         className="cursor-pointer underline text-[#111D4A] w-fit"
       >
-        View the whole answer
+        {isExpanded ? "Show less" : "View the whole answer"}
       </p>
-
       <Modal
         open={isCarouselModalVisible}
         onCancel={handleCloseCarouselModal}
@@ -171,24 +166,6 @@ export const AnswerComponent = ({
           adaptiveHeight
           arrows
         >
-          {pictures.map((image, index) => (
-            <img src={image} alt={`Image ${index + 1}`} />
-          ))}
-        </Carousel>
-      </Modal>
-      <Modal
-        title={
-          <div className="flex items-center">
-            <UserIcon className="w-5 mr-[10px]" />
-            <p>{answerAuthor}</p>
-          </div>
-        }
-        open={isAnswerModalVisible}
-        onCancel={handleCloseAnswerModal}
-        footer={null}
-      >
-        <p className="mb-4">{answerText}</p>
-        <Carousel className="mb-[12px]" adaptiveHeight arrows>
           {pictures.map((image, index) => (
             <img src={image} alt={`Image ${index + 1}`} />
           ))}
