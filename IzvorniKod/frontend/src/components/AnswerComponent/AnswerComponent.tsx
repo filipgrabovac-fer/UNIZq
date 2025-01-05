@@ -146,37 +146,10 @@ export const AnswerComponent = ({
       )}
       <p
         onClick={handleOpenAnswerModal}
-        className="cursor-pointer underline text-[#111D4A]"
+        className="cursor-pointer underline text-[#111D4A] w-fit"
       >
         View the whole answer
       </p>
-
-      <Modal
-        title={
-          <div className="flex items-center">
-            <UserIcon className="w-5 mr-[10px]" />
-            <p>{answerAuthor}</p>
-          </div>
-        }
-        open={isAnswerModalVisible}
-        onCancel={handleCloseAnswerModal}
-        footer={null}
-      >
-        <p className="mb-4">{answerText}</p>
-        <Carousel
-          className="mb-[12px]"
-          ref={carouselRef}
-          initialSlide={currentImageIndex}
-          adaptiveHeight
-          arrows
-        >
-          {pictures.map((image, index) => (
-            <div key={index}>
-              <img src={image} alt={`Image ${index + 1}`} />
-            </div>
-          ))}
-        </Carousel>
-      </Modal>
 
       <Modal
         open={isCarouselModalVisible}
@@ -199,9 +172,25 @@ export const AnswerComponent = ({
           arrows
         >
           {pictures.map((image, index) => (
-            <div key={index}>
-              <img src={image} alt={`Image ${index + 1}`} />
-            </div>
+            <img src={image} alt={`Image ${index + 1}`} />
+          ))}
+        </Carousel>
+      </Modal>
+      <Modal
+        title={
+          <div className="flex items-center">
+            <UserIcon className="w-5 mr-[10px]" />
+            <p>{answerAuthor}</p>
+          </div>
+        }
+        open={isAnswerModalVisible}
+        onCancel={handleCloseAnswerModal}
+        footer={null}
+      >
+        <p className="mb-4">{answerText}</p>
+        <Carousel className="mb-[12px]" adaptiveHeight arrows>
+          {pictures.map((image, index) => (
+            <img src={image} alt={`Image ${index + 1}`} />
           ))}
         </Carousel>
       </Modal>
