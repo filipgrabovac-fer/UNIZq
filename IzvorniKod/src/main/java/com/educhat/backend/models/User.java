@@ -76,4 +76,8 @@ public class User implements UserDetails {
     public String getRealUsername() {
         return username;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

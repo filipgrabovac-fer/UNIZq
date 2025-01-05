@@ -46,9 +46,11 @@ public class WebConfig implements WebMvcConfigurer {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
 
+    @Value("${spring.datasource.username}")
+    private String SECRET_KEY;
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-
         registry.addViewController("/{path:[^\\.]*}")
                 .setViewName("forward:/index.html");
     }
@@ -114,15 +116,13 @@ public class WebConfig implements WebMvcConfigurer {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
 
         log.info("OAuth2 Authentication Successful, redirecting to frontend home");
-        log.info("Authenticated Principal: Name: [{}], Granted Authorities: [{}], User Attributes: [{}]",
-                oauth2User.getName(), oauth2User.getAuthorities(), oauth2User.getAttributes());
-
         customOAuth2UserService.saveUser(oauth2User);
 
         String email = oauth2User.getAttribute("email");
+        Long userId = customOAuth2UserService.getUserIdByEmail(email); // Fetch userId from DB
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-        String jwt = jwtService.generateToken(userDetails);
+        String jwt = jwtService.generateToken(userDetails, userId); // Include userId in JWT
         log.info("Generated JWT: [{}]", jwt);
 
         Cookie jwtCookie = new Cookie("jwtToken", jwt);
@@ -133,5 +133,6 @@ public class WebConfig implements WebMvcConfigurer {
         response.addCookie(jwtCookie);
         response.sendRedirect("/home");
     }
+
 }
 

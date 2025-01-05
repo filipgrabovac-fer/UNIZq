@@ -33,6 +33,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyRepository facultyRepository;
+    private final CustomUserDetailsService customUserDetailsService;
 
     public AuthenticationResponse saveUser(UserRegistrationDTO registrationDTO) {
         var user = User.builder()
@@ -43,29 +44,42 @@ public class UserService {
                 .role(Role.USER)
                 .build();
 
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException("Username already exists");
         }
-        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email already exists");
         }
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        user = userRepository.save(user); // Save user and get the persisted user with ID
+
+        var userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
+        var jwtToken = jwtService.generateToken(userDetails, user.getId()); // Pass userId to generateToken
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
     public AuthenticationResponse authenticateUser(UserLoginDTO userLoginDTO) {
+        // Authenticate the user credentials
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userLoginDTO.getEmail()
-                        , userLoginDTO.getPassword()
+                        userLoginDTO.getEmail(),
+                        userLoginDTO.getPassword()
                 )
         );
+
+        // Find the user from the database
         var user = userRepository.findByEmail(userLoginDTO.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
-        var jwtToken = jwtService.generateToken(user);
+
+        // Load UserDetails
+        var userDetails = customUserDetailsService.loadUserByUsername(user.getEmail());
+
+        // Generate the token with userId
+        var jwtToken = jwtService.generateToken(userDetails, user.getId());
+
+        // Return the response with the token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
