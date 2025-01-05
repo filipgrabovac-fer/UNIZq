@@ -83,51 +83,6 @@ public class PostService {
 
 
 
-    public PostAnswersDTO getPostAnswers(Long postId) {
-        // get post
-        Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
-
-        // create main dto response
-        PostAnswersDTO response = new PostAnswersDTO();
-        response.setPostHeader(post.getTitle());
-        response.setPostContent(post.getDescription());
-
-        // find author username
-        FacultyUser facultyUser = facultyUserRepository.findById(post.getFacultyUserId())
-                .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
-        User user = userRepository.findById(facultyUser.getUserId())
-                .orElseThrow( () -> new UserNotFoundException("User not found"));
-        response.setAuthor(user.getRealUsername());
-
-        // post images
-        List<String> postImagesUrl = new ArrayList<>();
-        for(PostImage image : postImageRepository.findByPostId(postId)) {
-            postImagesUrl.add(image.getLink());
-        }
-        response.setImages(postImagesUrl);
-
-        // connect answers with images
-        List<AnswerWithImagesDTO> answerAndImages = new ArrayList<>();
-        for(Answer answer : answerRepository.findByPostId(postId)) {
-            // set answer in dto
-            AnswerWithImagesDTO temp = new AnswerWithImagesDTO();
-            temp.setAnswer(answer);
-            //set images in dto
-            List<String> answerImagesUrl = new ArrayList<>();
-            for(AnswerImage image : answerImageRepository.findByAnswerId(answer.getId())) {
-                answerImagesUrl.add(image.getLink());
-            }
-            temp.setAnswerImages(answerImagesUrl);
-
-            answerAndImages.add(temp);
-        }
-        response.setAnswers(answerAndImages);
-
-        return response;
-    }
-
-
-
     public Post createPostAndImages(Long userId, PostCreateDTO postCreateDTO) {
         if(!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found");
@@ -159,6 +114,7 @@ public class PostService {
 
         return savedPost;
     }
+
 
     public PostDetailsDTO getPostDetails(Long postId, Long userId) {
         // get post
@@ -217,4 +173,5 @@ public class PostService {
 
         return response;
     }
+
 }

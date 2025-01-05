@@ -1,7 +1,6 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.PostCreateDTO;
-import com.educhat.backend.DTO.PostAnswersDTO;
 import com.educhat.backend.DTO.PostDetailsDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.models.Post;
@@ -22,16 +21,10 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("subject/{subjectId}")
-    public ResponseEntity<List<PostResponseDTO>> getPosts(@PathVariable Long subjectId, @RequestParam Long userId) {
+    @GetMapping("subject/{subjectId}/user/{userId}")
+    public ResponseEntity<List<PostResponseDTO>> getPosts(@PathVariable Long subjectId, @PathVariable Long userId) {
         List<PostResponseDTO> subjectPosts = postService.getPostsBySubject(subjectId, userId);
         return ResponseEntity.ok(subjectPosts);
-    }
-
-    @GetMapping("{postId}")
-    public ResponseEntity<PostAnswersDTO> postAnswers(@PathVariable Long postId) {
-        PostAnswersDTO response = postService.getPostAnswers(postId);
-        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/user/{userId}")
@@ -40,8 +33,8 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/details/{postId}")
-    public ResponseEntity<PostDetailsDTO> postDetails(@PathVariable Long postId, @RequestParam Long userId) {
+    @GetMapping("/{postId}/user/{userId}")
+    public ResponseEntity<PostDetailsDTO> postDetails(@PathVariable Long postId, @PathVariable Long userId) {
         PostDetailsDTO response = postService.getPostDetails(postId, userId);
         return ResponseEntity.ok(response);
     }
