@@ -59,7 +59,7 @@ public class PostService {
         return facultyUser.getUserId().equals(userId);
     }
 
-    // find if user is admin
+    // find if user is admin by subjectId and userId
     private boolean isUserAdmin(Long subjectId, Long userId) {
 
         // check if user is app admin
@@ -77,6 +77,18 @@ public class PostService {
                 .orElseThrow( () -> new FacultyYearNotFoundException("FacultyYear not found"));
         Long facultyId = facultyYear.getFacultyId();
 
+        Optional<FacultyUser> facultyUserOptional = facultyUserRepository.findByUserIdAndFacultyIdAndRole(userId, facultyId, Role.ADMIN);
+        return facultyUserOptional.isPresent();
+    }
+
+    // find if user is admin by userId and facultyId
+    private boolean isUserAdmin_2(Long userId, Long facultyId) {
+        // check if user is app admin
+        User user = userRepository.findById(userId).orElseThrow( () -> new UserNotFoundException("User not found"));
+        if(user.getRole().equals(Role.ADMIN)) {
+            return true;
+        }
+        // check if user is faculty admin
         Optional<FacultyUser> facultyUserOptional = facultyUserRepository.findByUserIdAndFacultyIdAndRole(userId, facultyId, Role.ADMIN);
         return facultyUserOptional.isPresent();
     }
@@ -117,6 +129,10 @@ public class PostService {
 
 
     public PostDetailsDTO getPostDetails(Long postId, Long userId) {
+        // check if current user exists
+        if(!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("User not found");
+        }
         // get post
         Post post = postRepository.findById(postId).orElseThrow( () -> new PostNotFoundException("Post not found"));
 
@@ -143,8 +159,9 @@ public class PostService {
         }
         response.setImages(postImagesUrl);
 
-        // check if current user is author of post
-        response.setEditable(userId.equals(userAuthor.getId()));
+        // user can edit post if user is author of post or user is admin
+        response.setEditable(userId.equals(userAuthor.getId()) ||
+                isUserAdmin_2(userId, facultyUser.getFacultyId()));
 
         // find answers
         List<AnswerDetailsDTO> answersDTO = new ArrayList<>();
@@ -164,7 +181,7 @@ public class PostService {
                     answer.getDescription(),
                     answerImagesUrl,
                     userAuthorAnswer.getRealUsername(),
-                    userId.equals(userAuthorAnswer.getId()),
+                    userId.equals(userAuthorAnswer.getId()) || isUserAdmin_2(userId, facultyUserAnswer.getFacultyId()),
                     false,
                     false,
                     answer.isLikedByAuthor()));
