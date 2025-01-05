@@ -41,9 +41,9 @@ export const Sidebar = ({ list, events }: SidebarType) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="cursor-pointer"
+        className="cursor-pointer text-red"
       >
-        Edit
+        Remove
       </button>
     </div>
   );
@@ -72,7 +72,21 @@ export const Sidebar = ({ list, events }: SidebarType) => {
         children: [
           ...facultyYears[faculty.facultyId].map((year, index) => ({
             key: `faculty-${faculty.facultyId}-year-${index}`,
-            label: year,
+            label: (
+              <div className="flex justify-between w-[400px]">
+                <p className="truncate">{year}</p>
+                {faculty.canEditFacultyYear && (
+                  <Popover
+                    arrow={false}
+                    content={content}
+                    trigger="click"
+                    className="w-[25px]"
+                  >
+                    <EllipsisVerticalIcon className="cursor-pointer" />
+                  </Popover>
+                )}
+              </div>
+            ),
           })),
           {
             key: `faculty-${faculty.facultyId}-add-year`,

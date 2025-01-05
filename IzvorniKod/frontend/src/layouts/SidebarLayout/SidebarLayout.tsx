@@ -23,7 +23,7 @@ export const SidebarLayout = () => {
       facultyId: 1,
       title: "FSB",
       canEditFaculty: true,
-      canEditFacultyYear: false,
+      canEditFacultyYear: true,
     },
     {
       facultyId: 2,
