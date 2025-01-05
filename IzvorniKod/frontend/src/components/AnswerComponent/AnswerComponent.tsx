@@ -6,7 +6,7 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { Popover, Modal, Carousel } from "antd";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { CarouselRef } from "antd/es/carousel";
 
 type AnswerComponentType = {
@@ -40,7 +40,29 @@ export const AnswerComponent = ({
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isClamped, setIsClamped] = useState(false);
+
+  const textRef = useRef<HTMLParagraphElement>(null);
   const carouselRef = useRef<CarouselRef>(null);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const lineHeight = parseFloat(
+        getComputedStyle(textRef.current).lineHeight
+      );
+      const maxHeight = lineHeight * 2; // Two lines
+      if (textRef.current.scrollHeight > maxHeight) {
+        setIsClamped(true);
+      } else {
+        setIsClamped(false);
+      }
+    }
+  }, [answerText]);
+
+  const handleToggleText = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const content = (
     <div className="flex flex-col gap-3 p-1">
@@ -73,11 +95,6 @@ export const AnswerComponent = ({
     carouselRef.current?.goTo(index);
   };
 
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleToggleText = () => {
-    setIsExpanded(!isExpanded);
-  };
   return (
     <div className="bg-white">
       <div className="flex justify-between">
@@ -126,9 +143,15 @@ export const AnswerComponent = ({
           </Popover>
         </div>
       </div>
-      <p className={isExpanded ? "" : "line-clamp-2"}>{answerText}</p>{" "}
+      <p
+        ref={textRef}
+        className={isExpanded || !isClamped ? "" : "line-clamp-2"}
+      >
+        {answerText}
+      </p>
+
       {pictures.length > 0 && (
-        <div className="flex flex-row space-x-2 m-3">
+        <div className="flex flex-row space-x-2 mt-3 mx-3">
           {pictures.slice(0, 5).map((image, index) => (
             <img
               key={index}
@@ -140,12 +163,15 @@ export const AnswerComponent = ({
           ))}
         </div>
       )}
-      <p
-        onClick={handleToggleText}
-        className="cursor-pointer underline text-[#111D4A] w-fit"
-      >
-        {isExpanded ? "Show less" : "View the whole answer"}
-      </p>
+
+      {isClamped && (
+        <p
+          onClick={handleToggleText}
+          className="cursor-pointer underline text-[#111D4A] w-fit mt-3"
+        >
+          {isExpanded ? "Show less" : "View the whole answer"}
+        </p>
+      )}
       <Modal
         open={isCarouselModalVisible}
         onCancel={handleCloseCarouselModal}
