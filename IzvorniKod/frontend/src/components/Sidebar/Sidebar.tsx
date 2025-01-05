@@ -55,7 +55,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
       children: list.map((faculty) => ({
         key: `faculty-${faculty.facultyId}`,
         label: (
-          <div className="flex justify-between w-[400px]">
+          <div className="flex justify-between w-[250px]">
             <p className="truncate">{faculty.title}</p>
             {faculty.canEditFaculty && (
               <Popover
@@ -73,7 +73,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
           ...facultyYears[faculty.facultyId].map((year, index) => ({
             key: `faculty-${faculty.facultyId}-year-${index}`,
             label: (
-              <div className="flex justify-between w-[400px]">
+              <div className="flex justify-between w-[250px]">
                 <p className="truncate">{year}</p>
                 {faculty.canEditFacultyYear && (
                   <Popover
@@ -115,7 +115,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
   ];
 
   return (
-    <div>
+    <div className="min-w-[250px] h-screen">
       <ConfigProvider
         theme={{
           components: {
@@ -129,11 +129,8 @@ export const Sidebar = ({ list, events }: SidebarType) => {
         }}
       >
         <Menu
-          //expandIcon={null}
+          className="max-[500px]:w-full"
           onClick={handleClick}
-          style={{
-            borderRadius: "20px",
-          }}
           selectedKeys={[current]}
           mode="inline"
           items={menuItems}

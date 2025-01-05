@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Header } from "../../components/Header/Header";
 import { Outlet } from "@tanstack/react-router";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { useGetEvents } from "../../pages/Events/hooks/useGetEvents.hook";
 
 export const SidebarLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -38,7 +39,8 @@ export const SidebarLayout = () => {
       canEditFacultyYear: false,
     },
   ];
-
+  const { data } = useGetEvents();
+  console.log(data);
   return (
     <div>
       <Header
@@ -55,9 +57,7 @@ export const SidebarLayout = () => {
         )
       ) : (
         <div className="flex w-full">
-          <div className="w-[300px]">
-            <Sidebar list={sidebarData} events={[]} />
-          </div>
+          <Sidebar list={sidebarData} events={[]} />
           <Outlet />
         </div>
       )}

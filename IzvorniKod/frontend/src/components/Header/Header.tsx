@@ -4,58 +4,8 @@ import {
   UserCircleIcon,
   Bars3Icon,
   XMarkIcon,
-  PlusIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "@tanstack/react-router";
-
-export const sidebarDataMock = [
-  {
-    key: "faculties",
-    label: "Faculties",
-    children: [
-      {
-        key: 1,
-        label: "FER",
-        children: [
-          { key: 1, label: "First Year" },
-          { key: 2, label: "Second Year" },
-          { key: 3, label: "Third Year" },
-          { key: 13, label: "Add year", icon: <PlusIcon className="h-4" /> },
-        ],
-      },
-      {
-        key: 2,
-        label: "PMF",
-        children: [
-          { key: 4, label: "First Year" },
-          { key: 5, label: "Second Year" },
-          { key: 6, label: "Third Year" },
-          { key: 14, label: "Add year", icon: <PlusIcon className="h-4" /> },
-        ],
-      },
-      {
-        key: 3,
-        label: "FSB",
-        children: [
-          { key: 7, label: "First Year" },
-          { key: 8, label: "Second Year" },
-          { key: 9, label: "Third Year" },
-          { key: 16, label: "Add year", icon: <PlusIcon className="h-4" /> },
-        ],
-      },
-      { key: 13, label: "Add faculty", icon: <PlusIcon className="h-4" /> },
-    ],
-  },
-  {
-    key: "event",
-    label: "Events",
-    children: [
-      { key: 10, label: "First Event" },
-      { key: 11, label: "Second Event" },
-      { key: 12, label: "Third Event" },
-    ],
-  },
-];
 
 type HeaderType = {
   isSidebarOpen: boolean;
@@ -67,7 +17,8 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
 
   const dropdownTabs = [
     { onClick: () => navigate({ to: "/events" }), label: "Events" },
-    { onClick: () => navigate({ to: "/profile" }), label: "View profile" },
+    { onClick: () => navigate({ to: "/profile" }), label: "Profile" },
+    { onClick: () => navigate({ to: "/users" }), label: "Users" },
     {
       onClick: () => {
         localStorage.removeItem("token");
