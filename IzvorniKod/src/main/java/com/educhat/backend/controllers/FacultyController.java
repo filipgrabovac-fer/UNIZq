@@ -31,6 +31,12 @@ public class FacultyController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Faculty> createFaculty(@PathVariable Long userId, @RequestParam String title) {
+        Faculty createdFaculty = facultyService.createFaculty(userId, title);
+        return ResponseEntity.ok(createdFaculty);
+    }
+
     @DeleteMapping("/{facultyId}")
     public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId) {
         facultyService.deleteFacultyById(facultyId);
