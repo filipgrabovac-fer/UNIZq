@@ -31,4 +31,10 @@ public class FacultyController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{facultyId}")
+    public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId) {
+        facultyService.deleteFacultyById(facultyId);
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
+    }
+
 }

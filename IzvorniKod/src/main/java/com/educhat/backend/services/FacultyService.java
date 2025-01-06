@@ -5,10 +5,13 @@ import com.educhat.backend.exceptions.FacultyNotFoundException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.models.FacultyUser;
+import com.educhat.backend.models.FacultyYear;
 import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.FacultyRepository;
 import com.educhat.backend.repository.FacultyUserRepository;
+import com.educhat.backend.repository.FacultyYearRepository;
 import com.educhat.backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ public class FacultyService {
     private final FacultyRepository facultyRepository;
     private final UserRepository userRepository;
     private final FacultyUserRepository facultyUserRepository;
+    private final FacultyYearRepository facultyYearRepository;
+    private final FacultyYearService facultyYearService;
 
     public List<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
@@ -42,4 +47,19 @@ public class FacultyService {
         return responseDTOs;
     }
 
+    @Transactional
+    public void deleteFacultyById(Long facultyId) {
+        // find if faculty exists before deleting it
+        if(!facultyRepository.existsById(facultyId)) {
+            throw new FacultyNotFoundException("Faculty not found");
+        }
+
+        // delete all related data
+        for(FacultyYear facultyYear : facultyYearRepository.findByFacultyId(facultyId)) {
+            facultyYearService.deleteFacultyYearById(facultyYear.getId());
+        }
+
+        // delete faculty
+        facultyRepository.deleteById(facultyId);
+    }
 }
