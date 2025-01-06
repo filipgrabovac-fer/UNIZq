@@ -7,42 +7,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "@tanstack/react-router";
 
-export const sidebarDataMock = [
-  {
-    key: "faculties",
-    label: "Faculties",
-    children: [
-      {
-        key: 1,
-        label: "FER",
-        children: [
-          { key: 1, label: "First Year" },
-          { key: 2, label: "Second Year" },
-          { key: 3, label: "Third Year" },
-        ],
-      },
-      {
-        key: 2,
-        label: "PMF",
-        children: [
-          { key: 4, label: "First Year" },
-          { key: 5, label: "Second Year" },
-          { key: 6, label: "Third Year" },
-        ],
-      },
-      {
-        key: 3,
-        label: "FSB",
-        children: [
-          { key: 7, label: "First Year" },
-          { key: 8, label: "Second Year" },
-          { key: 9, label: "Third Year" },
-        ],
-      },
-    ],
-  },
-];
-
 type HeaderType = {
   isSidebarOpen: boolean;
   setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
@@ -53,7 +17,8 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
 
   const dropdownTabs = [
     { onClick: () => navigate({ to: "/events" }), label: "Events" },
-    { onClick: () => navigate({ to: "/profile" }), label: "View profile" },
+    { onClick: () => navigate({ to: "/profile" }), label: "Profile" },
+    { onClick: () => navigate({ to: "/users" }), label: "Users" },
     {
       onClick: () => {
         localStorage.removeItem("token");
@@ -72,7 +37,7 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
 
   return (
     <div className="flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
-      <div className="min-[500px]:hidden flex">
+      <div className="min-[501px]:hidden flex">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           {isSidebarOpen ? (
             <XMarkIcon width={25} height={25} />

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Header, sidebarDataMock } from "../../components/Header/Header";
-import { Menu } from "antd";
+import { Header } from "../../components/Header/Header";
 import { Outlet } from "@tanstack/react-router";
 
 export const NoSidebarLayout = () => {
@@ -12,20 +11,8 @@ export const NoSidebarLayout = () => {
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />
-      {isSidebarOpen ? (
-        <div className={"absolute left-0 top-[60px] w-full h-full bg-white"}>
-          <Menu
-            mode="inline"
-            items={sidebarDataMock}
-            defaultOpenKeys={["faculties"]}
-            onSelect={() => {
-              setIsSidebarOpen(false); // dodati funkcionalnost klika na pojedinu godinu
-            }}
-          />
-        </div>
-      ) : (
-        <Outlet />
-      )}
+
+      <Outlet />
     </div>
   );
 };
