@@ -1,7 +1,8 @@
 package com.educhat.backend.services;
 
-import com.educhat.backend.exceptions.FacultyYearNotFoundException;
+import com.educhat.backend.exceptions.*;
 import com.educhat.backend.models.*;
+import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,34 @@ public class FacultyYearService {
     private final PostImageRepository postImageRepository;
     private final AnswerRepository answerRepository;
     private final AnswerImageRepository answerImageRepository;
+    private final UserRepository userRepository;
+    private final FacultyUserRepository facultyUserRepository;
+    private final FacultyRepository facultyRepository;
+
+    public FacultyYear createFacultyYear(Long userId, Long facultyId, String title) {
+        // find user if exists
+        User user = userRepository.findById(userId)
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+
+        // check if faculty exists
+        if(!facultyRepository.existsById(facultyId)) {
+            throw new FacultyNotFoundException("Faculty not found");
+        }
+
+        // user have to be subscribed to faculty and be admin in order to create year
+        FacultyUser facultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId,facultyId)
+                .orElseThrow( () -> new FacultyUserNotFoundException("Faculty user not found"));
+        if(!(user.getRole().equals(Role.ADMIN) || facultyUser.getRole().equals(Role.ADMIN))) {
+            throw new UnauthorizedActionException("User does not have permission to create a faculty year");
+        }
+
+        // create and save new year
+        FacultyYear facultyYear = new FacultyYear();
+        facultyYear.setFacultyUserId(facultyUser.getId());
+        facultyYear.setFacultyId(facultyId);
+        facultyYear.setTitle(title);
+        return facultyYearRepository.save(facultyYear);
+    }
 
     @Transactional
     public void deleteFacultyYearById(Long yearId) {

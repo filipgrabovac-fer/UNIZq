@@ -53,10 +53,12 @@ public class FacultyService {
         // find user if exists
         User user = userRepository.findById(userId)
                 .orElseThrow( () -> new UserNotFoundException("User not found"));
+
         // allow creation only if user is admin
         if(!user.getRole().equals(Role.ADMIN)) {
             throw new UnauthorizedActionException("User does not have permission to create a faculty");
         }
+
         // create and save new faculty
         Faculty faculty = new Faculty();
         faculty.setAppAdminId(userId);
