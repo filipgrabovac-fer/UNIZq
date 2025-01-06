@@ -19,7 +19,7 @@ public class Answer {
     private Long postId;
 
     @NotNull
-    private Long userId;
+    private Long facultyUserId;
 
     private int upvotes;
     private int downvotes;

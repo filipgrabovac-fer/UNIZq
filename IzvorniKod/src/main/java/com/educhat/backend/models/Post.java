@@ -1,6 +1,5 @@
 package com.educhat.backend.models;
 
-import com.educhat.backend.models.enums.PostType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -20,7 +19,7 @@ public class Post {
     private String description;
 
     @NotNull
-    private Long facutlyUserId;
+    private Long facultyUserId;
 
     @NotNull
     private Long subjectId;

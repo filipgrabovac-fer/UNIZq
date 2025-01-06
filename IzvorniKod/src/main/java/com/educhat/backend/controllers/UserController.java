@@ -1,6 +1,7 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.FacultyUserCreateDTO;
+import com.educhat.backend.DTO.UserDetailsDTO;
 import com.educhat.backend.DTO.UserLoginDTO;
 import com.educhat.backend.DTO.UserRegistrationDTO;
 import com.educhat.backend.auth.AuthenticationResponse;
@@ -38,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public User getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
+    public UserDetailsDTO getUserDetailsById(@PathVariable Long userId) {
+        return userService.getUserDetails(userId);
     }
 
     @PostMapping("/user/{userId}/selected-faculties")

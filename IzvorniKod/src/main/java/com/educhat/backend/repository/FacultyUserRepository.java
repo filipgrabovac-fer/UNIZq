@@ -21,4 +21,7 @@ public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> 
     Optional<FacultyUser> findByUserIdAndFacultyIdAndRole(Long userId, Long facultyId, Role role);
 
     Optional<FacultyUser> findByUserIdAndFacultyId(Long userId, Long facultyId);
+
+    List<FacultyUser> findByUserId(Long userId);
+
 }
