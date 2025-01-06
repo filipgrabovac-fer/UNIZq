@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { customFetch } from "../../../utils/customFetch";
+import { jwtDecode } from "jwt-decode";
+import { getTokenFromLocalStorageOrCookie } from "../../../routes/layout.routes";
 
 export type GetSubjectPostsProps = {
   subjectId: string;
@@ -19,6 +21,9 @@ export type SubjectPostType = {
 };
 
 export const useGetSubjectPosts = ({ subjectId }: GetSubjectPostsProps) => {
+  // @ts-ignore
+  const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
+
   return useQuery<SubjectPostType[]>({
     queryKey: ["posts", subjectId],
     queryFn: async () => {

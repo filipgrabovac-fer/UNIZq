@@ -2,6 +2,10 @@ import { useState } from "react";
 import type { MenuProps } from "antd";
 import { ConfigProvider, Menu, Popover } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { EventsDataType } from "../../pages/Events/hooks/useGetEvents.hook";
+import { useNavigate } from "@tanstack/react-router";
+import { eventsRoute } from "../../routes/events.routes";
+import { facultySubjectsRoute } from "../../routes/faculty-subjects.routes";
 
 type FacultyComponent = {
   facultyId: number;
@@ -12,7 +16,7 @@ type FacultyComponent = {
 
 type SidebarType = {
   list: FacultyComponent[];
-  events: string[];
+  events: EventsDataType;
 };
 
 export const Sidebar = ({ list, events }: SidebarType) => {
@@ -23,6 +27,8 @@ export const Sidebar = ({ list, events }: SidebarType) => {
       return acc;
     }, {} as Record<number, string[]>)
   );
+
+  const navigate = useNavigate();
 
   const handleClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
@@ -73,7 +79,16 @@ export const Sidebar = ({ list, events }: SidebarType) => {
           ...facultyYears[faculty.facultyId].map((year, index) => ({
             key: `faculty-${faculty.facultyId}-year-${index}`,
             label: (
-              <div className="flex justify-between w-[250px]">
+              <div
+                className="flex justify-between w-[250px]"
+                onClick={() =>
+                  navigate({
+                    to: facultySubjectsRoute.to,
+                    // replace hardcoded year with actual year
+                    params: { facultyId: faculty.facultyId, yearId: 1 },
+                  })
+                }
+              >
                 <p className="truncate">{year}</p>
                 {faculty.canEditFacultyYear && (
                   <Popover
@@ -109,7 +124,8 @@ export const Sidebar = ({ list, events }: SidebarType) => {
       label: "Events",
       children: events.map((event, index) => ({
         key: `event-${index}`,
-        label: event,
+        label: event.title,
+        onClick: () => navigate({ to: eventsRoute.fullPath }),
       })),
     },
   ];

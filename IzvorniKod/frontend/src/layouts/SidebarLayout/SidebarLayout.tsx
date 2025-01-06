@@ -39,8 +39,8 @@ export const SidebarLayout = () => {
       canEditFacultyYear: false,
     },
   ];
-  const { data } = useGetEvents();
-  console.log(data);
+  const { data: eventsData } = useGetEvents();
+
   return (
     <div>
       <Header
@@ -50,14 +50,14 @@ export const SidebarLayout = () => {
       {isSmallScreen ? (
         isSidebarOpen ? (
           <div className={"absolute left-0 top-[60px] w-full h-full bg-white"}>
-            <Sidebar list={sidebarData} events={[]} />
+            <Sidebar list={sidebarData} events={eventsData ?? []} />
           </div>
         ) : (
           <Outlet />
         )
       ) : (
         <div className="flex w-full">
-          <Sidebar list={sidebarData} events={[]} />
+          <Sidebar list={sidebarData} events={eventsData ?? []} />
           <Outlet />
         </div>
       )}

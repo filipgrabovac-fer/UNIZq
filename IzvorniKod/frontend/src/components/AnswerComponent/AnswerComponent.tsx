@@ -13,7 +13,6 @@ type AnswerComponentType = {
   answerAuthor: string;
   answerText: string;
   pictures: string[];
-  onClick: () => void;
 };
 
 type GetIconStyleType = {
@@ -33,7 +32,6 @@ export const AnswerComponent = ({
   answerAuthor,
   answerText,
   pictures,
-  onClick,
 }: AnswerComponentType) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
@@ -192,7 +190,7 @@ export const AnswerComponent = ({
           arrows
         >
           {pictures.map((image, index) => (
-            <img src={image} alt={`Image ${index + 1}`} />
+            <img key={index} src={image} alt={`Image ${index + 1}`} />
           ))}
         </Carousel>
       </Modal>
