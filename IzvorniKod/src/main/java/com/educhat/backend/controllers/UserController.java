@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public UserDetailsDTO getUserDetailsById(@PathVariable Long userId) {
-        return userService.getUserDetails(userId);
+    public ResponseEntity<UserDetailsDTO> getUserDetailsById(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUserDetails(userId));
     }
 
     @PostMapping("/user/{userId}/selected-faculties")
