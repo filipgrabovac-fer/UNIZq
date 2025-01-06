@@ -1,22 +1,13 @@
 package com.educhat.backend.services;
 
 
-import com.educhat.backend.DTO.FacultyUserCreateDTO;
-import com.educhat.backend.DTO.UserDetailsDTO;
-import com.educhat.backend.DTO.UserLoginDTO;
-import com.educhat.backend.DTO.UserRegistrationDTO;
+import com.educhat.backend.DTO.*;
 import com.educhat.backend.auth.AuthenticationResponse;
 import com.educhat.backend.exceptions.*;
-import com.educhat.backend.models.Faculty;
-import com.educhat.backend.models.FacultyUser;
-import com.educhat.backend.models.Post;
-import com.educhat.backend.models.User;
+import com.educhat.backend.models.*;
 import com.educhat.backend.models.enums.LoginType;
 import com.educhat.backend.models.enums.Role;
-import com.educhat.backend.repository.FacultyRepository;
-import com.educhat.backend.repository.FacultyUserRepository;
-import com.educhat.backend.repository.PostRepository;
-import com.educhat.backend.repository.UserRepository;
+import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +29,8 @@ public class UserService {
     private final FacultyRepository facultyRepository;
     private final PostRepository postRepository;
     private final CustomUserDetailsService customUserDetailsService;
-  
+    private final FacultyYearRepository facultyYearRepository;
+
 
     public AuthenticationResponse saveUser(UserRegistrationDTO registrationDTO) {
         var user = User.builder()
@@ -138,4 +130,38 @@ public class UserService {
         return savedFacultyUsers;
     }
 
+    public List<SelectedFacultiesDTO> selectedFaculties(Long userId) {
+        // find user if exist
+        User user = userRepository.findById(userId)
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+
+        // initialize empty list - zero selected faculties
+        List<SelectedFacultiesDTO> selectedFaculties = new ArrayList<>();
+
+        // iterate through faculties user selected
+        for(FacultyUser facultyUser : facultyUserRepository.findByUserId(userId)) {
+            // if user is kicked from that faculty, don't show it
+            if(facultyUser.isKicked()) continue;
+
+            // find faculty
+            Faculty faculty = facultyRepository.findById(facultyUser.getFacultyId())
+                    .orElseThrow( () -> new FacultyNotFoundException("Faculty not found"));
+
+            // find associated faculty years
+            List<FacultyYearDTO> facultyYearDTOs = new ArrayList<>();
+            for(FacultyYear facultyYear : facultyYearRepository.findByFacultyId(faculty.getId())) {
+                facultyYearDTOs.add(new FacultyYearDTO(facultyYear.getId(), facultyYear.getTitle()));
+            }
+
+            // add created dto to list
+            selectedFaculties.add(new SelectedFacultiesDTO(
+                    faculty.getId(),
+                    faculty.getTitle(),
+                    facultyYearDTOs,
+                    user.getRole().equals(Role.ADMIN),
+                    facultyUser.getRole().equals(Role.ADMIN) || user.getRole().equals(Role.ADMIN)));
+        }
+
+        return selectedFaculties;
+    }
 }
