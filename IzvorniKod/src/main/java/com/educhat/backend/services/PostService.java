@@ -7,7 +7,10 @@ import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,7 @@ public class PostService {
     private final PostImageRepository postImageRepository;
     private final AnswerImageRepository answerImageRepository;
 
+    private final CloudinaryService cloudinaryService;
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
         if(!userRepository.existsById(userId)) {
@@ -94,20 +98,21 @@ public class PostService {
     }
 
 
-
-    public Post createPostAndImages(Long userId, PostCreateDTO postCreateDTO) {
-        if(!userRepository.existsById(userId)) {
+    public Post createPostAndImages(Long userId, PostCreateDTO postCreateDTO, List<MultipartFile> imageFiles) {
+        // Step 1: Check if the user exists
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found");
         }
+
+        // Step 2: Check if the user is linked to the faculty
         FacultyUser facultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId, postCreateDTO.getFacultyId())
                 .orElseThrow(() -> new FacultyUserNotFoundException("FacultyUser not found"));
-
+        // Step 3: Create and save the Post
         Post post = new Post();
         post.setTitle(postCreateDTO.getPostHeader());
         post.setDescription(postCreateDTO.getPostContent());
         post.setFacultyUserId(facultyUser.getId());
         post.setSubjectId(postCreateDTO.getSubjectId());
-        post.setLink(postCreateDTO.getLink());
         post.setUpvotes(0);
         post.setDownvotes(0);
         post.setReports(0);
@@ -115,14 +120,30 @@ public class PostService {
 
         Post savedPost = postRepository.save(post);
 
-        List<PostImage> postImagesForSave = new ArrayList<>();
-        for(String url : postCreateDTO.getImages()) {
-            PostImage postImage = new PostImage();
-            postImage.setPostId(savedPost.getId());
-            postImage.setLink(url);
-            postImagesForSave.add(postImage);
+        // Step 4: Upload images to Cloudinary and link to the post
+        if (imageFiles != null && !imageFiles.isEmpty()) {
+            List<PostImage> postImagesForSave = new ArrayList<>();
+            for (MultipartFile file : imageFiles) {
+                try {
+                    // Upload the file to Cloudinary
+                    File tempFile = File.createTempFile("upload", file.getOriginalFilename());
+                    file.transferTo(tempFile);
+
+                    String imageUrl = cloudinaryService.uploadFile(tempFile); // Upload and get URL
+                    tempFile.delete(); // Clean up temporary file
+
+                    // Create and save PostImage
+                    PostImage postImage = new PostImage();
+                    postImage.setPostId(savedPost.getId());
+                    postImage.setLink(imageUrl);
+                    postImagesForSave.add(postImage);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to upload image: " + e.getMessage());
+                }
+            }
+
+            postImageRepository.saveAll(postImagesForSave); // Save all images
         }
-        postImageRepository.saveAll(postImagesForSave);
 
         return savedPost;
     }

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Modal, Form, Input, Upload, message } from "antd";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { CustomButton } from "../CustomButton/CustomButton"; // Adjust the path as necessary
@@ -102,7 +102,7 @@ export const CreatePostModal = ({
                     setFileList([]);
                     onCreate({ ...values, images: fileList });
                   })
-                  .catch((info) => {
+                  .catch(() => {
                     message.error(
                       "Validation Failed: Please check the form fields and try again."
                     );

@@ -10,4 +10,5 @@ import java.util.List;
 public interface AnswerImageRepository extends JpaRepository<AnswerImage, Long> {
 
     List<AnswerImage> findByAnswerId(Long answerId);
+
 }

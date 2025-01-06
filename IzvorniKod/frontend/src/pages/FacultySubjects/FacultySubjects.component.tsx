@@ -1,11 +1,17 @@
+import { useNavigate } from "@tanstack/react-router";
 import { FacultySubject } from "../../components/FacultySubject/FacultySubject";
-import { facultySubjectsRoute } from "../../routes/faculty-subjects.routes";
+import {
+  facultySubjectsRoute,
+  subjectPostsRoute,
+} from "../../routes/faculty-subjects.routes";
 import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 
 export const FacultySubjects = () => {
   const { yearId } = facultySubjectsRoute.useParams();
 
   const { data } = useGetFacultySubjects({ facultyYearId: yearId });
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -16,7 +22,14 @@ export const FacultySubjects = () => {
         {data?.map((facultySubject, i) => (
           <FacultySubject
             key={i}
-            onClick={() => console.log(facultySubject)}
+            onClick={() => {
+              navigate({
+                to: subjectPostsRoute.to,
+                params: {
+                  subjectId: facultySubject.id,
+                },
+              });
+            }}
             subjectDescription={facultySubject.description}
             subjectTitle={facultySubject.title}
           />

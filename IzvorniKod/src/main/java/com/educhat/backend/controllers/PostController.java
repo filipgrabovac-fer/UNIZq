@@ -5,8 +5,10 @@ import com.educhat.backend.DTO.PostDetailsDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.models.Post;
 import com.educhat.backend.services.PostService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,10 +29,22 @@ public class PostController {
         return ResponseEntity.ok(subjectPosts);
     }
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody PostCreateDTO postCreateDTO) {
-        Post response = postService.createPostAndImages(userId, postCreateDTO);
-        return ResponseEntity.ok(response);
+    @PostMapping(value = "/user/{userId}", consumes = "multipart/form-data")
+    public ResponseEntity<Post> createPost(@PathVariable Long userId,
+                                           @RequestPart("post") String postJson,
+                                           @RequestPart(value = "images", required = false) List<MultipartFile> images) {
+        try {
+            // Parse the JSON string into PostCreateDTO
+            ObjectMapper objectMapper = new ObjectMapper();
+            PostCreateDTO postCreateDTO = objectMapper.readValue(postJson, PostCreateDTO.class);
+            System.out.println(postCreateDTO);
+
+            // Call the service method
+            Post response = postService.createPostAndImages(userId, postCreateDTO, images);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null); // Handle invalid JSON or errors
+        }
     }
 
     @GetMapping("/{postId}/user/{userId}")
