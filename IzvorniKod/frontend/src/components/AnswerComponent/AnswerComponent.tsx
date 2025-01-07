@@ -2,7 +2,6 @@ import {
   EllipsisVerticalIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
-  HeartIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { Popover, Modal, Carousel } from "antd";
@@ -33,7 +32,6 @@ export const AnswerComponent = ({
   answerText,
   pictures,
 }: AnswerComponentType) => {
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
@@ -101,14 +99,6 @@ export const AnswerComponent = ({
           <p className="w-[50%] truncate">{answerAuthor}</p>
         </div>
         <div className="flex gap-1.5">
-          <HeartIcon
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsHeartClicked(!isHeartClicked);
-            }}
-            className="w-[20px] cursor-pointer"
-            style={getIconStyle({ color: "red", isClicked: isHeartClicked })}
-          />
           <HandThumbUpIcon
             onClick={(e) => {
               e.stopPropagation();
