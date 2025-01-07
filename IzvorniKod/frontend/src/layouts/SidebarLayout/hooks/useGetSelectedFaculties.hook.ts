@@ -20,7 +20,7 @@ export const useGetSelectedFaculties = ({
   userId,
 }: GetSelectedFacultiesProps) => {
   return useQuery<SelectedFacultiesDataType[]>({
-    queryKey: ["selected-faculties", userId],
+    queryKey: ["selected-faculties"],
     queryFn: async () => {
       const response = await customFetch({
         endpointUrl: `selected-faculties/user/${userId}`,

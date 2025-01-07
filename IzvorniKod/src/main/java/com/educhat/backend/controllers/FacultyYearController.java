@@ -1,5 +1,6 @@
 package com.educhat.backend.controllers;
 
+import com.educhat.backend.DTO.CreateFacultyYearDTO;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.models.FacultyYear;
 import com.educhat.backend.services.FacultyYearService;
@@ -21,14 +22,14 @@ public class FacultyYearController {
     public ResponseEntity<FacultyYear> createFacultyYear(
             @PathVariable Long userId,
             @PathVariable Long facultyId,
-            @RequestParam String title) {
-        FacultyYear createdFacultyYear = facultyYearService.createFacultyYear(userId, facultyId, title);
+            @RequestBody CreateFacultyYearDTO body) {
+        FacultyYear createdFacultyYear = facultyYearService.createFacultyYear(userId, facultyId, body.getTitle());
         return ResponseEntity.ok(createdFacultyYear);
     }
 
-    @DeleteMapping("/{yearId}/user/{userId}")
-    public ResponseEntity<Void> deleteFacultyYear(@PathVariable Long yearId, @PathVariable Long userId) {
+    @DeleteMapping("/faculty/{yearId}/user/{userId}")
+    public ResponseEntity<String> deleteFacultyYear(@PathVariable Long yearId, @PathVariable Long userId) {
         facultyYearService.deleteFacultyYearById(yearId, userId);
-        return ResponseEntity.noContent().build(); // HTTP 204 No Content
+        return ResponseEntity.ok("Success");
     }
 }

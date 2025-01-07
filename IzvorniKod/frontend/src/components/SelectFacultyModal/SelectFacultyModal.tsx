@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Modal, Button, Checkbox, List, Input } from "antd";
 import { cn } from "../../utils/cn.util";
 import { useGetFacultiesForSelection } from "./hooks/useGetFacultiesForSelection.hook";
@@ -10,7 +10,7 @@ interface Faculty {
 }
 interface SelectFacultyModalProps {
   isModalOpen: boolean;
-  setIsModalOpen: (isOpen: boolean) => void;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const SelectFacultyModal = ({
@@ -65,6 +65,7 @@ const SelectFacultyModal = ({
 
   return (
     <Modal
+      centered
       width={800}
       title={
         <h2 className="text-xl font-bold">Select a faculty of your interest</h2>
