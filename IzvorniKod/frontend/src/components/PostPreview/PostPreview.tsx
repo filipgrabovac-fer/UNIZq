@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Popover } from "antd";
 import {
-  HeartIcon,
   HandThumbUpIcon,
   HandThumbDownIcon,
   EllipsisVerticalIcon,
@@ -29,7 +28,6 @@ const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
 };
 
 export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
 
@@ -63,14 +61,6 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
     >
       <p className="cursor-default truncate w-[75%]">{postTitle}</p>
       <div className="flex gap-1.5">
-        <HeartIcon
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsHeartClicked(!isHeartClicked);
-          }}
-          className="w-[20px] cursor-pointer"
-          style={getIconStyle({ color: "red", isClicked: isHeartClicked })}
-        />
         <HandThumbUpIcon
           onClick={(e) => {
             e.stopPropagation();
