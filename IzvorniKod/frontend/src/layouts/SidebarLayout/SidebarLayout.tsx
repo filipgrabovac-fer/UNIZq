@@ -41,7 +41,13 @@ export const SidebarLayout = () => {
         isSidebarOpen ? (
           <div className={"absolute left-0 top-[60px] w-full h-full bg-white "}>
             <Sidebar list={sidebarData ?? []} events={eventsData ?? []} />
-            <div className="absolute left-2 bottom-6">123</div>
+            <button
+              className="mt-auto mb-4 flex justify-center items-center hover:opacity-60 ml-10"
+              onClick={() => setIsSelectFacultyModalOpen(true)}
+            >
+              <PlusIcon color="black" className="w-5 h-5" />
+              Add faculty
+            </button>
           </div>
         ) : (
           <Outlet />
