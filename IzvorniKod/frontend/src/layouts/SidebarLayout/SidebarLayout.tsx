@@ -47,7 +47,7 @@ export const SidebarLayout = () => {
           <Outlet />
         )
       ) : (
-        <div className="flex flex-1">
+        <div className="flex flex-1 ">
           <div className="flex flex-col justify-between items-start">
             <Sidebar list={sidebarData ?? []} events={eventsData ?? []} />
             <button
@@ -58,7 +58,9 @@ export const SidebarLayout = () => {
               Add faculty
             </button>
           </div>
-          <Outlet />
+          <div className="overflox-y-scroll">
+            <Outlet />
+          </div>
         </div>
       )}
       {isSelectFacultyModalOpen && (

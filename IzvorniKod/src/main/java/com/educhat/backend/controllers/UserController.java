@@ -43,8 +43,8 @@ public class UserController {
     @PostMapping("/user/{userId}/selected-faculties")
     public ResponseEntity<List<FacultyUser>> addFacultyToProfile(
             @PathVariable Long userId,
-            @RequestBody List<FacultyUserCreateDTO> facultyUserCreateDTOs) {
-        List<FacultyUser> createdFacultyUsers = userService.createFacultyUser(userId, facultyUserCreateDTOs);
+            @RequestBody FacultyUserCreateListDTO facultyUserCreateList) {
+        List<FacultyUser> createdFacultyUsers = userService.createFacultyUser(userId, facultyUserCreateList.getFacultyUserList());
         return ResponseEntity.ok(createdFacultyUsers);
     }
 

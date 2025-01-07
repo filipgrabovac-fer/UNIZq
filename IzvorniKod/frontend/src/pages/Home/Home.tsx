@@ -4,7 +4,7 @@ import { AnswerComponent } from "../../components/AnswerComponent/AnswerComponen
 
 export const Home = () => {
   return (
-    <div className="bg-secondary overflow-hidden">
+    <div>
       <SelectedPostHeader
         postName="Post Name"
         postData="Politički analitičari Višeslav Raos i Davor Gjenero smatraju da 
@@ -19,7 +19,6 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
       />
-      <AddAnswerComponent postContent="Explain theory of relativity" />
       <AnswerComponent
         answerAuthor="Answer author"
         answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
@@ -65,21 +64,7 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
       />
-      <AnswerComponent
-        answerAuthor="Answer author"
-        answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-    minus, dolore, laboriosam aliquid natus officia consequatur commodi
-    iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-    similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-    minus, dolore, laboriosam aliquid natus officia consequatur commodi
-    iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-    similique."
-        pictures={[
-          "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-          "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-          "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-        ]}
-      />
+      <AddAnswerComponent postContent="Explain theory of relativity" />
     </div>
   );
 };
