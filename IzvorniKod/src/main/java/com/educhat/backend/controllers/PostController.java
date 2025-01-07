@@ -1,8 +1,8 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.PostCreateDTO;
+import com.educhat.backend.DTO.PostDetailsDTO;
 import com.educhat.backend.DTO.PostResponseDTO;
-import com.educhat.backend.models.Answer;
 import com.educhat.backend.models.Post;
 import com.educhat.backend.services.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,16 +23,10 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("subject/{subjectId}")
-    public ResponseEntity<List<PostResponseDTO>> getPosts(@PathVariable Long subjectId, @RequestParam Long userId) {
+    @GetMapping("subject/{subjectId}/user/{userId}")
+    public ResponseEntity<List<PostResponseDTO>> getPosts(@PathVariable Long subjectId, @PathVariable Long userId) {
         List<PostResponseDTO> subjectPosts = postService.getPostsBySubject(subjectId, userId);
         return ResponseEntity.ok(subjectPosts);
-    }
-
-    @GetMapping("{postId}")
-    public ResponseEntity<List<Answer>> postResponses(@PathVariable Long postId) {
-        List<Answer> responses = postService.getPostResponses(postId);
-        return ResponseEntity.ok(responses);
     }
 
     @PostMapping(value = "/user/{userId}", consumes = "multipart/form-data")
@@ -51,6 +45,12 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null); // Handle invalid JSON or errors
         }
+    }
+
+    @GetMapping("/{postId}/user/{userId}")
+    public ResponseEntity<PostDetailsDTO> postDetails(@PathVariable Long postId, @PathVariable Long userId) {
+        PostDetailsDTO response = postService.getPostDetails(postId, userId);
+        return ResponseEntity.ok(response);
     }
 
 }

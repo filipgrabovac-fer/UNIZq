@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/upload")
@@ -34,4 +36,15 @@ public class CloudinaryController {
             return ResponseEntity.status(500).body("Failed to upload file: " + e.getMessage());
         }
     }
+
+    @GetMapping("/images")
+    public List<Map> getAllImages() throws Exception {
+        return cloudinaryService.getAllImages();
+    }
+
+    @GetMapping("/images/{publicId}")
+    public Map getImageDetails(@PathVariable String publicId) throws Exception {
+        return cloudinaryService.getImageDetails(publicId);
+    }
+
 }

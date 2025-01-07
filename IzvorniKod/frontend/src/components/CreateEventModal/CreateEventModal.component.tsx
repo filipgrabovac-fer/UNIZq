@@ -1,10 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Map, Marker, useMarkerRef } from "@vis.gl/react-google-maps";
 import { usePostEvent } from "./hooks/usePostEvent.hook";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { CreateEventModalForm } from "./components/CreateEventModalForm";
-import { sidebarDataMock } from "../Header/Header";
+import { useGetFacultiesWithAdminPermissions } from "../../pages/Users/hooks/useGetFacultiesWithAdminPermissions.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import { Modal } from "antd";
 
 type CreateEventModalProps = {
   setState: Dispatch<SetStateAction<boolean>>;
@@ -24,24 +26,41 @@ export type CreateEventSchemaType = Yup.InferType<typeof createEventSchema>;
 
 export const CreateEventModal = ({ setState }: CreateEventModalProps) => {
   const [markerRef] = useMarkerRef();
+  const queryClient = useQueryClient();
+  const [isEventErrorModalOpen, setIsEventErrorModalOpen] = useState(true);
 
   const { mutate: postEvent } = usePostEvent({
-    onSuccess: () => setState(false),
+    onSuccess: () => {
+      setState(false);
+      queryClient.invalidateQueries({ queryKey: ["all-events"] });
+    },
   });
 
-  const facultyOptions = sidebarDataMock[0].children.map((element) => ({
-    value: element.key,
-    label: element.label,
+  const { data: facultyData } = useGetFacultiesWithAdminPermissions();
+  const facultyOptions = facultyData?.map((element) => ({
+    value: element.facultyId,
+    label: element.facultyName,
   }));
 
   return (
-    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-gray bg-opacity-20 w-screen h-screen flex">
+    <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-gray bg-opacity-20 w-screen h-screen flex z-10">
       <div className="flex flex-col m-auto bg-white px-8 pt-4 pb-8 rounded-lg max-[950px]:w-full max-[950px]:rounded-none">
-        {facultyOptions.length === 0 ? (
-          <p>
-            You have no available faculties to create an event for. You can
-            apply for a higher role when selecting a different faculty
-          </p>
+        {facultyOptions?.length == 0 ? (
+          <Modal
+            open={isEventErrorModalOpen}
+            footer={null}
+            onCancel={() => {
+              setIsEventErrorModalOpen(false);
+              setState(false);
+            }}
+            width="60%"
+            centered
+          >
+            <p>
+              You have no available faculties to create an event for. You can
+              apply for a higher role when selecting a different faculty
+            </p>
+          </Modal>
         ) : (
           <>
             <h1 className="text-xxl font-semibold mb-4">Add event</h1>
@@ -61,7 +80,7 @@ export const CreateEventModal = ({ setState }: CreateEventModalProps) => {
                   title: "",
                   description: "",
                   lat_lng: { lat: undefined, lng: undefined },
-                  faculty_id: facultyOptions[0].value,
+                  faculty_id: facultyOptions ? facultyOptions[0].value : 0,
                 }}
               >
                 {({ values, setFieldValue }) => (
@@ -86,7 +105,7 @@ export const CreateEventModal = ({ setState }: CreateEventModalProps) => {
                     </Map>
                     <CreateEventModalForm
                       setState={setState}
-                      facultyOptions={facultyOptions}
+                      facultyOptions={facultyOptions ?? []}
                     />
                   </>
                 )}

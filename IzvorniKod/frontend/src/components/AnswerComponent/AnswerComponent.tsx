@@ -2,7 +2,6 @@ import {
   EllipsisVerticalIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
-  HeartIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { Popover, Modal, Carousel } from "antd";
@@ -13,7 +12,6 @@ type AnswerComponentType = {
   answerAuthor: string;
   answerText: string;
   pictures: string[];
-  onClick: () => void;
 };
 
 type GetIconStyleType = {
@@ -33,9 +31,7 @@ export const AnswerComponent = ({
   answerAuthor,
   answerText,
   pictures,
-  onClick,
 }: AnswerComponentType) => {
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
@@ -103,14 +99,6 @@ export const AnswerComponent = ({
           <p className="w-[50%] truncate">{answerAuthor}</p>
         </div>
         <div className="flex gap-1.5">
-          <HeartIcon
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsHeartClicked(!isHeartClicked);
-            }}
-            className="w-[20px] cursor-pointer"
-            style={getIconStyle({ color: "red", isClicked: isHeartClicked })}
-          />
           <HandThumbUpIcon
             onClick={(e) => {
               e.stopPropagation();
@@ -192,7 +180,7 @@ export const AnswerComponent = ({
           arrows
         >
           {pictures.map((image, index) => (
-            <img src={image} alt={`Image ${index + 1}`} />
+            <img key={index} src={image} alt={`Image ${index + 1}`} />
           ))}
         </Carousel>
       </Modal>

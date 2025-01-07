@@ -1,11 +1,12 @@
 package com.educhat.backend.services;
 
+import com.educhat.backend.exceptions.FacultyUserNotFoundException;
+import com.educhat.backend.exceptions.PostNotFoundException;
 import com.educhat.backend.models.Answer;
 import com.educhat.backend.models.AnswerImage;
-import com.educhat.backend.repository.AnswerImageRepository;
-import com.educhat.backend.repository.AnswerRepository;
-import com.educhat.backend.repository.PostRepository;
-import com.educhat.backend.repository.UserRepository;
+import com.educhat.backend.models.FacultyUser;
+import com.educhat.backend.models.Post;
+import com.educhat.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,8 @@ public class AnswerService {
 
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private FacultyUserRepository facultyUserRepository;
 
     public Answer createAnswerWithImages(Long postId, Long userId, String description, List<MultipartFile> images) {
         // Step 1: Validate post and user
@@ -42,10 +45,19 @@ public class AnswerService {
             throw new IllegalArgumentException("User not found");
         }
 
+        // find faculty user who created answer
+        Post post = postRepository.findById(postId)
+                .orElseThrow( () -> new PostNotFoundException("Post not found"));
+        FacultyUser postFacultyUser = facultyUserRepository.findById(post.getFacultyUserId())
+                .orElseThrow( () -> new FacultyUserNotFoundException("FacultyUser not found"));
+        Long facultyId = postFacultyUser.getFacultyId();
+        FacultyUser answerFacultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId, facultyId)
+                .orElseThrow( () -> new FacultyUserNotFoundException("FacultyUser not found"));
+
         // Step 2: Create and save the Answer
         Answer answer = new Answer();
         answer.setPostId(postId);
-        answer.setUserId(userId);
+        answer.setFacultyUserId(answerFacultyUser.getId());
         answer.setDescription(description);
         answer.setUpvotes(0);
         answer.setDownvotes(0);
@@ -68,8 +80,8 @@ public class AnswerService {
 
                     // Create and save AnswerImage
                     AnswerImage answerImage = new AnswerImage();
-                    answerImage.setAppAdminId(savedAnswer.getId()); // Associate image with answer
-                    answerImage.setTitle(imageUrl);
+                    answerImage.setAnswerId(savedAnswer.getId()); // Associate image with answer
+                    answerImage.setLink(imageUrl);
                     answerImagesForSave.add(answerImage);
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to upload image: " + e.getMessage());

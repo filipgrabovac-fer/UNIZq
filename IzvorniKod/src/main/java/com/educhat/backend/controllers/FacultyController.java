@@ -1,5 +1,6 @@
 package com.educhat.backend.controllers;
 
+import com.educhat.backend.DTO.AllFacultiesDTO;
 import com.educhat.backend.DTO.FacultiesAdminResponseDTO;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.services.FacultyService;
@@ -19,9 +20,9 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Faculty>> getAllFaculties() {
-        List<Faculty> faculties = facultyService.getAllFaculties();
+    @GetMapping("/all/user/{userId}")
+    public ResponseEntity<List<AllFacultiesDTO>> getAllFaculties(@PathVariable Long userId) {
+        List<AllFacultiesDTO> faculties = facultyService.getAllFaculties(userId);
         return ResponseEntity.ok(faculties);
     }
 
@@ -29,6 +30,18 @@ public class FacultyController {
     public ResponseEntity<List<FacultiesAdminResponseDTO>> getFacultiesWhereUserIsAdmin(@PathVariable Long userId) {
         List<FacultiesAdminResponseDTO> response = facultyService.getFacultiesWhereUserIsAdmin(userId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Faculty> createFaculty(@PathVariable Long userId, @RequestParam String title) {
+        Faculty createdFaculty = facultyService.createFaculty(userId, title);
+        return ResponseEntity.ok(createdFaculty);
+    }
+
+    @DeleteMapping("/{facultyId}/user/{userId}")
+    public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId, @PathVariable Long userId) {
+        facultyService.deleteFacultyById(facultyId, userId);
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 
 }

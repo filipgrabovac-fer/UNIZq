@@ -16,7 +16,6 @@ export const useGetPostDetails = ({ postId }: GetPostDetailsProps) => {
         },
       });
 
-      console.log(response);
       return response;
     },
   });
