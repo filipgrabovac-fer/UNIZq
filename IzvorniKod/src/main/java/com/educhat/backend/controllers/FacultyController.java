@@ -37,9 +37,9 @@ public class FacultyController {
         return ResponseEntity.ok(createdFaculty);
     }
 
-    @DeleteMapping("/{facultyId}")
-    public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId) {
-        facultyService.deleteFacultyById(facultyId);
+    @DeleteMapping("/{facultyId}/user/{userId}")
+    public ResponseEntity<Void> deleteFaculty(@PathVariable Long facultyId, @PathVariable Long userId) {
+        facultyService.deleteFacultyById(facultyId, userId);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 

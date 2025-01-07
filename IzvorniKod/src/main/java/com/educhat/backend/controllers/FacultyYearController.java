@@ -26,9 +26,9 @@ public class FacultyYearController {
         return ResponseEntity.ok(createdFacultyYear);
     }
 
-    @DeleteMapping("/{yearId}")
-    public ResponseEntity<Void> deleteFacultyYear(@PathVariable Long yearId) {
-        facultyYearService.deleteFacultyYearById(yearId);
+    @DeleteMapping("/{yearId}/user/{userId}")
+    public ResponseEntity<Void> deleteFacultyYear(@PathVariable Long yearId, @PathVariable Long userId) {
+        facultyYearService.deleteFacultyYearById(yearId, userId);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 }

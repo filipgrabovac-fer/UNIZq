@@ -22,6 +22,7 @@ public class FacultyYearService {
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyRepository facultyRepository;
 
+
     public FacultyYear createFacultyYear(Long userId, Long facultyId, String title) {
         // find user if exists
         User user = userRepository.findById(userId)
@@ -48,10 +49,21 @@ public class FacultyYearService {
     }
 
     @Transactional
-    public void deleteFacultyYearById(Long yearId) {
-        // find if faculty year exists before deleting it
-        if(!facultyYearRepository.existsById(yearId)) {
-            throw new FacultyYearNotFoundException("Faculty year not found");
+    public void deleteFacultyYearById(Long yearId, Long userId) {
+        // find user if exists
+        User user = userRepository.findById(userId)
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+
+        // find faculty year if exists before deleting it
+        FacultyYear facultyYear =  facultyYearRepository.findById(yearId)
+                .orElseThrow( () -> new FacultyYearNotFoundException("Faculty year not found"));
+
+
+        // user have to be subscribed to faculty and be admin in order to delete year
+        FacultyUser facultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId,facultyYear.getFacultyId())
+                .orElseThrow( () -> new FacultyUserNotFoundException("Faculty user not found"));
+        if(!(user.getRole().equals(Role.ADMIN) || facultyUser.getRole().equals(Role.ADMIN))) {
+            throw new UnauthorizedActionException("User does not have permission to delete a faculty year");
         }
 
         for(Subject subject : subjectRepository.findByFacultyYearId(yearId)) {
