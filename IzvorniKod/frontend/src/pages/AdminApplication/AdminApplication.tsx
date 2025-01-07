@@ -50,7 +50,9 @@ const AdminApplicationPage = () => {
   return (
     <div>
       <Header isSidebarOpen={false} setIsSidebarOpen={() => null} />
-      <h1 className="text-2xl font-bold mb-4">Admin Applications</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">
+        Admin Applications
+      </h1>
       <AdminApplicationTable
         applications={applications.map((application) => ({
           ...application,

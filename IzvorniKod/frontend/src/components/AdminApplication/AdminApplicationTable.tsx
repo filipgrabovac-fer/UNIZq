@@ -49,31 +49,33 @@ export const AdminApplicationTable = ({
   // };
 
   return (
-    <div className="border-gray_border border-[1px] rounded-[10px]">
-      {/* Header Row */}
-      <div className="flex items-center p-2">
-        <div className="w-[20%]">userId</div>
-        <div className="w-[20%] truncate">facultyId</div>
-        <div className="w-[20%] truncate">facultyName</div>
-        <div className="w-[20%] text-center truncate">userEmail</div>
-        <p className="w-[10%] text-end">Status</p>
-        <p className="w-[10%] text-end">Role</p>
-      </div>
+    <div className="p-4">
+      <div className="border-gray_border border-[1px] rounded-[10px] ">
+        {/* Header Row */}
+        <div className="flex items-center p-2">
+          <div className="w-[20%]">userId</div>
+          <div className="w-[20%] truncate">facultyId</div>
+          <div className="w-[20%] truncate">facultyName</div>
+          <div className="w-[20%] text-center truncate">userEmail</div>
+          <p className="w-[10%] text-end">Status</p>
+          <p className="w-[10%] text-end">Role</p>
+        </div>
 
-      {/* Scrollable Rows */}
-      <div className="max-h-[75vh] overflow-y-auto max-md:max-h-[70vh]">
-        {applications.map((application) => (
-          <AdminApplicationTableRow
-            key={application.userId}
-            userId={application.userId}
-            facultyId={application.facultyId}
-            facultyName={application.facultyName}
-            userEmail={application.userEmail}
-            isApproved={application.isApproved}
-            userRole={application.userRole}
-            onApprove={() => application.onApprove(application.userId)}
-          />
-        ))}
+        {/* Scrollable Rows */}
+        <div className="max-h-[75vh] overflow-y-auto max-md:max-h-[70vh]">
+          {applications.map((application) => (
+            <AdminApplicationTableRow
+              key={application.userId}
+              userId={application.userId}
+              facultyId={application.facultyId}
+              facultyName={application.facultyName}
+              userEmail={application.userEmail}
+              isApproved={application.isApproved}
+              userRole={application.userRole}
+              onApprove={() => application.onApprove(application.userId)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
