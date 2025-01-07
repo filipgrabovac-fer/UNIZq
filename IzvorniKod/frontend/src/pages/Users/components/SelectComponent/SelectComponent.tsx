@@ -73,7 +73,7 @@ export const SelectComponent = ({ faculties }: SelectComponentType) => {
               height: "85vh",
             }}
             onChange={handleTabChange}
-            items={faculties.map((faculty, index) => ({
+            items={faculties?.map((faculty, index) => ({
               label: (
                 <div>
                   <Popover
