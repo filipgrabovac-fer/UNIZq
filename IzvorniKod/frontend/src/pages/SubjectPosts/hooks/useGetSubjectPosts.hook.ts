@@ -28,9 +28,10 @@ export const useGetSubjectPosts = ({ subjectId }: GetSubjectPostsProps) => {
     queryKey: ["posts", subjectId],
     queryFn: async () => {
       const response = await customFetch({
-        endpointUrl: `posts/subject/${subjectId}`,
+        endpointUrl: `posts/subject/${subjectId}/user/${userId}`,
         method: "GET",
       });
+
       return response;
     },
   });

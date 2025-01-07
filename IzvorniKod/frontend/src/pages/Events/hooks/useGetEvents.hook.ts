@@ -12,7 +12,7 @@ export type EventsDataType = EventDataType[];
 
 export const useGetEvents = () => {
   return useQuery({
-    queryKey: ["get-events"],
+    queryKey: ["all-events"],
     queryFn: async () => {
       const data: EventsDataType = await customFetch({
         endpointUrl: "events/all",

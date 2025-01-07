@@ -20,7 +20,6 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
   const handleIconClick = () => {
     // Handle the logic for adding images here
     console.log("Icon clicked to add images");
-    console.log(imageList);
   };
 
   const handlePaperClipClick = () => {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Button, Checkbox, List, Input } from "antd";
 import { cn } from "../../utils/cn.util";
+import { useGetFacultiesForSelection } from "./hooks/useGetFacultiesForSelection.hook";
 // Define the faculty type
 interface Faculty {
   facultyName: string;
@@ -59,6 +60,8 @@ const SelectFacultyModal = ({
       setRequestingFaculties([...requestingFaculties, facultyId]);
     }
   };
+
+  const { data } = useGetFacultiesForSelection();
 
   return (
     <Modal

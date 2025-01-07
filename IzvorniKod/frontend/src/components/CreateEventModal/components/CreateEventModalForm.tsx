@@ -42,7 +42,7 @@ export const CreateEventModalForm = ({
           <Select
             className="m-auto mt-6  w-1/2 h-[2.5rem] max-[950px]:mt-10"
             placeholder="Select faculty"
-            defaultValue={facultyOptions[0].value}
+            defaultValue={facultyOptions[0]?.value}
             options={facultyOptions}
             onChange={(value) => setFieldValue("faculty_id", value)}
           />
