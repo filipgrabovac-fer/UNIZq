@@ -8,9 +8,8 @@ import {
 
 type PostPreviewProps = {
   postTitle: string;
-  postID: number;
-  canDelete: boolean;
-  canModify: boolean;
+  postId: number;
+  editable: boolean;
   onClick: () => void;
 };
 
@@ -27,7 +26,12 @@ const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
   };
 };
 
-export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
+export const PostPreview = ({
+  postTitle,
+  onClick,
+  postId,
+  editable,
+}: PostPreviewProps) => {
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
 
@@ -42,28 +46,28 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
         Report
       </button>
 
-      {/* napraviti validaciju može li korisnik obrisati ovaj post i ako ne može, onda ne prikazivati Delete gumb */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="cursor-pointer text-red"
-      >
-        Delete
-      </button>
+      {editable && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="cursor-pointer text-red"
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 
   return (
     <div
       onClick={onClick}
-      className="h-[50px] rounded-[20px] bg-white flex items-center justify-between p-[10px]"
+      className="h-[50px] rounded-[20px] flex items-center justify-between p-[10px] cursor-pointer hover:bg-gray-100"
     >
       <p className="cursor-default truncate w-[75%]">{postTitle}</p>
       <div className="flex gap-1.5">
         <HandThumbUpIcon
           onClick={(e) => {
-            e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
           }}
           className="w-[20px] cursor-pointer"
@@ -74,7 +78,6 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
         />
         <HandThumbDownIcon
           onClick={(e) => {
-            e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
           }}
           className="w-[20px] cursor-pointer"
@@ -89,7 +92,10 @@ export const PostPreview = ({ postTitle, onClick }: PostPreviewProps) => {
           trigger="click"
           className="w-[25px]"
         >
-          <EllipsisVerticalIcon className="cursor-pointer" />
+          <EllipsisVerticalIcon
+            className="cursor-pointer"
+            onClick={(e) => e.stopPropagation()}
+          />
         </Popover>
       </div>
     </div>

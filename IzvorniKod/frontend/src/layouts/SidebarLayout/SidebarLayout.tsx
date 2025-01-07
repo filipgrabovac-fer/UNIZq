@@ -58,9 +58,7 @@ export const SidebarLayout = () => {
               Add faculty
             </button>
           </div>
-          <div className="overflox-y-scroll">
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
       )}
       {isSelectFacultyModalOpen && (
