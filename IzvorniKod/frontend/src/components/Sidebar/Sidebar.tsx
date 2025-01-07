@@ -1,7 +1,8 @@
 import { useState } from "react";
 import type { MenuProps } from "antd";
-import { ConfigProvider, Input, Menu, Popover } from "antd";
+import { ConfigProvider, Input, Menu, message, Popover } from "antd";
 import {
+  ArrowTurnDownRightIcon,
   CheckIcon,
   EllipsisVerticalIcon,
   TrashIcon,
@@ -18,6 +19,7 @@ import { useDeleteFacultyYear } from "./hooks/useDeleteFacultyYear.hook";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "../../utils/cn.util";
 import { useDeleteFaculty } from "./hooks/useDeleteFaculty.hooks";
+import { usePostCreateNewFaculty } from "./hooks/usePostCreateNewFaculty.hook";
 
 type SidebarType = {
   list: SelectedFacultiesDataType[];
@@ -32,6 +34,9 @@ export const Sidebar = ({ list, events }: SidebarType) => {
   const [newFacultyYearTitle, setNewFacultyYearTitle] = useState<
     string | undefined
   >();
+
+  const [newFacultyTitle, setNewFacultyTitle] = useState<string | undefined>();
+  const [isCreatingFacultyActive, setIsCreatingFacultyActive] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -65,6 +70,14 @@ export const Sidebar = ({ list, events }: SidebarType) => {
       queryClient.invalidateQueries({
         queryKey: ["selected-faculties"],
       });
+    },
+  });
+
+  const { mutate: createFaculty } = usePostCreateNewFaculty({
+    onSuccess: () => {
+      message.info("Faculty created successfully");
+      queryClient.invalidateQueries({ queryKey: ["selected-faculties"] });
+      setIsCreatingFacultyActive(false);
     },
   });
 
@@ -143,21 +156,29 @@ export const Sidebar = ({ list, events }: SidebarType) => {
                     placeholder="Create faculty year"
                     onChange={(e) => setNewFacultyYearTitle(e.target.value)}
                     suffix={
-                      <button
-                        disabled={!newFacultyYearTitle}
-                        className={cn(
-                          "w-5 h-5",
-                          !newFacultyYearTitle &&
-                            "cursor-not-allowed opacity-20"
+                      <button className={cn("w-5 h-5")}>
+                        {newFacultyYearTitle ? (
+                          <CheckIcon
+                            className="w-5 h-5"
+                            onClick={() => {
+                              postFacultyYear({
+                                facultyId: faculty.facultyId,
+                                title: newFacultyYearTitle ?? "",
+                              });
+
+                              setNewFacultyTitle(undefined);
+                              setIsCreatingFacultyYearFacultyId(undefined);
+                            }}
+                          />
+                        ) : (
+                          <ArrowTurnDownRightIcon
+                            className="w-5 h-5"
+                            color="gray"
+                            onClick={() => {
+                              setIsCreatingFacultyYearFacultyId(undefined);
+                            }}
+                          />
                         )}
-                        onClick={() =>
-                          postFacultyYear({
-                            facultyId: faculty.facultyId,
-                            title: newFacultyYearTitle ?? "",
-                          })
-                        }
-                      >
-                        <CheckIcon className="w-5 h-5" />
                       </button>
                     }
                   />
@@ -202,13 +223,48 @@ export const Sidebar = ({ list, events }: SidebarType) => {
     },
     {
       key: "create-faculty",
-      label: isAppAdmin && <p className=" w-full p-0">+ Create Faculty</p>,
+      label:
+        isAppAdmin &&
+        (isCreatingFacultyActive ? (
+          <Input
+            placeholder="Create faculty"
+            onChange={(e) => setNewFacultyTitle(e.target.value)}
+            suffix={
+              <button className={cn("w-5 h-5")}>
+                {newFacultyTitle ? (
+                  <CheckIcon
+                    className="w-5 h-5"
+                    onClick={() => {
+                      createFaculty({ title: newFacultyTitle ?? "" });
+                      setNewFacultyTitle(undefined);
+                    }}
+                  />
+                ) : (
+                  <ArrowTurnDownRightIcon
+                    className="w-5 h-5"
+                    color="gray"
+                    onClick={() => {
+                      setIsCreatingFacultyActive(false);
+                    }}
+                  />
+                )}
+              </button>
+            }
+          />
+        ) : (
+          <p
+            className=" w-full p-0"
+            onClick={() => setIsCreatingFacultyActive(true)}
+          >
+            + Create Faculty
+          </p>
+        )),
       type: "item",
     },
   ];
 
   return (
-    <div className="min-w-[250px] h-screen">
+    <div className="min-w-[250px] ">
       <ConfigProvider
         theme={{
           components: {

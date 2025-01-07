@@ -1,6 +1,7 @@
 package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.AllFacultiesDTO;
+import com.educhat.backend.DTO.CreateFacultyDTO;
 import com.educhat.backend.DTO.FacultiesAdminResponseDTO;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.services.FacultyService;
@@ -33,8 +34,8 @@ public class FacultyController {
     }
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<Faculty> createFaculty(@PathVariable Long userId, @RequestParam String title) {
-        Faculty createdFaculty = facultyService.createFaculty(userId, title);
+    public ResponseEntity<Faculty> createFaculty(@PathVariable Long userId, @RequestBody CreateFacultyDTO body) {
+        Faculty createdFaculty = facultyService.createFaculty(userId, body.getTitle());
         return ResponseEntity.ok(createdFaculty);
     }
 

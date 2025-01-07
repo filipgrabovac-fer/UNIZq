@@ -25,7 +25,6 @@ export const useDeleteFacultyYear = ({ onSuccess }: DeleteFacultyYearProps) => {
         method: "DELETE",
       });
 
-      console.log("we here");
       return response;
     },
   });
