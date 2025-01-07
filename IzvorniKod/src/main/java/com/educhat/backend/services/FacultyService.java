@@ -112,7 +112,7 @@ public class FacultyService {
         if(!user.getRole().equals(Role.ADMIN)) {
             throw new UnauthorizedActionException("User does not have permission to delete a faculty");
         }
-
+        facultyUserRepository.deleteByFacultyId(facultyId);
         // delete all related data
         for(FacultyYear facultyYear : facultyYearRepository.findByFacultyId(facultyId)) {
 

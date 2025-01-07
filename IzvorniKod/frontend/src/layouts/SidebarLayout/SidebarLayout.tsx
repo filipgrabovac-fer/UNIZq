@@ -22,11 +22,10 @@ export const SidebarLayout = () => {
     return () => mediaQuery.removeEventListener("change", handleScreenResize);
   }, []);
 
-  const { data: eventsData } = useGetEvents();
-
   // @ts-ignore
   const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
   const { data: sidebarData } = useGetSelectedFaculties({ userId: userId });
+  const { data: eventsData } = useGetEvents();
 
   return (
     <div>

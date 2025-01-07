@@ -1,7 +1,11 @@
 import { useState } from "react";
 import type { MenuProps } from "antd";
-import { ConfigProvider, Menu, Popover } from "antd";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import { ConfigProvider, Input, Menu, Popover } from "antd";
+import {
+  CheckIcon,
+  EllipsisVerticalIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 import { EventsDataType } from "../../pages/Events/hooks/useGetEvents.hook";
 import { useNavigate } from "@tanstack/react-router";
 import { eventsRoute } from "../../routes/events.routes";
@@ -9,6 +13,11 @@ import { facultySubjectsRoute } from "../../routes/faculty-subjects.routes";
 import { SelectedFacultiesDataType } from "../../layouts/SidebarLayout/hooks/useGetSelectedFaculties.hook";
 
 import { CreateEventModal } from "../CreateEventModal/CreateEventModal.component";
+import { usePostFacultyYear } from "./hooks/usePostFacultyYear.hook";
+import { useDeleteFacultyYear } from "./hooks/useDeleteFacultyYear.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import { cn } from "../../utils/cn.util";
+import { useDeleteFaculty } from "./hooks/useDeleteFaculty.hooks";
 
 type SidebarType = {
   list: SelectedFacultiesDataType[];
@@ -18,29 +27,46 @@ type SidebarType = {
 export const Sidebar = ({ list, events }: SidebarType) => {
   const [current, setCurrent] = useState<string | null>(null);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
+  const [isCreatingFacultyYearFacultyId, setIsCreatingFacultyYearFacultyId] =
+    useState<number | undefined>();
+  const [newFacultyYearTitle, setNewFacultyYearTitle] = useState<
+    string | undefined
+  >();
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const isAppAdmin = list[0]?.canEditFaculty == true;
 
   const handleClick: MenuProps["onClick"] = (e) => {
-    setCurrent(`faculty-${e.key}`);
+    setCurrent(e.key);
   };
 
-  const addYear = (facultyId: number) => {
-    console.log("add faculty year");
-  };
+  const { mutate: postFacultyYear } = usePostFacultyYear({
+    onSuccess: () => {
+      setIsCreatingFacultyYearFacultyId(undefined);
+      setNewFacultyYearTitle(undefined);
+      queryClient.invalidateQueries({
+        queryKey: ["selected-faculties"],
+      });
+    },
+  });
 
-  const content = (
-    <div>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="cursor-pointer text-red"
-      >
-        Remove
-      </button>
-    </div>
-  );
+  const { mutate: deleteFacultyYear } = useDeleteFacultyYear({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["selected-faculties"],
+      });
+    },
+  });
+
+  const { mutate: deleteFaculty } = useDeleteFaculty({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["selected-faculties"],
+      });
+    },
+  });
 
   const menuItems: MenuProps["items"] = [
     {
@@ -50,15 +76,27 @@ export const Sidebar = ({ list, events }: SidebarType) => {
         key: `faculty-${faculty.facultyId}`,
         label: (
           <div className="flex justify-between w-[250px]">
-            <p className="truncate">{faculty.title}</p>
+            <p className="truncate w-32">{faculty.title}</p>
             {faculty.canEditFaculty && (
               <Popover
                 arrow={false}
-                content={content}
+                content={
+                  <button
+                    onClick={() => {
+                      deleteFaculty(faculty.facultyId);
+                    }}
+                    className="cursor-pointer text-red z-10"
+                  >
+                    Remove
+                  </button>
+                }
                 trigger="click"
                 className="w-[25px]"
               >
-                <EllipsisVerticalIcon className="cursor-pointer" />
+                <EllipsisVerticalIcon
+                  className="cursor-pointer"
+                  onClick={(e) => e.stopPropagation()}
+                />
               </Popover>
             )}
           </div>
@@ -79,31 +117,61 @@ export const Sidebar = ({ list, events }: SidebarType) => {
                   })
                 }
               >
-                <p className="truncate">{year.yearName ?? "asd"}</p>
+                <p className="truncate w-32">{year.yearName}</p>
                 {faculty.canEditFacultyYear && (
-                  <Popover
-                    arrow={false}
-                    content={content}
-                    trigger="click"
-                    className="w-[25px]"
-                  >
-                    <EllipsisVerticalIcon className="cursor-pointer" />
-                  </Popover>
+                  <button className="cursor-pointer text-red ">
+                    <TrashIcon
+                      className="w-5 h-5"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteFacultyYear({
+                          yearId: year.yearId,
+                        });
+                      }}
+                    />
+                  </button>
                 )}
               </div>
             ),
           })),
-          {
+          faculty.canEditFacultyYear && {
             key: `faculty-${faculty.facultyId}-add-year`,
             label: (
-              <p
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addYear(faculty.facultyId);
-                }}
-              >
-                + Add Year
-              </p>
+              <>
+                {isCreatingFacultyYearFacultyId == faculty.facultyId ? (
+                  <Input
+                    placeholder="Create faculty year"
+                    onChange={(e) => setNewFacultyYearTitle(e.target.value)}
+                    suffix={
+                      <button
+                        disabled={!newFacultyYearTitle}
+                        className={cn(
+                          "w-5 h-5",
+                          !newFacultyYearTitle &&
+                            "cursor-not-allowed opacity-20"
+                        )}
+                        onClick={() =>
+                          postFacultyYear({
+                            facultyId: faculty.facultyId,
+                            title: newFacultyYearTitle ?? "",
+                          })
+                        }
+                      >
+                        <CheckIcon className="w-5 h-5" />
+                      </button>
+                    }
+                  />
+                ) : (
+                  <p
+                    className="w-full"
+                    onClick={() => {
+                      setIsCreatingFacultyYearFacultyId(faculty.facultyId);
+                    }}
+                  >
+                    + Add Year
+                  </p>
+                )}
+              </>
             ),
           },
         ],
@@ -122,8 +190,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
           key: `faculty-add-event`,
           label: (
             <p
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 setIsCreateEventModalOpen(true);
               }}
             >
@@ -132,6 +199,11 @@ export const Sidebar = ({ list, events }: SidebarType) => {
           ),
         },
       ],
+    },
+    {
+      key: "create-faculty",
+      label: isAppAdmin && <p className=" w-full p-0">+ Create Faculty</p>,
+      type: "item",
     },
   ];
 
