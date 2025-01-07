@@ -19,8 +19,6 @@ export const useGetFacultiesWithAdminPermissions = () => {
         method: "GET",
       });
 
-      console.log(response);
-
       return response;
     },
   });

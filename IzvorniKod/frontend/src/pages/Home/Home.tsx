@@ -1,6 +1,7 @@
 import { AddAnswerComponent } from "../../components/SearchComponent/AddAnswerComponent";
 import SelectedPostHeader from "../../components/SelectedPostHeader/SelectedPostHeader";
 import { AnswerComponent } from "../../components/AnswerComponent/AnswerComponent";
+import SelectFacultyModal from "../../components/SelectFacultyModal/SelectFacultyModal";
 export const Home = () => {
   return (
     <div className="bg-secondary overflow-hidden">
@@ -20,9 +21,6 @@ export const Home = () => {
       />
       <AddAnswerComponent postContent="Explain theory of Relativity" />
       <AnswerComponent
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
         answerAuthor="Answer author"
         answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
         minus, dolore, laboriosam aliquid natus officia consequatur commodi
@@ -38,9 +36,6 @@ export const Home = () => {
         ]}
       />
       <AnswerComponent
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
         answerAuthor="Answer author"
         answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
         minus, dolore, laboriosam aliquid natus officia consequatur commodi
@@ -56,9 +51,6 @@ export const Home = () => {
         ]}
       />
       <AnswerComponent
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
         answerAuthor="Answer author"
         answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
       minus, dolore, laboriosam aliquid natus officia consequatur commodi
@@ -74,9 +66,6 @@ export const Home = () => {
         ]}
       />
       <AnswerComponent
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
         answerAuthor="Answer author"
         answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
     minus, dolore, laboriosam aliquid natus officia consequatur commodi
@@ -91,6 +80,7 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
       />
+      <SelectFacultyModal isModalOpen setIsModalOpen={() => 0} />
     </div>
   );
 };
