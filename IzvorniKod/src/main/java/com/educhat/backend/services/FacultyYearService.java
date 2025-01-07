@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 public class FacultyYearService {
@@ -21,6 +23,7 @@ public class FacultyYearService {
     private final UserRepository userRepository;
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyRepository facultyRepository;
+    private final CloudinaryService cloudinaryService;
 
 
     public FacultyYear createFacultyYear(Long userId, Long facultyId, String title) {
@@ -70,10 +73,24 @@ public class FacultyYearService {
 
             for(Post post : postRepository.findBySubjectId(subject.getId())) {
                 // delete all post images
+                for (PostImage postImage : postImageRepository.findByPostId(post.getId())) {
+                    try {
+                        cloudinaryService.deleteFile(postImage.getLink());
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to delete image: " + e.getMessage());
+                    }
+                }
                 postImageRepository.deleteByPostId(post.getId());
 
                 for(Answer answer : answerRepository.findByPostId(post.getId())) {
                     // delete all answer images
+                    for (AnswerImage answerImage : answerImageRepository.findByAnswerId(answer.getId())) {
+                        try {
+                            cloudinaryService.deleteFile(answerImage.getLink());
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to delete image: " + e.getMessage());
+                        }
+                    }
                     answerImageRepository.deleteByAnswerId(answer.getId());
                 }
                 // delete all answers
