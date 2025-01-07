@@ -63,9 +63,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-
-
-
+    @ExceptionHandler(UnauthorizedActionException.class)
+    public ResponseEntity<String> handleUnauthorizedActionException(UnauthorizedActionException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 
 
 }
