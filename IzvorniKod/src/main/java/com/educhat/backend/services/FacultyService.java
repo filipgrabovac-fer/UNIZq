@@ -1,7 +1,9 @@
 package com.educhat.backend.services;
 
+import com.educhat.backend.DTO.AllFacultiesDTO;
 import com.educhat.backend.DTO.FacultiesAdminResponseDTO;
 import com.educhat.backend.exceptions.FacultyNotFoundException;
+import com.educhat.backend.exceptions.FacultyUserNotFoundException;
 import com.educhat.backend.exceptions.UnauthorizedActionException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.models.*;
@@ -30,8 +32,37 @@ public class FacultyService {
     private final FacultyRepository facultyRepository;
     private final CloudinaryService cloudinaryService;
 
-    public List<Faculty> getAllFaculties() {
-        return facultyRepository.findAll();
+    public List<AllFacultiesDTO> getAllFaculties(Long userId) {
+        // find user if exists
+        User user = userRepository.findById(userId)
+                .orElseThrow( () -> new UserNotFoundException("User not found"));
+        boolean appAdmin = user.getRole().equals(Role.ADMIN);
+
+        // create return dto
+        List<AllFacultiesDTO> facultiesDTO = new ArrayList<>();
+
+        for (Faculty faculty : facultyRepository.findAll()) {
+            // fetch the faculty user only if user is not an admin
+            FacultyUser facultyUser = null;
+            if (!appAdmin) {
+                facultyUser = facultyUserRepository.findByUserIdAndFacultyId(userId, faculty.getId()).orElse(null);
+            }
+
+            // determine role based on user role and faculty user existence
+            Role role;
+            if (appAdmin) {
+                role = Role.ADMIN;
+            } else {
+                if (facultyUser != null) {
+                    role = facultyUser.getRole();
+                } else {
+                    role = null;
+                }
+            }
+
+            facultiesDTO.add(new AllFacultiesDTO(faculty.getTitle(), role, faculty.getId()));
+        }
+        return facultiesDTO;
     }
 
     public List<FacultiesAdminResponseDTO> getFacultiesWhereUserIsAdmin(Long userId) {

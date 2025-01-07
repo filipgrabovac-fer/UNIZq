@@ -1,5 +1,6 @@
 package com.educhat.backend.controllers;
 
+import com.educhat.backend.DTO.AllFacultiesDTO;
 import com.educhat.backend.DTO.FacultiesAdminResponseDTO;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.services.FacultyService;
@@ -19,9 +20,9 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Faculty>> getAllFaculties() {
-        List<Faculty> faculties = facultyService.getAllFaculties();
+    @GetMapping("/all/user/{userId}")
+    public ResponseEntity<List<AllFacultiesDTO>> getAllFaculties(@PathVariable Long userId) {
+        List<AllFacultiesDTO> faculties = facultyService.getAllFaculties(userId);
         return ResponseEntity.ok(faculties);
     }
 
