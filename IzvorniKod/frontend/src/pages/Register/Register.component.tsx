@@ -27,20 +27,20 @@ export const Register = () => {
           required={true}
           title="username"
           placeholder="username"
-          setValue={setUsername}
+          onChange={(event) => setUsername(event.target.value)}
         />
         <CustomInput
           required={true}
           title="email"
           placeholder="email@example.com"
-          setValue={setEmail}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <CustomInput
           required={true}
           title="password"
           placeholder="password"
           type="password"
-          setValue={setPassword}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <div className="mt-5">
           <CustomLoginRegisterButton

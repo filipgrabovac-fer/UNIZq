@@ -9,13 +9,30 @@ import { loginRoute } from "./routes/login.routes";
 import { registerRoute } from "./routes/register.routes";
 import { eventsRoute } from "./routes/events.routes";
 import { defaultRoute } from "./routes/default.routes";
+import { usersRoute } from "./routes/users.routes";
+import { profileRoute } from "./routes/profile.routes";
+import {
+  _facultySubjectsRoute,
+  _subjectPostsRoute,
+  facultySubjectsRoute,
+  postRoute,
+  subjectPostsRoute,
+} from "./routes/faculty-subjects.routes";
 
 const routeTree = rootRoute.addChildren([
-  sidebarLayoutRoute.addChildren([homeRoute]),
+  sidebarLayoutRoute.addChildren([
+    homeRoute,
+    _facultySubjectsRoute.addChildren([facultySubjectsRoute]),
+    _subjectPostsRoute.addChildren([
+      subjectPostsRoute.addChildren([postRoute]),
+    ]),
+  ]),
   noSidebarLayoutRoute.addChildren([eventsRoute]),
   loginRoute,
   registerRoute,
   defaultRoute,
+  usersRoute,
+  profileRoute,
 ]);
 
 export const router = createRouter({ routeTree });

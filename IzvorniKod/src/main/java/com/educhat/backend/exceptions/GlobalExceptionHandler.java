@@ -33,4 +33,40 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FacultyNotFoundException.class)
+    public ResponseEntity<String> handleFacultyNotFoundException(FacultyNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FacultyUserAlreadyExistsException.class)
+    public ResponseEntity<String> handleFacultyUserAlreadyExistsException(FacultyUserAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(SubjectNotFoundException.class)
+    public ResponseEntity<String> handleSubjectNotFoundException(SubjectNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FacultyUserNotFoundException.class)
+    public ResponseEntity<String> handleFacultyUserNotFoundException(FacultyUserNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FacultyYearNotFoundException.class)
+    public ResponseEntity<String> handleFacultyYearNotFoundException(FacultyYearNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<String> handlePostNotFoundException(PostNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedActionException.class)
+    public ResponseEntity<String> handleUnauthorizedActionException(UnauthorizedActionException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+
 }
