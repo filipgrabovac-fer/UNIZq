@@ -37,7 +37,6 @@ public class PostController {
             // Parse the JSON string into PostCreateDTO
             ObjectMapper objectMapper = new ObjectMapper();
             PostCreateDTO postCreateDTO = objectMapper.readValue(postJson, PostCreateDTO.class);
-            System.out.println(postCreateDTO);
 
             // Call the service method
             Post response = postService.createPostAndImages(userId, postCreateDTO, images);

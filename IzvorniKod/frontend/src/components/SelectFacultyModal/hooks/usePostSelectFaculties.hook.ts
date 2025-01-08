@@ -39,8 +39,6 @@ export const usePostSelectFaculties = ({
         body: { facultyUserList: facultyList },
       });
 
-      console.log(response);
-
       return response;
     },
   });

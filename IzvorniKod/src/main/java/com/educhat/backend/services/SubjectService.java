@@ -52,17 +52,14 @@ public class SubjectService {
             return ResponseEntity.notFound().build();
 
         FacultyYear facultyYear = facultyYearRepository.findById(facultyYearId).get();
-        System.out.println("1");
 
         if (facultyYear.getId() == null)
             return ResponseEntity.badRequest().build();
-        System.out.println("2");
 
         Optional<FacultyUser> facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyYear.getFacultyId(),userId);
         Optional<User> user = userRepository.findById(userId);
 
         if (user.isEmpty()) return ResponseEntity.badRequest().build();
-        System.out.println("3");
 
         if(facultyUser.isPresent() && facultyUser.get().getRole() == Role.ADMIN || user.get().getRole() == Role.ADMIN) {
             subjectRepository.deleteById(subjectId);
