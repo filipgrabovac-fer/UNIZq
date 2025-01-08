@@ -18,6 +18,7 @@ import {
   postRoute,
   subjectPostsRoute,
 } from "./routes/faculty-subjects.routes";
+import { adminRoute } from "./routes/addminApplication.routes";
 
 const routeTree = rootRoute.addChildren([
   sidebarLayoutRoute.addChildren([
@@ -33,6 +34,7 @@ const routeTree = rootRoute.addChildren([
   defaultRoute,
   usersRoute,
   profileRoute,
+  adminRoute,
 ]);
 
 export const router = createRouter({ routeTree });
