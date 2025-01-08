@@ -1,7 +1,7 @@
 type CustomFetchType = {
   endpointUrl: string;
   method: string;
-  body?: Record<string, any>;
+  body?: Record<string, any> | any;
   headers?: Record<string, string>;
 };
 
@@ -17,7 +17,7 @@ export const customFetch = async ({
     }/api/${endpointUrl}`,
     {
       method,
-      body: JSON.stringify(body),
+      body: body,
       headers,
     }
   ).then((data) => data.json());

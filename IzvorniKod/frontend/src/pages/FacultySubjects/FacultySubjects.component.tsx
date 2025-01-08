@@ -6,12 +6,24 @@ import {
 } from "../../routes/faculty-subjects.routes";
 import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { Search } from "../../components/Search/Search";
+import { useState } from "react";
 
 export const FacultySubjects = () => {
+  const [filterSubjectsByName, setfilterSubjectsByName] = useState<
+    string | undefined
+  >(undefined);
+
   const { yearId } = facultySubjectsRoute.useParams();
 
   const { data } = useGetFacultySubjects({ facultyYearId: yearId });
   const navigate = useNavigate();
+
+  const filteredSubjects = filterSubjectsByName
+    ? data?.filter((subject) =>
+        subject.title.toLowerCase().includes(filterSubjectsByName)
+      )
+    : data;
 
   return (
     <div>
@@ -27,8 +39,12 @@ export const FacultySubjects = () => {
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-4 mt-4 p-2">
-        {data?.map((facultySubject, i) => (
+      <div className="w-4/5 my-4 px-4 max-[1000px]:w-full ">
+        <Search setFilterState={setfilterSubjectsByName} />
+      </div>
+
+      <div className="flex flex-wrap gap-4 mt-4 p-2 max-[600px]:justify-evenly max-[600px]:gap-x-0">
+        {filteredSubjects?.map((facultySubject, i) => (
           <FacultySubject
             key={i}
             onClick={() => {

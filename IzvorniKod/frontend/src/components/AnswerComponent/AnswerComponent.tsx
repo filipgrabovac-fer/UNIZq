@@ -12,6 +12,8 @@ type AnswerComponentType = {
   answerAuthor: string;
   answerText: string;
   pictures: string[];
+  upvoted: boolean;
+  downvoted: boolean;
 };
 
 type GetIconStyleType = {
@@ -31,7 +33,9 @@ export const AnswerComponent = ({
   answerAuthor,
   answerText,
   pictures,
-}: AnswerComponentType) => {
+}: // upvoted,
+// downvoted,
+AnswerComponentType) => {
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
   const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
@@ -64,7 +68,7 @@ export const AnswerComponent = ({
     <div className="flex flex-col gap-3 p-1">
       <button
         onClick={(e) => {
-          e.stopPropagation();
+          // e.stopPropagation();
         }}
         className="cursor-pointer"
       >
@@ -72,7 +76,7 @@ export const AnswerComponent = ({
       </button>
       <button
         onClick={(e) => {
-          e.stopPropagation();
+          // e.stopPropagation();
         }}
         className="cursor-pointer text-red"
       >
@@ -101,7 +105,7 @@ export const AnswerComponent = ({
         <div className="flex gap-1.5">
           <HandThumbUpIcon
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
               setIsThumbUpClicked(!isThumbUpClicked);
             }}
             className="w-[20px] cursor-pointer"
@@ -112,7 +116,7 @@ export const AnswerComponent = ({
           />
           <HandThumbDownIcon
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
               setIsThumbDownClicked(!isThumbDownClicked);
             }}
             className="w-[20px] cursor-pointer"

@@ -1,23 +1,35 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Modal, Form, Input, Upload, message } from "antd";
+import { Modal, Form, Input, Upload, message, UploadFile } from "antd";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { CustomButton } from "../CustomButton/CustomButton"; // Adjust the path as necessary
+import { usePostCreatePost } from "./hooks/usePostCreatePost.hook";
+import { subjectPostsRoute } from "../../routes/faculty-subjects.routes";
+import { useQueryClient } from "@tanstack/react-query";
 
 const { TextArea } = Input;
 
 interface NewPostModalProps {
-  onCreate: (values: any) => void;
   isModalVisible: boolean;
   setIsModalVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CreatePostModal = ({
-  onCreate,
   isModalVisible,
   setIsModalVisible,
 }: NewPostModalProps) => {
   const [form] = Form.useForm();
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState<UploadFile[]>();
+
+  const queryClient = useQueryClient();
+
+  const { mutate: createPost } = usePostCreatePost({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts", subjectId] });
+      setIsModalVisible(false);
+    },
+  });
+
+  const { facultyId, subjectId } = subjectPostsRoute.useParams();
 
   const handleUploadChange = ({ fileList }: any) => {
     const isImage = fileList.every((file: any) =>
@@ -29,6 +41,7 @@ export const CreatePostModal = ({
     }
     setFileList(fileList);
   };
+
   const onCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
@@ -65,10 +78,9 @@ export const CreatePostModal = ({
             listType="picture-card"
             fileList={fileList}
             onChange={handleUploadChange}
-            beforeUpload={() => false}
             multiple
           >
-            {fileList.length >= 5 ? null : (
+            {fileList?.length && fileList.length >= 5 ? null : (
               <div>
                 <PlusIcon />
                 <div style={{ marginTop: 8 }}>Upload</div>
@@ -97,10 +109,22 @@ export const CreatePostModal = ({
               onClick={() => {
                 form
                   .validateFields()
-                  .then((values) => {
+                  .then(() => {
+                    const images: FormData = new FormData();
+                    fileList?.forEach((file) => {
+                      if (file.originFileObj) {
+                        images.append("images", file.originFileObj);
+                      }
+                    });
+                    createPost({
+                      images: images,
+                      postHeader: form.getFieldValue("header"),
+                      postContent: form.getFieldValue("body"),
+                      subjectId: Number(subjectId),
+                      facultyId: Number(facultyId),
+                    });
                     form.resetFields();
                     setFileList([]);
-                    onCreate({ ...values, images: fileList });
                   })
                   .catch(() => {
                     message.error(

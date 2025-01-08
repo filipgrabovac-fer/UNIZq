@@ -31,8 +31,10 @@ public class PostController {
 
     @PostMapping(value = "/user/{userId}", consumes = "multipart/form-data")
     public ResponseEntity<Post> createPost(@PathVariable Long userId,
-                                           @RequestPart("post") String postJson,
+                                           @RequestPart(value = "post") String postJson,
                                            @RequestPart(value = "images", required = false) List<MultipartFile> images) {
+
+//
         try {
             // Parse the JSON string into PostCreateDTO
             ObjectMapper objectMapper = new ObjectMapper();
@@ -44,6 +46,7 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null); // Handle invalid JSON or errors
         }
+//        return ResponseEntity.ok("123");
     }
 
     @GetMapping("/{postId}/user/{userId}")

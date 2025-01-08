@@ -8,11 +8,16 @@ import {
 import { Link, useNavigate } from "@tanstack/react-router";
 
 type HeaderType = {
+  withSidebar?: boolean;
   isSidebarOpen: boolean;
   setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
+export const Header = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  withSidebar,
+}: HeaderType) => {
   const navigate = useNavigate();
 
   const dropdownTabs = [
@@ -36,18 +41,28 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
   };
 
   return (
-    <div className="sticky top-0 z-10 flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
-      <div className="min-[501px]:hidden flex">
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          {isSidebarOpen ? (
-            <XMarkIcon width={25} height={25} />
-          ) : (
-            <Bars3Icon width={25} height={25} />
-          )}
-        </button>
-      </div>
+    <div className="z-10 flex justify-between bg-primary text-white h-[60px]  items-center pl-8 pr-4 ">
+      {withSidebar && (
+        <div className="min-[601px]:hidden flex z-10">
+          <button>
+            {isSidebarOpen ? (
+              <XMarkIcon
+                width={25}
+                height={25}
+                onClick={() => setIsSidebarOpen(false)}
+              />
+            ) : (
+              <Bars3Icon
+                width={25}
+                height={25}
+                onClick={() => setIsSidebarOpen(true)}
+              />
+            )}
+          </button>
+        </div>
+      )}
 
-      <Link to="/" className="text-md my-auto">
+      <Link to="/" className="text-md my-auto z-10">
         eduChat
       </Link>
 
@@ -71,7 +86,7 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
         open={open}
         onOpenChange={handleOpenChange}
       >
-        <UserCircleIcon className="w-[25px] h-[25px] cursor-pointer my-auto" />
+        <UserCircleIcon className="w-[25px] h-[25px] cursor-pointer my-auto z-10" />
       </Popover>
     </div>
   );
