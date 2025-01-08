@@ -28,4 +28,6 @@ public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> 
 
     void deleteByFacultyId(Long facultyId);
 
+    List<FacultyUser> findByFacultyIdAndRoleNot(Long facultyId, Role role);
+
 }
