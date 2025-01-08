@@ -2,6 +2,7 @@ package com.educhat.backend.controllers;
 
 import com.educhat.backend.DTO.CreateSubjectDTO;
 import com.educhat.backend.models.Subject;
+import com.educhat.backend.repository.FacultyYearRepository;
 import com.educhat.backend.repository.SubjectRepository;
 import com.educhat.backend.services.SubjectService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,11 @@ public class SubjectController {
     @PostMapping("/year/{facultyYearId}/user/{userId}")
     public ResponseEntity<String> createSubject(@PathVariable Long facultyYearId,@PathVariable Long userId, @RequestBody CreateSubjectDTO subject) {
         return subjectService.createSubject(userId, facultyYearId, subject.getTitle(), subject.getDescription());
+    }
+
+    @DeleteMapping("/year/{facultyYearId}/subject/{subjectId}/user/{userId}")
+    public ResponseEntity<String> deleteSubject(@PathVariable Long subjectId,@PathVariable Long userId, @PathVariable Long facultyYearId) {
+        return subjectService.deleteSubject(userId, subjectId,facultyYearId);
+
     }
 }

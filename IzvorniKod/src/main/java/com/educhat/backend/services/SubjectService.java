@@ -1,13 +1,8 @@
 package com.educhat.backend.services;
 
-import com.educhat.backend.models.Faculty;
-import com.educhat.backend.models.FacultyUser;
-import com.educhat.backend.models.FacultyYear;
-import com.educhat.backend.models.Subject;
-import com.educhat.backend.repository.FacultyRepository;
-import com.educhat.backend.repository.FacultyUserRepository;
-import com.educhat.backend.repository.FacultyYearRepository;
-import com.educhat.backend.repository.SubjectRepository;
+import com.educhat.backend.models.*;
+import com.educhat.backend.models.enums.Role;
+import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +17,7 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final FacultyUserRepository facultyUserRepository;
     private final FacultyYearRepository facultyYearRepository;
+    private final UserRepository userRepository;
 
     public List<Subject> getAllSubjects(Long facultyYearId) {
         return subjectRepository.findByFacultyYearId(facultyYearId);
@@ -49,5 +45,30 @@ public class SubjectService {
             return ResponseEntity.ok(subject.toString());
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    public ResponseEntity<String> deleteSubject(Long userId, Long subjectId, Long facultyYearId){
+        if (facultyYearRepository.findById(facultyYearId).isEmpty() || subjectRepository.findById(subjectId).isEmpty())
+            return ResponseEntity.notFound().build();
+
+        FacultyYear facultyYear = facultyYearRepository.findById(facultyYearId).get();
+        System.out.println("1");
+
+        if (facultyYear.getId() == null)
+            return ResponseEntity.badRequest().build();
+        System.out.println("2");
+
+        Optional<FacultyUser> facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyYear.getFacultyId(),userId);
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isEmpty()) return ResponseEntity.badRequest().build();
+        System.out.println("3");
+
+        if(facultyUser.isPresent() && facultyUser.get().getRole() == Role.ADMIN || user.get().getRole() == Role.ADMIN) {
+            subjectRepository.deleteById(subjectId);
+            return ResponseEntity.ok("Successfully deleted subject with id" + subjectId);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
