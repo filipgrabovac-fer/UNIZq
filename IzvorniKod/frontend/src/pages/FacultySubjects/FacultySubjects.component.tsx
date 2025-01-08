@@ -8,6 +8,7 @@ import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Search } from "../../components/Search/Search";
 import { useState } from "react";
+import { Form, Input, Modal } from "antd";
 
 export const FacultySubjects = () => {
   const [filterSubjectsByName, setfilterSubjectsByName] = useState<
@@ -25,6 +26,33 @@ export const FacultySubjects = () => {
       )
     : data;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const [form] = Form.useForm();
+  const [isOkDisabled, setIsOkDisabled] = useState(true);
+
+  const handleFormChange = () => {
+    const values = form.getFieldsValue();
+    // Check if both fields are filled
+    const isDisabled = !values.facultyName || !values.facultyDescription;
+    setIsOkDisabled(isDisabled);
+  };
+  const onFinish = (values: any) => {
+    console.log("Form Values:", values);
+    handleOk(); // Call the original OK handler
+  };
   return (
     <div>
       <div className="flex align-middle mt-5">
@@ -33,10 +61,54 @@ export const FacultySubjects = () => {
         </h1>
         <button
           className="bg-primary w-8 h-8 rounded-sm justify-center flex my-auto"
-          onClick={() => {}}
+          onClick={showModal}
         >
           <PlusIcon className="w-5 h-5 m-auto" color="white" />
         </button>
+        <Modal
+          title="Add Faculty Subject"
+          open={isModalOpen}
+          onOk={() => form.submit()} // Submit the form on OK
+          onCancel={handleCancel}
+          okButtonProps={{
+            style: { backgroundColor: "#111D4A" },
+            disabled: isOkDisabled, // Disable OK based on state
+          }}
+        >
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            onValuesChange={handleFormChange} // Trigger on every form change
+          >
+            <Form.Item
+              label="Faculty Name"
+              name="facultyName"
+              rules={[
+                { required: true, message: "Please enter the faculty name" },
+              ]}
+              hasFeedback
+            >
+              <Input placeholder="Enter faculty name" />
+            </Form.Item>
+            <Form.Item
+              label="Faculty Description"
+              name="facultyDescription"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the faculty description",
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.TextArea
+                rows={4}
+                placeholder="Enter faculty description"
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
 
       <div className="w-4/5 my-4 px-4 max-[1000px]:w-full ">

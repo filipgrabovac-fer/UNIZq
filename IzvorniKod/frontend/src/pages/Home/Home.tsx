@@ -33,6 +33,8 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
+        upvoted={true}
+        downvoted={true}
       />
       <AnswerComponent
         answerAuthor="Answer author"
@@ -48,6 +50,8 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
+        upvoted={true}
+        downvoted={true}
       />
       <AnswerComponent
         answerAuthor="Answer author"
@@ -63,6 +67,8 @@ export const Home = () => {
           "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
           "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
         ]}
+        upvoted={true}
+        downvoted={true}
       />
       <AddAnswerComponent postContent="Explain theory of relativity" />
     </div>
