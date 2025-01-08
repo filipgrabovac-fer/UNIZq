@@ -64,7 +64,7 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
   };
 
   return (
-    <div className="bg-white p-1">
+    <div className="w-[90%] bg-white p-1">
       <input
         type="file"
         id="file"

@@ -36,7 +36,7 @@ export const Header = ({ isSidebarOpen, setIsSidebarOpen }: HeaderType) => {
   };
 
   return (
-    <div className="flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
+    <div className="sticky top-0 z-10 flex justify-between bg-primary text-white h-[60px] align-middle pl-8 pr-4">
       <div className="min-[501px]:hidden flex">
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           {isSidebarOpen ? (
