@@ -1,7 +1,7 @@
 import { Header } from "../../components/Header/Header";
-
 import { SelectComponent } from "./components/SelectComponent/SelectComponent";
 import { useGetFacultiesWithAdminPermissions } from "./hooks/useGetFacultiesWithAdminPermissions.hook";
+
 export const Users = () => {
   const { data: faculties } = useGetFacultiesWithAdminPermissions();
 
