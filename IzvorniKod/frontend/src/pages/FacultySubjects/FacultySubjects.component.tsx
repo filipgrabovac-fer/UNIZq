@@ -9,6 +9,7 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { Search } from "../../components/Search/Search";
 import { useState } from "react";
 import { Form, Input, Modal } from "antd";
+import { usePostFacultySubject } from "./hooks/usePostFacultySubject.hook";
 
 export const FacultySubjects = () => {
   const [filterSubjectsByName, setfilterSubjectsByName] = useState<
@@ -45,14 +46,16 @@ export const FacultySubjects = () => {
 
   const handleFormChange = () => {
     const values = form.getFieldsValue();
-    // Check if both fields are filled
     const isDisabled = !values.facultyName || !values.facultyDescription;
     setIsOkDisabled(isDisabled);
   };
   const onFinish = (values: any) => {
     console.log("Form Values:", values);
-    handleOk(); // Call the original OK handler
+    handleOk();
   };
+
+  const { mutate: postFacultySubject } = usePostFacultySubject();
+
   return (
     <div>
       <div className="flex align-middle mt-5">
@@ -68,10 +71,19 @@ export const FacultySubjects = () => {
         <Modal
           title="Add Faculty Subject"
           open={isModalOpen}
-          onOk={() => form.submit()} // Submit the form on OK
+          onOk={() =>
+            postFacultySubject({
+              facultyDescription: form.getFieldValue("facultyDescription"),
+              facultyName: form.getFieldValue("facultyName"),
+              facultyYearId: yearId,
+            })
+          } // Submit the form on OK
           onCancel={handleCancel}
           okButtonProps={{
-            style: { backgroundColor: "#111D4A" },
+            style: {
+              backgroundColor: "#111D4A",
+              opacity: isOkDisabled ? 0.5 : 1,
+            },
             disabled: isOkDisabled, // Disable OK based on state
           }}
         >
