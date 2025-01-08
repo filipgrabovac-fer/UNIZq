@@ -1,6 +1,8 @@
 package com.educhat.backend.controllers;
 
+import com.educhat.backend.DTO.CreateSubjectDTO;
 import com.educhat.backend.models.Subject;
+import com.educhat.backend.repository.SubjectRepository;
 import com.educhat.backend.services.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,8 @@ public class SubjectController {
         return ResponseEntity.ok(subjects);
     }
 
-
+    @PostMapping("/year/{facultyYearId}/user/{userId}")
+    public ResponseEntity<String> createSubject(@PathVariable Long facultyYearId,@PathVariable Long userId, @RequestBody CreateSubjectDTO subject) {
+        return subjectService.createSubject(userId, facultyYearId, subject.getTitle(), subject.getDescription());
+    }
 }

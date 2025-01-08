@@ -21,6 +21,4 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Transactional
     @Query("DELETE FROM Subject s WHERE s.facultyYearId = :facultyYearId")
     void deleteByFacultyYearId(@Param("facultyYearId") Long facultyYearId);
-
-
 }
