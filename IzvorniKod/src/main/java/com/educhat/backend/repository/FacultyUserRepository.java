@@ -24,6 +24,8 @@ public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> 
 
     List<FacultyUser> findByUserId(Long userId);
 
+    Optional<FacultyUser> findByFacultyIdAndUserId(Long facultyId, Long userId);
+
     void deleteByFacultyId(Long facultyId);
 
 }

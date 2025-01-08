@@ -120,7 +120,7 @@ public class PostService {
 
         Post savedPost = postRepository.save(post);
 
-        // Step 4: Upload images to Cloudinary and link to the post
+        // Step 4: Upload images to Cloudinary and link to the post (optional step)
         if (imageFiles != null && !imageFiles.isEmpty()) {
             List<PostImage> postImagesForSave = new ArrayList<>();
             for (MultipartFile file : imageFiles) {
