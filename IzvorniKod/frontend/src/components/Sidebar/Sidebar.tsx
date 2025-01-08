@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import type { MenuProps } from "antd";
 import { ConfigProvider, Input, Menu, message, Popover } from "antd";
 import {
@@ -24,9 +24,10 @@ import { usePostCreateNewFaculty } from "./hooks/usePostCreateNewFaculty.hook";
 type SidebarType = {
   list: SelectedFacultiesDataType[];
   events: EventsDataType;
+  onYearSelect?: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Sidebar = ({ list, events }: SidebarType) => {
+export const Sidebar = ({ list, events, onYearSelect }: SidebarType) => {
   const [current, setCurrent] = useState<string | null>(null);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
   const [isCreatingFacultyYearFacultyId, setIsCreatingFacultyYearFacultyId] =
@@ -88,7 +89,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
       children: list.map((faculty) => ({
         key: `faculty-${faculty.facultyId}`,
         label: (
-          <div className="flex justify-between w-[250px]">
+          <div className="flex justify-between w-max-[250px]">
             <p className="truncate w-32">{faculty.title}</p>
             {faculty.canEditFaculty && (
               <Popover
@@ -106,10 +107,7 @@ export const Sidebar = ({ list, events }: SidebarType) => {
                 trigger="click"
                 className="w-[25px]"
               >
-                <EllipsisVerticalIcon
-                  className="cursor-pointer"
-                  onClick={(e) => e.stopPropagation()}
-                />
+                <EllipsisVerticalIcon className="cursor-pointer" />
               </Popover>
             )}
           </div>
@@ -119,24 +117,24 @@ export const Sidebar = ({ list, events }: SidebarType) => {
             key: `year-${year.yearId}`,
             label: (
               <div
-                className="flex justify-between w-[250px]"
-                onClick={() =>
+                className="flex justify-between w-max-[250px]"
+                onClick={() => {
+                  if (onYearSelect != undefined) onYearSelect(false);
                   navigate({
                     to: facultySubjectsRoute.to,
                     params: {
                       facultyId: faculty.facultyId,
                       yearId: year.yearId,
                     },
-                  })
-                }
+                  });
+                }}
               >
                 <p className="truncate w-32">{year.yearName}</p>
                 {faculty.canEditFacultyYear && (
                   <button className="cursor-pointer text-red ">
                     <TrashIcon
                       className="w-5 h-5"
-                      onClick={(e) => {
-                        e.stopPropagation();
+                      onClick={() => {
                         deleteFacultyYear({
                           yearId: year.yearId,
                         });
@@ -221,50 +219,10 @@ export const Sidebar = ({ list, events }: SidebarType) => {
         },
       ],
     },
-    {
-      key: "create-faculty",
-      label:
-        isAppAdmin &&
-        (isCreatingFacultyActive ? (
-          <Input
-            placeholder="Create faculty"
-            onChange={(e) => setNewFacultyTitle(e.target.value)}
-            suffix={
-              <button className={cn("w-5 h-5")}>
-                {newFacultyTitle ? (
-                  <CheckIcon
-                    className="w-5 h-5"
-                    onClick={() => {
-                      createFaculty({ title: newFacultyTitle ?? "" });
-                      setNewFacultyTitle(undefined);
-                    }}
-                  />
-                ) : (
-                  <ArrowTurnDownRightIcon
-                    className="w-5 h-5"
-                    color="gray"
-                    onClick={() => {
-                      setIsCreatingFacultyActive(false);
-                    }}
-                  />
-                )}
-              </button>
-            }
-          />
-        ) : (
-          <p
-            className=" w-full p-0"
-            onClick={() => setIsCreatingFacultyActive(true)}
-          >
-            + Create Faculty
-          </p>
-        )),
-      type: "item",
-    },
   ];
 
   return (
-    <div className="min-w-[250px] ">
+    <div className="w-[250px] ">
       <ConfigProvider
         theme={{
           components: {
@@ -277,14 +235,55 @@ export const Sidebar = ({ list, events }: SidebarType) => {
           },
         }}
       >
-        <Menu
-          className="max-[500px]:w-full"
-          onClick={handleClick}
-          selectedKeys={current ? [current] : []}
-          mode="inline"
-          items={menuItems}
-        />
+        <div className="overflow-y-auto max-h-[39rem] max-[750px]:max-h-[30rem]">
+          <Menu
+            className="max-[500px]:w-full"
+            onClick={handleClick}
+            selectedKeys={current ? [current] : []}
+            mode="inline"
+            items={menuItems}
+          />
+        </div>
       </ConfigProvider>
+      {isAppAdmin && (
+        <div className="px-4 mt-2">
+          {isCreatingFacultyActive ? (
+            <Input
+              placeholder="Create faculty"
+              className=" w-full"
+              onChange={(e) => setNewFacultyTitle(e.target.value)}
+              suffix={
+                <button className={cn("w-5 h-5")}>
+                  {newFacultyTitle ? (
+                    <CheckIcon
+                      className="w-5 h-5"
+                      onClick={() => {
+                        createFaculty({ title: newFacultyTitle ?? "" });
+                        setNewFacultyTitle(undefined);
+                      }}
+                    />
+                  ) : (
+                    <ArrowTurnDownRightIcon
+                      className="w-5 h-5"
+                      color="gray"
+                      onClick={() => {
+                        setIsCreatingFacultyActive(false);
+                      }}
+                    />
+                  )}
+                </button>
+              }
+            />
+          ) : (
+            <p
+              className=" w-full p-0 cursor-pointer ml-4"
+              onClick={() => setIsCreatingFacultyActive(true)}
+            >
+              + Create Faculty
+            </p>
+          )}
+        </div>
+      )}
       {isCreateEventModalOpen && (
         <CreateEventModal setState={setIsCreateEventModalOpen} />
       )}

@@ -22,13 +22,13 @@ export const FacultySubject = ({
   return (
     <div
       onClick={onClick}
-      className="w-[150px] h-[150px] bg-white rounded-[20px] p-[10px] min-[501px]:w-[220px] min-[501px]:h-[220px] min-[501px]:p-[15px] border border-gray_border cursor-pointer hover:opacity-60"
+      className="w-[150px] h-[150px] bg-white rounded-[20px] p-[10px] min-[750px]:w-[220px] min-[750px]:h-[220px] min-[750px]:p-[15px] border border-gray_border cursor-pointer hover:opacity-60"
     >
-      <p className="font-medium text-[15px] mb-[5px] min-[501px]:text-[26px] min-[501px]:mb-[10px]">
+      <p className="font-medium text-[15px] mb-[5px] min-[750px]:text-[26px] min-[750px]:mb-[10px]">
         {subjectTitle}
       </p>
       <hr />
-      <div className="mt-[5px] text-[10px] min-[501px]:text-[14px] min-[501px]:mt-[10px]">
+      <div className="mt-[5px] text-[10px] min-[750px]:text-[14px] min-[750px]:mt-[10px]">
         <p className="max-[500px]:hidden">
           {formattedSubjectDescriptionDesktop}
         </p>

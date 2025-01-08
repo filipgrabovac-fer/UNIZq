@@ -16,7 +16,7 @@ export const SidebarLayout = () => {
     useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
+    const mediaQuery = window.matchMedia("(max-width: 600px)");
     const handleScreenResize = (e: MediaQueryListEvent) =>
       setIsSmallScreen(e.matches);
 
@@ -33,28 +33,40 @@ export const SidebarLayout = () => {
 
   return (
     <div className="h-screen flex flex-col">
-      <Header
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <div>
+        <Header
+          withSidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
+      </div>
+
       {isSmallScreen ? (
         isSidebarOpen ? (
-          <div className={"absolute left-0 top-[60px] w-full h-full bg-white "}>
-            <Sidebar list={sidebarData ?? []} events={eventsData ?? []} />
-            <button
-              className="mt-auto mb-4 flex justify-center items-center hover:opacity-60 ml-10"
-              onClick={() => setIsSelectFacultyModalOpen(true)}
-            >
-              <PlusIcon color="black" className="w-5 h-5" />
-              Add faculty
-            </button>
+          <div className={"absolute left-0 pt-[60px] w-full h-full "}>
+            <div className="flex flex-col justify-between items-start h-full">
+              <Sidebar
+                list={sidebarData ?? []}
+                events={eventsData ?? []}
+                onYearSelect={setIsSidebarOpen}
+              />
+              <button
+                className="mt-auto mb-4 flex justify-center items-center hover:opacity-60 ml-10"
+                onClick={() => setIsSelectFacultyModalOpen(true)}
+              >
+                <PlusIcon color="black" className="w-5 h-5" />
+                Add faculty
+              </button>
+            </div>
           </div>
         ) : (
-          <Outlet />
+          <div className="w-full">
+            <Outlet />
+          </div>
         )
       ) : (
-        <div className="flex flex-1 ">
-          <div className="flex flex-col justify-between items-start">
+        <div className="flex flex-1">
+          <div className="flex flex-col justify-between items-start h-full">
             <Sidebar list={sidebarData ?? []} events={eventsData ?? []} />
             <button
               className="mt-auto mb-4 flex justify-center items-center hover:opacity-60 ml-10"
@@ -64,7 +76,9 @@ export const SidebarLayout = () => {
               Add faculty
             </button>
           </div>
-          <Outlet />
+          <div className="w-full h-full">
+            <Outlet />
+          </div>
         </div>
       )}
       {isSelectFacultyModalOpen && (

@@ -1,14 +1,19 @@
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import { Select, ConfigProvider, Input } from "antd";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type SearchType = {
-  withAddPost: boolean;
-  onClick: () => void;
+  withAddPost?: boolean;
+  setFilterState: Dispatch<SetStateAction<string | undefined>>;
+  onAddPostClick?: () => void;
 };
 
-export const Search = ({ withAddPost, onClick }: SearchType) => {
+export const Search = ({
+  withAddPost,
+  onAddPostClick,
+  setFilterState,
+}: SearchType) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -26,10 +31,7 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
   }, []);
 
   return (
-    <div
-      onClick={onClick}
-      className="min-[501px]:h-[40px] min-[501px]:flex justify-center min-[501px]:gap-[3%] max-[500px]:gap-y-2 max-[500px]:grid grid-cols-3 grid-rows-[40px_40px]"
-    >
+    <div className="min-[501px]:h-[40px] min-[501px]:flex min-[501px]:gap-[3%] max-[500px]:gap-y-2  flex w-full ">
       <ConfigProvider
         theme={{
           components: {
@@ -47,9 +49,10 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
         }}
       >
         <Input
-          className=" rounded-[20px] w-[50%] max-[500px]:w-full col-start-1 col-end-4"
-          size="large"
+          className="rounded-[20px] w-full"
+          size="middle"
           placeholder="Search..."
+          onChange={(e) => setFilterState(e.target.value.trim())}
           prefix={
             <div className="flex">
               <MagnifyingGlassIcon className="w-5 mr-2" />
@@ -57,16 +60,15 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
             </div>
           }
         />
+
         <Select
-          className="row-start-2 col-start-1 col-end-2 w-[120px] h-[100%] cursor-default"
-          showSearch
           allowClear
           options={[
             { value: "Name", label: "Name" },
             { value: "Date", label: "Date" },
             { value: "Content", label: "Content" },
           ]}
-          optionFilterProp="label"
+          optionFilterProp="button"
           filterSort={(optionA, optionB) =>
             (optionA?.label ?? "")
               .toLowerCase()
@@ -74,21 +76,22 @@ export const Search = ({ withAddPost, onClick }: SearchType) => {
           }
           placeholder="Filter by"
           open={isOpen}
-          onMouseEnter={() => setIsOpen(true)}
+          onClick={() => setIsOpen(true)}
+          onMouseLeave={() => setIsOpen(false)}
           dropdownRender={(menu) => (
-            <div
-              className="overflow-hidden"
-              onMouseLeave={() => setIsOpen(false)}
-            >
-              {menu}
-            </div>
+            <div className="overflow-hidden">{menu}</div>
           )}
         />
       </ConfigProvider>
 
-      {withAddPost && (
+      {withAddPost && onAddPostClick && (
         <div className="flex max-[500px]:w-20">
-          <CustomButton variant="primary" title="Add post" onClick={() => {}} />
+          <CustomButton
+            variant="primary"
+            title="Add post"
+            onClick={onAddPostClick}
+            fontSize="sm"
+          />
         </div>
       )}
     </div>

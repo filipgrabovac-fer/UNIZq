@@ -21,7 +21,6 @@ export const useGetFacultiesForSelection = () => {
         endpointUrl: `faculties/all/user/${userId}`,
         method: "GET",
       });
-      console.log(response);
       return response;
     },
   });

@@ -5,21 +5,42 @@ import {
   subjectPostsRoute,
 } from "../../routes/faculty-subjects.routes";
 import { useGetSubjectPosts } from "./hooks/useGetSubjectPosts.hook";
-import { useEffect } from "react";
+import { Search } from "../../components/Search/Search";
+import { useState } from "react";
+import { CreatePostModal } from "../../components/CreatePostModal/CreatePostModal";
 
 export const SubjectPosts = () => {
   const { subjectId } = subjectPostsRoute.useParams();
 
   const { data } = useGetSubjectPosts({ subjectId: subjectId });
+  const [filterPostsByName, setFilterPostsByName] = useState<
+    string | undefined
+  >();
+  const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const filteredPosts = filterPostsByName
+    ? data?.filter((post) =>
+        post.title.toLowerCase().includes(filterPostsByName)
+      )
+    : data;
+
   return (
     <div className="w-full">
       <h1 className="text-[1.5rem] font-medium ml-4 mt-5">Subject Posts</h1>
 
-      {data && data.length > 0 ? (
-        <div className="w-full px-10 max-[500px]:px-4">
-          {data.map((post, i) => (
+      <div className="w-4/5 px-4 my-4 ">
+        <Search
+          setFilterState={setFilterPostsByName}
+          withAddPost
+          onAddPostClick={() => setIsCreatePostModalOpen(true)}
+        />
+      </div>
+
+      {filteredPosts && filteredPosts.length > 0 ? (
+        <div className="px-6 w-full max-[500px]:px-4">
+          {filteredPosts.map((post, i) => (
             <PostPreview
               key={i}
               editable={post.editable}
@@ -40,6 +61,12 @@ export const SubjectPosts = () => {
             No posts found.
           </p>
         </div>
+      )}
+      {isCreatePostModalOpen && (
+        <CreatePostModal
+          isModalVisible={isCreatePostModalOpen}
+          setIsModalVisible={setIsCreatePostModalOpen}
+        />
       )}
     </div>
   );

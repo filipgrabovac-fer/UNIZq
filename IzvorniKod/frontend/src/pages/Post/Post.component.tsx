@@ -1,100 +1,38 @@
 import SelectedPostHeader from "../../components/SelectedPostHeader/SelectedPostHeader";
 import { AnswerComponent } from "../../components/AnswerComponent/AnswerComponent";
 import { AddAnswerComponent } from "../../components/SearchComponent/AddAnswerComponent";
+import { useGetPostDetails } from "./hooks/useGetPostDetails.hook";
+import { postRoute } from "../../routes/faculty-subjects.routes";
 
 export const Post = () => {
+  const { postId } = postRoute.useParams();
+
+  const { data: postData } = useGetPostDetails({ postId: Number(postId) });
+
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-none">
+    <div className="flex flex-col h-full">
+      <div className="h-max">
         <SelectedPostHeader
-          images={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-          postAuthor="Post Author"
-          postData="Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore aspernatur architecto provident saepe dicta, quasi fuga consequatur amet quo tempora atque ad, maiores nemo magni tenetur in quos recusandae fugiat?"
-          postName="Post Name"
+          images={postData?.images ?? []}
+          postAuthor={postData?.author ?? ""}
+          postData={postData?.postContent ?? ""}
+          postName={postData?.postHeader ?? ""}
         />
       </div>
-      <div className="flex-1 overflow-y-scroll">
-        <AnswerComponent
-          answerAuthor="Answer author"
-          answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique."
-          pictures={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-        />
-        <AnswerComponent
-          answerAuthor="Answer author"
-          answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique."
-          pictures={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-        />
-        <AnswerComponent
-          answerAuthor="Answer author"
-          answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique."
-          pictures={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-        />
-        <AnswerComponent
-          answerAuthor="Answer author"
-          answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique."
-          pictures={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-        />
-        <AnswerComponent
-          answerAuthor="Answer author"
-          answerText="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur quas
-minus, dolore, laboriosam aliquid natus officia consequatur commodi
-iusto modi nisi magni, quisquam ducimus rerum ad nostrum itaque nobis
-similique."
-          pictures={[
-            "https://cdn.pixabay.com/photo/2022/03/27/12/46/chongqing-7094955_640.jpg",
-            "https://cdn.pixabay.com/photo/2020/10/22/10/05/formula-5675604_640.jpg",
-            "https://cdn.pixabay.com/photo/2024/12/05/11/17/fishing-9246365_640.jpg",
-          ]}
-        />
+
+      <div className="h-full overflow-y-auto">
+        {postData?.answerDetails?.map((answer, i) => (
+          <AnswerComponent
+            pictures={answer.answerImages}
+            answerText={answer.content}
+            answerAuthor={answer.author}
+            key={i}
+            upvoted={answer.upvoted}
+            downvoted={answer.downvoted}
+          />
+        ))}
       </div>
-      <div className="flex-none sticky bottom-0 my-2 bg-white">
+      <div className="sticky bottom-0 my-2 bg-white">
         <AddAnswerComponent postContent="Explain theory of relativity" />
       </div>
     </div>
