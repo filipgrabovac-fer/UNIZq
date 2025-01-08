@@ -116,6 +116,7 @@ export const CreatePostModal = ({
                         images.append("images", file.originFileObj);
                       }
                     });
+
                     createPost({
                       images: images,
                       postHeader: form.getFieldValue("header"),

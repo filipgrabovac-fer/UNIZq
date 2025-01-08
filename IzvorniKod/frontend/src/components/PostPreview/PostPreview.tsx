@@ -29,7 +29,6 @@ const getIconStyle = ({ color, isClicked }: GetIconStyleType) => {
 export const PostPreview = ({
   postTitle,
   onClick,
-  postId,
   editable,
 }: PostPreviewProps) => {
   const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);

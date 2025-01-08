@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Input, Spin } from "antd";
+import { Input, message, Spin, Upload, UploadFile } from "antd";
 import {
   PaperClipIcon,
   PaperAirplaneIcon,
   CpuChipIcon,
+  PlusIcon,
 } from "@heroicons/react/24/solid";
 import { cn } from "../../utils/cn.util";
 import { usePostGenerateAnswerWithAI } from "./hooks/usePostGenerateAnswerWithAI.hook";
+import { usePostCreateAnswer } from "./hooks/usePostCreateAnswer.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import { postRoute } from "../../routes/faculty-subjects.routes";
 
 interface SearchComponentProps {
   postContent: string;
@@ -14,17 +18,35 @@ interface SearchComponentProps {
 
 export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
   const [answerContent, setAnswerContent] = useState("");
-  const [imageList, setImageList] = useState<FileList | null>(null);
+  const [imageList, setImageList] = useState<UploadFile[]>();
   const [isGenerateAnswerLoading, setIsGenerateAnswerLoading] = useState(false);
 
-  const handleIconClick = () => {
-    // Handle the logic for adding images here
-    console.log("Icon clicked to add images");
-  };
+  const queryClient = useQueryClient();
+  const { postId } = postRoute.useParams();
 
-  const handlePaperClipClick = () => {
-    const fileInput = document.getElementById("file") as HTMLInputElement;
-    fileInput && fileInput.click();
+  const { mutate: postAnswer } = usePostCreateAnswer({
+    onSuccess: () => {
+      setImageList([]);
+      setAnswerContent("");
+      queryClient.invalidateQueries({ queryKey: ["post-details"] });
+    },
+  });
+
+  const handleSubmit = () => {
+    console.log(4);
+
+    // Handle the logic for adding images here
+    const formData = new FormData();
+
+    formData.append("description", answerContent);
+
+    imageList?.forEach((file) => {
+      if (file.originFileObj) {
+        formData.append("images", file.originFileObj);
+      }
+    });
+
+    postAnswer({ formData: formData, postId });
   };
 
   const { mutate: postGenerateAnswerWithAI } = usePostGenerateAnswerWithAI({
@@ -34,28 +56,16 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
     },
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      if (files.length > 5) {
-        alert("You can only select up to 5 images.");
-        return;
-      }
-
-      const validImageTypes = [
-        "image/gif",
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-      ];
-      for (let i = 0; i < files.length; i++) {
-        if (!validImageTypes.includes(files[i].type)) {
-          alert("Only image files are allowed.");
-          return;
-        }
-      }
-      setImageList(files);
+  const handleUploadChange = ({ fileList }: any) => {
+    const isImage = fileList?.every((file: any) =>
+      file.type.startsWith("image/")
+    );
+    if (!isImage) {
+      message.error("Please upload only images");
+      return;
     }
+    setImageList(fileList);
+    console.log(123);
   };
 
   const handleCpuChipClick = () => {
@@ -65,14 +75,7 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
 
   return (
     <div className="w-[90%] bg-white p-1 m-auto">
-      <input
-        type="file"
-        id="file"
-        className="hidden"
-        onChange={handleFileChange}
-        multiple
-        accept="image/*"
-      />
+      <div className="absolute"></div>
       <Input
         placeholder="Add your answer"
         value={answerContent}
@@ -81,8 +84,18 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
           setAnswerContent(e.target.value);
         }}
         prefix={
-          <div onClick={handlePaperClipClick}>
-            <PaperClipIcon className="h-5 w-5 text-gray-400 cursor-pointer hover:scale-110 transition-transform" />
+          <div className="h-5 w-5">
+            <Upload
+              accept="image/*"
+              fileList={imageList}
+              onChange={handleUploadChange}
+              multiple
+            >
+              <PaperClipIcon
+                className="h-5 w-5 text-gray-400 cursor-pointer hover:scale-110 transition-transform"
+                onClick={() => 0}
+              />
+            </Upload>
           </div>
         }
         suffix={
@@ -107,7 +120,7 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
                 !answerContent &&
                   "opacity-50 cursor-not-allowed pointer-events-none"
               )}
-              onClick={handleIconClick}
+              onClick={handleSubmit}
             >
               <PaperAirplaneIcon className="h-5 w-5 text-purple-900" />
             </div>

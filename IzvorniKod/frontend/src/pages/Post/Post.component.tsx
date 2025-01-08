@@ -33,7 +33,9 @@ export const Post = () => {
         ))}
       </div>
       <div className="sticky bottom-0 my-2 bg-white">
-        <AddAnswerComponent postContent="Explain theory of relativity" />
+        <AddAnswerComponent
+          postContent={postData?.postHeader ?? "" + postData?.postContent ?? ""}
+        />
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export const useGetPostDetails = ({ postId }: GetPostDetailsProps) => {
   const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
 
   return useQuery<PostDetailsDataType>({
-    queryKey: ["post", postId],
+    queryKey: ["post-details"],
     queryFn: async () => {
       const response = await customFetch({
         endpointUrl: `posts/${postId}/user/${userId}`,

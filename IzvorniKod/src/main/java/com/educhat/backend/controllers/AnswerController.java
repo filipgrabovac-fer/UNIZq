@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/answers")
+@CrossOrigin("*")
 public class AnswerController {
 
     @Autowired
@@ -21,6 +22,7 @@ public class AnswerController {
                                                @PathVariable Long userId,
                                                @RequestPart("description") String description,
                                                @RequestPart(value = "images", required = false) List<MultipartFile> images) {
+        System.out.println("images" + images);
         Answer answer = answerService.createAnswerWithImages(postId, userId, description, images);
         return ResponseEntity.ok(answer);
     }
