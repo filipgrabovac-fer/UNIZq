@@ -67,7 +67,7 @@ AnswerComponentType) => {
   const content = (
     <div className="flex flex-col gap-3 p-1">
       <button
-        onClick={(e) => {
+        onClick={() => {
           // e.stopPropagation();
         }}
         className="cursor-pointer"
@@ -75,7 +75,7 @@ AnswerComponentType) => {
         Report
       </button>
       <button
-        onClick={(e) => {
+        onClick={() => {
           // e.stopPropagation();
         }}
         className="cursor-pointer text-red"
@@ -104,7 +104,7 @@ AnswerComponentType) => {
         </div>
         <div className="flex gap-1.5">
           <HandThumbUpIcon
-            onClick={(e) => {
+            onClick={() => {
               // e.stopPropagation();
               setIsThumbUpClicked(!isThumbUpClicked);
             }}
@@ -115,7 +115,7 @@ AnswerComponentType) => {
             })}
           />
           <HandThumbDownIcon
-            onClick={(e) => {
+            onClick={() => {
               // e.stopPropagation();
               setIsThumbDownClicked(!isThumbDownClicked);
             }}

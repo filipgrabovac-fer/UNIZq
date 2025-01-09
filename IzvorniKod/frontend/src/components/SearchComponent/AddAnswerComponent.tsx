@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input, message, Spin, Upload, UploadFile } from "antd";
 import {
   PaperClipIcon,
   PaperAirplaneIcon,
   CpuChipIcon,
-  PlusIcon,
 } from "@heroicons/react/24/solid";
 import { cn } from "../../utils/cn.util";
 import { usePostGenerateAnswerWithAI } from "./hooks/usePostGenerateAnswerWithAI.hook";
@@ -87,11 +86,9 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
               fileList={imageList}
               onChange={handleUploadChange}
               multiple
+              showUploadList={false}
             >
-              <PaperClipIcon
-                className="h-5 w-5 text-gray-400 cursor-pointer hover:scale-110 transition-transform"
-                onClick={() => 0}
-              />
+              <PaperClipIcon className="h-5 w-5 text-gray-400 cursor-pointer hover:scale-110 transition-transform" />
             </Upload>
           </div>
         }

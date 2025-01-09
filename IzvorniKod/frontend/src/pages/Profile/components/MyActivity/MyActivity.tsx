@@ -168,9 +168,8 @@ export const MyActivity = ({}: MyActivityType) => {
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
-                      postID={0}
-                      canDelete={false}
-                      canModify={false}
+                      postId={0}
+                      editable={false}
                       onClick={function (): void {
                         throw new Error("Function not implemented.");
                       }}
@@ -181,9 +180,8 @@ export const MyActivity = ({}: MyActivityType) => {
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
-                      postID={0}
-                      canDelete={false}
-                      canModify={false}
+                      postId={0}
+                      editable={false}
                       onClick={function (): void {
                         throw new Error("Function not implemented.");
                       }}
@@ -194,9 +192,8 @@ export const MyActivity = ({}: MyActivityType) => {
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
-                      postID={0}
-                      canDelete={false}
-                      canModify={false}
+                      postId={0}
+                      editable={false}
                       onClick={function (): void {
                         throw new Error("Function not implemented.");
                       }}

@@ -1,4 +1,3 @@
-import { cn } from "../../../utils/cn.util";
 type AdminApplicationTableRowType = {
   userId: number;
   facultyId: number;

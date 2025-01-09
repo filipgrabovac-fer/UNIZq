@@ -66,7 +66,7 @@ export const PostPreview = ({
       <p className="cursor-default truncate w-[75%]">{postTitle}</p>
       <div className="flex gap-1.5">
         <HandThumbUpIcon
-          onClick={(e) => {
+          onClick={() => {
             setIsThumbUpClicked(!isThumbUpClicked);
           }}
           className="w-[20px] cursor-pointer"
@@ -76,7 +76,7 @@ export const PostPreview = ({
           })}
         />
         <HandThumbDownIcon
-          onClick={(e) => {
+          onClick={() => {
             setIsThumbDownClicked(!isThumbDownClicked);
           }}
           className="w-[20px] cursor-pointer"
