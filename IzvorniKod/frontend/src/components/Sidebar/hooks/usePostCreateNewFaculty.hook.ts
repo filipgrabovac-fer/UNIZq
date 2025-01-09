@@ -31,9 +31,9 @@ export const usePostCreateNewFaculty = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: {
+        body: JSON.stringify({
           title: title,
-        },
+        }),
       });
 
       return response;

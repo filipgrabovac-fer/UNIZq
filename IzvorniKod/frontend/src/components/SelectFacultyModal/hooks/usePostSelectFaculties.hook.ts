@@ -36,7 +36,7 @@ export const usePostSelectFaculties = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: { facultyUserList: facultyList },
+        body: JSON.stringify({ facultyUserList: facultyList }),
       });
 
       return response;

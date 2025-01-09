@@ -28,9 +28,9 @@ export const usePostFacultyYear = ({ onSuccess }: PostFacultyYearProps) => {
       const response = await customFetch({
         endpointUrl: `faculty-years/faculty/${facultyId}/user/${userId}`,
         method: "POST",
-        body: {
+        body: JSON.stringify({
           title,
-        },
+        }),
         headers: {
           "Content-Type": "application/json",
         },

@@ -26,13 +26,13 @@ export const usePostEvent = ({ onSuccess }: UsePostEventOnSuccessType) => {
       await customFetch({
         endpointUrl: "events/create",
         method: "POST",
-        body: {
+        body: JSON.stringify({
           title,
           description,
           latitude,
           longitude,
           faculty_id,
-        },
+        }),
         headers: {
           "Content-Type": "application/json",
         },

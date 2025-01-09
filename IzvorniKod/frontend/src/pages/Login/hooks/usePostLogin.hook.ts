@@ -17,7 +17,7 @@ export const usePostLogin = () => {
     mutationFn: async ({ email, password }: UsePostLoginProps) => {
       const response: PostLoginResponseType = await customFetch({
         endpointUrl: "login",
-        body: { email, password },
+        body: JSON.stringify({ email, password }),
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
