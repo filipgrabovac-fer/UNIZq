@@ -17,7 +17,7 @@ export const useGetFacultySubjects = ({
   facultyYearId,
 }: GetFacultySubjectsProps) => {
   return useQuery<FacultySubjectType[]>({
-    queryKey: ["faculty-subjects", facultyYearId],
+    queryKey: [`faculty-subjects-${facultyYearId}`],
     queryFn: async () => {
       const response = await customFetch({
         endpointUrl: `subjects/year/${facultyYearId}`,

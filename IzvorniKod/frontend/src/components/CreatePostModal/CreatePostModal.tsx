@@ -50,6 +50,7 @@ export const CreatePostModal = ({
 
   return (
     <Modal
+      centered
       footer={null}
       open={isModalVisible}
       title="Create a new post"

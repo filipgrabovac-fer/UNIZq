@@ -23,15 +23,15 @@ public class SubjectService {
         return subjectRepository.findByFacultyYearId(facultyYearId);
     }
 
-    public ResponseEntity<String> createSubject(Long userId, Long facultyYearId, String title, String description) {
+    public String createSubject(Long userId, Long facultyYearId, String title, String description) {
 
         if (facultyYearRepository.findById(facultyYearId).isEmpty() || title == null || description == null)
-            return ResponseEntity.badRequest().build();
+            return null;
 
         FacultyYear facultyYear = facultyYearRepository.findById(facultyYearId).get();
 
         if (facultyYear.getId() == null)
-            return ResponseEntity.badRequest().build();
+            return null;
 
         Optional<FacultyUser> facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyYear.getFacultyId(),userId);
 
@@ -42,9 +42,9 @@ public class SubjectService {
                     .facultyYearId(facultyYearId)
                     .build();
             subjectRepository.save(subject);
-            return ResponseEntity.ok(subject.toString());
+            return "Successfully built";
         }
-        return ResponseEntity.badRequest().build();
+        return null;
     }
 
     public ResponseEntity<String> deleteSubject(Long userId, Long subjectId, Long facultyYearId){

@@ -33,8 +33,6 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
   });
 
   const handleSubmit = () => {
-    console.log(4);
-
     // Handle the logic for adding images here
     const formData = new FormData();
 
@@ -65,7 +63,6 @@ export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
       return;
     }
     setImageList(fileList);
-    console.log(123);
   };
 
   const handleCpuChipClick = () => {

@@ -10,6 +10,7 @@ import { Search } from "../../components/Search/Search";
 import { useState } from "react";
 import { Form, Input, Modal } from "antd";
 import { usePostFacultySubject } from "./hooks/usePostFacultySubject.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const FacultySubjects = () => {
   const [filterSubjectsByName, setfilterSubjectsByName] = useState<
@@ -33,10 +34,6 @@ export const FacultySubjects = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -49,12 +46,17 @@ export const FacultySubjects = () => {
     const isDisabled = !values.facultyName || !values.facultyDescription;
     setIsOkDisabled(isDisabled);
   };
-  const onFinish = (values: any) => {
-    console.log("Form Values:", values);
-    handleOk();
-  };
 
-  const { mutate: postFacultySubject } = usePostFacultySubject();
+  const queryClient = useQueryClient();
+
+  const { mutate: postFacultySubject } = usePostFacultySubject({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`faculty-subjects-${yearId}`],
+      });
+      setIsModalOpen(false);
+    },
+  });
 
   return (
     <div>
@@ -69,6 +71,7 @@ export const FacultySubjects = () => {
           <PlusIcon className="w-5 h-5 m-auto" color="white" />
         </button>
         <Modal
+          centered
           title="Add Faculty Subject"
           open={isModalOpen}
           onOk={() =>
@@ -90,7 +93,6 @@ export const FacultySubjects = () => {
           <Form
             form={form}
             layout="vertical"
-            onFinish={onFinish}
             onValuesChange={handleFormChange} // Trigger on every form change
           >
             <Form.Item
