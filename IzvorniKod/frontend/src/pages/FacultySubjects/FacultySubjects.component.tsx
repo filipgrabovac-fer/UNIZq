@@ -8,7 +8,7 @@ import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Search } from "../../components/Search/Search";
 import { useState } from "react";
-import { Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { usePostFacultySubject } from "./hooks/usePostFacultySubject.hook";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -52,7 +52,7 @@ export const FacultySubjects = () => {
   const { mutate: postFacultySubject } = usePostFacultySubject({
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`faculty-subjects-${yearId}`],
+        queryKey: ["faculty-subjects"],
       });
       setIsModalOpen(false);
     },
@@ -64,6 +64,19 @@ export const FacultySubjects = () => {
         <h1 className="px-4 text-[1.5rem] font-medium ml-4  my-auto ">
           Faculty Subjects
         </h1>
+
+        <button
+          onClick={() => {
+            postFacultySubject({
+              facultyDescription: form.getFieldValue("facultyDescription"),
+              facultyName: form.getFieldValue("facultyName"),
+              facultyYearId: yearId,
+            });
+          }}
+        >
+          {" "}
+          ASHNDOIUASGKBDIYBGAUYSDUK
+        </button>
         <button
           className="bg-primary w-8 h-8 rounded-sm justify-center flex my-auto"
           onClick={showModal}
@@ -71,24 +84,17 @@ export const FacultySubjects = () => {
           <PlusIcon className="w-5 h-5 m-auto" color="white" />
         </button>
         <Modal
+          footer={[
+            <Button key="cancel" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>,
+            <Button key="save" type="primary" className="bg-primary">
+              Save
+            </Button>,
+          ]}
           centered
           title="Add Faculty Subject"
           open={isModalOpen}
-          onOk={() =>
-            postFacultySubject({
-              facultyDescription: form.getFieldValue("facultyDescription"),
-              facultyName: form.getFieldValue("facultyName"),
-              facultyYearId: yearId,
-            })
-          } // Submit the form on OK
-          onCancel={handleCancel}
-          okButtonProps={{
-            style: {
-              backgroundColor: "#111D4A",
-              opacity: isOkDisabled ? 0.5 : 1,
-            },
-            disabled: isOkDisabled, // Disable OK based on state
-          }}
         >
           <Form
             form={form}
@@ -96,7 +102,7 @@ export const FacultySubjects = () => {
             onValuesChange={handleFormChange} // Trigger on every form change
           >
             <Form.Item
-              label="Faculty Name"
+              label="Faculty Subject Name"
               name="facultyName"
               rules={[
                 { required: true, message: "Please enter the faculty name" },
@@ -106,7 +112,7 @@ export const FacultySubjects = () => {
               <Input placeholder="Enter faculty name" />
             </Form.Item>
             <Form.Item
-              label="Faculty Description"
+              label="Faculty Subject Description"
               name="facultyDescription"
               rules={[
                 {

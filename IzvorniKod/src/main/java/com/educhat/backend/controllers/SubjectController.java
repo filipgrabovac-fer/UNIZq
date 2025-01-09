@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/subjects")
@@ -30,8 +31,11 @@ public class SubjectController {
 
     @PostMapping("/year/{facultyYearId}/user/{userId}")
     public ResponseEntity<String> createSubject(@PathVariable Long facultyYearId,@PathVariable Long userId, @RequestBody CreateSubjectDTO subject) {
-        return subjectService.createSubject(userId, facultyYearId, subject.getTitle(), subject.getDescription()) == null ?
-                ResponseEntity.badRequest().build() : ResponseEntity.ok("Successfully created subject");
+
+        String newSubject = subjectService.createSubject(userId, facultyYearId, subject.getTitle(), subject.getDescription());
+        if (newSubject == null) return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.ok("Success");
     }
 
     @DeleteMapping("/year/{facultyYearId}/subject/{subjectId}/user/{userId}")
