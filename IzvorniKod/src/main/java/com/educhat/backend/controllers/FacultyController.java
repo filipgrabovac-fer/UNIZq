@@ -3,8 +3,10 @@ package com.educhat.backend.controllers;
 import com.educhat.backend.DTO.AllFacultiesDTO;
 import com.educhat.backend.DTO.CreateFacultyDTO;
 import com.educhat.backend.DTO.FacultiesAdminResponseDTO;
+import com.educhat.backend.DTO.FacultyUserDTO;
 import com.educhat.backend.models.Faculty;
 import com.educhat.backend.services.FacultyService;
+import com.educhat.backend.services.FacultyUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +18,11 @@ import java.util.List;
 public class FacultyController {
 
     private final FacultyService facultyService;
+    private final FacultyUserService facultyUserService;
 
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService, FacultyUserService facultyUserService) {
         this.facultyService = facultyService;
+        this.facultyUserService = facultyUserService;
     }
 
     @GetMapping("/all/user/{userId}")
@@ -31,6 +35,12 @@ public class FacultyController {
     public ResponseEntity<List<FacultiesAdminResponseDTO>> getFacultiesWhereUserIsAdmin(@PathVariable Long userId) {
         List<FacultiesAdminResponseDTO> response = facultyService.getFacultiesWhereUserIsAdmin(userId);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{facultyId}/users/all")
+    public ResponseEntity<List<FacultyUserDTO>> getNonAdminUsers(@PathVariable Long facultyId) {
+        List<FacultyUserDTO> users = facultyUserService.getNonAdminUsers(facultyId);
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/user/{userId}")

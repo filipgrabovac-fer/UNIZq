@@ -21,5 +21,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("DELETE FROM Post p WHERE p.subjectId = :subjectId")
     void deleteBySubjectId(@Param("subjectId") Long subjectId);
 
+    @Query("SELECT SUM(p.reports) FROM Post p WHERE p.facultyUserId = :facultyUserId")
+    Integer sumReportsByFacultyUserId(@Param("facultyUserId") Long facultyUserId);
+
 
 }
