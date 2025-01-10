@@ -99,7 +99,7 @@ public class UserService {
             }
         }
 
-        return new UserDetailsDTO(user.getRealUsername(), user.getEmail(), numFaculties, numPosts, numLikes);
+        return new UserDetailsDTO(user.getRealUsername(), user.getEmail(), user.getImageUrl(), numFaculties, numPosts, numLikes);
     }
 
     public List<FacultyUser> createFacultyUser(Long userId, List<FacultyUserCreateDTO> facultyUserCreateDTOs) {

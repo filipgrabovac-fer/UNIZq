@@ -13,6 +13,7 @@ public class UserDetailsDTO {
 
     private String username;
     private String email;
+    private String imageUrl;
     private int numSelectedFaculties;
     private int numCreatedPosts;
     private int sumOfLikes; // number of likes on created posts

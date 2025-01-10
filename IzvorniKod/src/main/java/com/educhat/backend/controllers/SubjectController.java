@@ -30,12 +30,12 @@ public class SubjectController {
     }
 
     @PostMapping("/year/{facultyYearId}/user/{userId}")
-    public ResponseEntity<String> createSubject(@PathVariable Long facultyYearId,@PathVariable Long userId, @RequestBody CreateSubjectDTO subject) {
+    public ResponseEntity<Boolean> createSubject(@PathVariable Long facultyYearId,@PathVariable Long userId, @RequestBody CreateSubjectDTO subject) {
 
         String newSubject = subjectService.createSubject(userId, facultyYearId, subject.getTitle(), subject.getDescription());
         if (newSubject == null) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok("Success");
+        return ResponseEntity.ok(true);
     }
 
     @DeleteMapping("/year/{facultyYearId}/subject/{subjectId}/user/{userId}")

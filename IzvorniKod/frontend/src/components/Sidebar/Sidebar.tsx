@@ -107,7 +107,10 @@ export const Sidebar = ({ list, events, onYearSelect }: SidebarType) => {
                 trigger="click"
                 className="w-[25px]"
               >
-                <EllipsisVerticalIcon className="cursor-pointer" />
+                <EllipsisVerticalIcon
+                  className="cursor-pointer"
+                  onClick={(e) => e.stopPropagation()}
+                />
               </Popover>
             )}
           </div>
@@ -134,7 +137,8 @@ export const Sidebar = ({ list, events, onYearSelect }: SidebarType) => {
                   <button className="cursor-pointer text-red ">
                     <TrashIcon
                       className="w-5 h-5"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         deleteFacultyYear({
                           yearId: year.yearId,
                         });

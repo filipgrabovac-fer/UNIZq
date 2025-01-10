@@ -30,6 +30,7 @@ public class PostService {
     private final AnswerImageRepository answerImageRepository;
 
     private final CloudinaryService cloudinaryService;
+    private final PostInteractionRepository postInteractionRepository;
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
         if(!userRepository.existsById(userId)) {
@@ -41,7 +42,8 @@ public class PostService {
         List<Post> posts = postRepository.findBySubjectId(subjectId);
 
         return posts.stream()
-                .map(post -> new PostResponseDTO(
+                .map(post ->
+                        new PostResponseDTO(
                         post.getId(),
                         post.getTitle(),
                         post.getDescription(),

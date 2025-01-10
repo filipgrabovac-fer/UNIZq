@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import { Spin } from "antd";
 import { cn } from "../../utils/cn.util";
 
 type CustomButtonType = {
@@ -7,6 +8,7 @@ type CustomButtonType = {
   onClick: () => void;
   type?: "button" | "submit" | "reset";
   fontSize?: "sm";
+  loading?: boolean;
 };
 
 export const CustomButton = ({
@@ -15,6 +17,7 @@ export const CustomButton = ({
   onClick,
   type,
   fontSize,
+  loading,
 }: CustomButtonType) => {
   return (
     <button
@@ -25,10 +28,11 @@ export const CustomButton = ({
         variant === "primary"
           ? "bg-primary  text-white  border-primary"
           : "border-black bg-white",
-        fontSize == "sm" && "text-[0.875rem]"
+        fontSize == "sm" && "text-[0.875rem]",
+        loading && "pointer-events-none opacity-60"
       )}
     >
-      {title}
+      {loading ? <Spin size="small" className="text-white" /> : title}
     </button>
   );
 };

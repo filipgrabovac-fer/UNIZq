@@ -25,4 +25,5 @@ public class FacultyUser {
 
     @NotNull
     private boolean kicked;
+
 }

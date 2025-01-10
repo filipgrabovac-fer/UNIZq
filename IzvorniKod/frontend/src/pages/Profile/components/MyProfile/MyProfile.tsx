@@ -16,6 +16,7 @@ type MyProfileType = {
   postsValue: valueType;
   likesValue: valueType;
   facultiesValue: valueType;
+  imageUrl?: string;
 };
 
 export const MyProfile = ({
@@ -24,6 +25,7 @@ export const MyProfile = ({
   username,
   email,
   facultiesValue,
+  imageUrl,
 }: MyProfileType) => {
   return (
     <div className="grid items-center min-h-screen grid-cols-2 max-xl:grid-cols-1">
@@ -42,7 +44,15 @@ export const MyProfile = ({
                 width: "100%",
               }}
             >
-              <UserIcon className="max-md:w-[200px] w-[300px]" />
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="profile"
+                  className="max-md:w-[200px] w-[300px]"
+                />
+              ) : (
+                <UserIcon className="max-md:w-[200px] w-[300px]" />
+              )}
             </div>
           }
         >

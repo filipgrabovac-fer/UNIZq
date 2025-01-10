@@ -28,8 +28,8 @@ public class FacultyYearController {
     }
 
     @DeleteMapping("/faculty/{yearId}/user/{userId}")
-    public ResponseEntity<String> deleteFacultyYear(@PathVariable Long yearId, @PathVariable Long userId) {
+    public ResponseEntity<Boolean> deleteFacultyYear(@PathVariable Long yearId, @PathVariable Long userId) {
         facultyYearService.deleteFacultyYearById(yearId, userId);
-        return ResponseEntity.ok("Success");
+        return ResponseEntity.ok(true);
     }
 }

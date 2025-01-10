@@ -7,7 +7,7 @@ import {
 import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Search } from "../../components/Search/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { usePostFacultySubject } from "./hooks/usePostFacultySubject.hook";
 import { useQueryClient } from "@tanstack/react-query";
@@ -24,7 +24,7 @@ export const FacultySubjects = () => {
 
   const filteredSubjects = filterSubjectsByName
     ? data?.filter((subject) =>
-        subject.title.toLowerCase().includes(filterSubjectsByName)
+        subject.title.toLowerCase().includes(filterSubjectsByName.toLowerCase())
       )
     : data;
 
@@ -32,10 +32,6 @@ export const FacultySubjects = () => {
 
   const showModal = () => {
     setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   const [form] = Form.useForm();
@@ -49,14 +45,15 @@ export const FacultySubjects = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: postFacultySubject } = usePostFacultySubject({
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["faculty-subjects"],
-      });
-      setIsModalOpen(false);
-    },
-  });
+  const { mutate: postFacultySubject, isPending: isPostFacultySubjectPending } =
+    usePostFacultySubject({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["faculty-subjects"],
+        });
+        setIsModalOpen(false);
+      },
+    });
 
   return (
     <div>
@@ -65,18 +62,6 @@ export const FacultySubjects = () => {
           Faculty Subjects
         </h1>
 
-        <button
-          onClick={() => {
-            postFacultySubject({
-              facultyDescription: form.getFieldValue("facultyDescription"),
-              facultyName: form.getFieldValue("facultyName"),
-              facultyYearId: yearId,
-            });
-          }}
-        >
-          {" "}
-          ASHNDOIUASGKBDIYBGAUYSDUK
-        </button>
         <button
           className="bg-primary w-8 h-8 rounded-sm justify-center flex my-auto"
           onClick={showModal}
@@ -88,7 +73,21 @@ export const FacultySubjects = () => {
             <Button key="cancel" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>,
-            <Button key="save" type="primary" className="bg-primary">
+            <Button
+              key="save"
+              type="primary"
+              className="bg-primary"
+              disabled={isOkDisabled || isPostFacultySubjectPending}
+              onClick={() => {
+                form.validateFields().then((values) => {
+                  postFacultySubject({
+                    facultyName: values.facultyName,
+                    facultyDescription: values.facultyDescription,
+                    facultyYearId: yearId,
+                  });
+                });
+              }}
+            >
               Save
             </Button>,
           ]}
