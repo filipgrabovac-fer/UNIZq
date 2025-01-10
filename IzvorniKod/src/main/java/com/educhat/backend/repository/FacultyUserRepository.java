@@ -30,4 +30,5 @@ public interface FacultyUserRepository extends JpaRepository<FacultyUser, Long> 
 
     List<FacultyUser> findByFacultyIdAndRoleNot(Long facultyId, Role role);
 
+
 }

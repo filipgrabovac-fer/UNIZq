@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -103,29 +104,44 @@ public class UserService {
     }
 
     public List<FacultyUser> createFacultyUser(Long userId, List<FacultyUserCreateDTO> facultyUserCreateDTOs) {
+        // check if user exists
         if(!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found");
         }
+
+        // list of all saved faculty users
         List<FacultyUser> savedFacultyUsers = new ArrayList<>();
 
+        // iterate through all selected faculties
         for(FacultyUserCreateDTO dto : facultyUserCreateDTOs) {
+
+            // check if faculty exists
             if(!facultyRepository.existsById(dto.getFacultyId())) {
                 throw new FacultyNotFoundException("Faculty not found");
             }
-            if(facultyUserRepository.existsByUserIdAndFacultyIdAndRole(userId, dto.getFacultyId(), dto.getUserRole())) {
-                throw new FacultyUserAlreadyExistsException("User already selected faculty with id: " + dto.getFacultyId()
-                        + " and role: " + dto.getUserRole());
+
+            // already exist that faculty user
+            Optional<FacultyUser> facultyUserOptional = facultyUserRepository.findByUserIdAndFacultyId(userId, dto.getFacultyId());
+            if(facultyUserOptional.isPresent()) {
+                FacultyUser facultyUser = facultyUserOptional.get();
+                // if the role is different, update it
+                if(!facultyUser.getRole().equals(dto.getUserRole())) {
+                    facultyUser.setRole(dto.getUserRole());
+                    facultyUserRepository.save(facultyUser);
+                    savedFacultyUsers.add(facultyUser);
+                }
+            // create new faculty user
+            } else {
+                FacultyUser facultyUser = new FacultyUser();
+                facultyUser.setUserId(userId);
+                facultyUser.setFacultyId(dto.getFacultyId());
+                facultyUser.setRole(dto.getUserRole());
+                facultyUser.setKicked(false);
+
+                facultyUserRepository.save(facultyUser);
+                savedFacultyUsers.add(facultyUser);
             }
-
-            FacultyUser facultyUser = new FacultyUser();
-            facultyUser.setUserId(userId);
-            facultyUser.setFacultyId(dto.getFacultyId());
-            facultyUser.setRole(dto.getUserRole());
-            facultyUser.setKicked(false);
-
-            savedFacultyUsers.add(facultyUser);
         }
-        facultyUserRepository.saveAll(savedFacultyUsers);
 
         return savedFacultyUsers;
     }
