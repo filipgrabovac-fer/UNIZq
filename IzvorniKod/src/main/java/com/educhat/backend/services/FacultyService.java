@@ -94,7 +94,20 @@ public class FacultyService {
         Faculty faculty = new Faculty();
         faculty.setAppAdminId(userId);
         faculty.setTitle(title);
-        return facultyRepository.save(faculty);
+        Faculty savedFaculty = facultyRepository.save(faculty);
+
+        // for all app admins create facultyUser with role ADMIN
+        for(User u : userRepository.findByRole(Role.ADMIN)) {
+            FacultyUser facultyUser = new FacultyUser();
+            facultyUser.setUserId(u.getId());
+            facultyUser.setFacultyId(savedFaculty.getId());
+            facultyUser.setRole(Role.ADMIN);
+            facultyUser.setKicked(false);
+            facultyUser.setSelected(true);
+            facultyUserRepository.save(facultyUser);
+        }
+
+        return savedFaculty;
     }
 
     @Transactional
