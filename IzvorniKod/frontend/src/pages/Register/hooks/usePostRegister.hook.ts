@@ -18,7 +18,11 @@ export const usePostRegister = () => {
   return useMutation({
     mutationFn: async ({ email, username, password }: UsePostRegisterProps) => {
       const response: PostRegisterResponseType = await customFetch({
-        body: { email: email, username: username, password: password },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          password: password,
+        }),
         method: "POST",
         endpointUrl: "register",
         headers: { "Content-Type": "application/json" },

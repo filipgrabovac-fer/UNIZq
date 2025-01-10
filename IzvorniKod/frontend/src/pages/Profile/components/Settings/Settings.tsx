@@ -4,20 +4,19 @@ import {
   InboxIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid";
-
-import { valueType } from "antd/es/statistic/utils";
+import { useState } from "react";
 
 const { Meta } = Card;
 
 type SettingsType = {
   username: string;
   email: string;
-  postsValue: valueType;
-  likesValue: valueType;
-  facultiesValue: valueType;
 };
 
 export const Settings = ({ username, email }: SettingsType) => {
+  const [usernameDetails, setUsernameDetails] = useState(username);
+  const [emailDetails, setEmailDetails] = useState(email);
+
   return (
     <Card className="w-fit" title="Edit your account" bordered={false}>
       <div className="grid grid-cols-2 max-md:grid-cols-1">
@@ -63,6 +62,8 @@ export const Settings = ({ username, email }: SettingsType) => {
                 className="h-10"
                 prefix={<UserIcon className="w-5" />}
                 placeholder="Username"
+                value={usernameDetails}
+                onChange={(e) => setUsernameDetails(e.target.value)}
               />
               <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
                 <PencilSquareIcon className="w-5 fill-white" />
@@ -77,6 +78,8 @@ export const Settings = ({ username, email }: SettingsType) => {
                 prefix={<InboxIcon className="w-5" />}
                 type="email"
                 placeholder="Email"
+                value={emailDetails}
+                onChange={(e) => setEmailDetails(e.target.value)}
               />
               <div className="bg-primary ml-2 p-2 w-fit rounded-[10px]">
                 <PencilSquareIcon className="w-5 fill-white" />

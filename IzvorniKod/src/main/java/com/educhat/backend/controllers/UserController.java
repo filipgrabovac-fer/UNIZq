@@ -5,13 +5,8 @@ import com.educhat.backend.auth.AuthenticationResponse;
 import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.services.FacultyUserService;
 import com.educhat.backend.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
-import com.educhat.backend.models.User;
 
 import java.util.List;
 

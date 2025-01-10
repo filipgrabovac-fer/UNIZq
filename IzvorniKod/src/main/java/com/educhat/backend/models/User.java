@@ -35,6 +35,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String token;
+    private String imageUrl;
 
     @NotNull
     @Enumerated(EnumType.STRING)

@@ -28,4 +28,5 @@ public class FacultyUser {
 
     @NotNull
     private boolean isSelected;
+  
 }

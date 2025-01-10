@@ -28,11 +28,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public void saveUser(OAuth2User oauth2User) {
         String email = oauth2User.getAttribute("email");
 
-        if (!userRepository.findByEmail(email).isPresent()) {
+        if (userRepository.findByEmail(email).isEmpty()) {
             User user = new User();
             user.setEmail(email);
             user.setLoginType(LoginType.GOOGLE);
             user.setRole(Role.USER);
+            user.setUsername(oauth2User.getAttribute("given_name"));
+            user.setImageUrl(oauth2User.getAttribute("picture"));
             userRepository.save(user);
         }
     }

@@ -2,10 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { customFetch } from "../../../utils/customFetch";
 
 type GetUserInfoData = {
-  id: number;
   username: string;
   email: string;
+  imageUrl: string;
+  numSelectedFaculties: number;
+  numCreatedPosts: number;
+  sumOfLikes: number;
 };
+
 export const useGetUserInfo = () => {
   return useQuery<GetUserInfoData>({
     queryKey: ["user-info"],

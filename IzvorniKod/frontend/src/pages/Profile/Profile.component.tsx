@@ -134,11 +134,12 @@ export const Profile = () => {
         >
           {selectedKey === "1" && (
             <MyProfile
-              likesValue={1234}
-              postsValue={100}
+              likesValue={data?.sumOfLikes.toString() ?? ""}
+              postsValue={data?.numCreatedPosts.toString() ?? ""}
               username={data?.username ?? ""}
               email={data?.email ?? ""}
-              facultiesValue={"10"}
+              facultiesValue={data?.numSelectedFaculties.toString() ?? ""}
+              imageUrl={data?.imageUrl}
             />
           )}
 
@@ -148,9 +149,6 @@ export const Profile = () => {
             <Settings
               username={data?.username ?? ""}
               email={data?.email ?? ""}
-              postsValue={"1234"}
-              likesValue={"100"}
-              facultiesValue={"50"}
             />
           )}
         </div>

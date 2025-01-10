@@ -61,12 +61,13 @@ export const PostPreview = ({
   return (
     <div
       onClick={onClick}
-      className="h-[50px] rounded-[20px] flex items-center justify-between p-[10px] cursor-pointer hover:bg-gray-100"
+      className="h-[50px] rounded-[20px] flex items-center justify-between p-[10px] cursor-pointer hover:bg-gray_hover"
     >
-      <p className="cursor-default truncate w-[75%]">{postTitle}</p>
+      <p className="truncate w-[75%] cursor-pointer">{postTitle}</p>
       <div className="flex gap-1.5">
         <HandThumbUpIcon
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsThumbUpClicked(!isThumbUpClicked);
           }}
           className="w-[20px] cursor-pointer"
@@ -76,7 +77,8 @@ export const PostPreview = ({
           })}
         />
         <HandThumbDownIcon
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsThumbDownClicked(!isThumbDownClicked);
           }}
           className="w-[20px] cursor-pointer"

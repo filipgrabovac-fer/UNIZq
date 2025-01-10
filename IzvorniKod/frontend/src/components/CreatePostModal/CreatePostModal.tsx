@@ -22,12 +22,13 @@ export const CreatePostModal = ({
 
   const queryClient = useQueryClient();
 
-  const { mutate: createPost } = usePostCreatePost({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", subjectId] });
-      setIsModalVisible(false);
-    },
-  });
+  const { mutate: createPost, isPending: isCreatePostPending } =
+    usePostCreatePost({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["posts", subjectId] });
+        setIsModalVisible(false);
+      },
+    });
 
   const { facultyId, subjectId } = subjectPostsRoute.useParams();
 
@@ -105,6 +106,7 @@ export const CreatePostModal = ({
           </div>
           <div className="w-32">
             <CustomButton
+              loading={isCreatePostPending}
               variant="primary"
               title="Create"
               onClick={() => {
