@@ -3,6 +3,7 @@ package com.educhat.backend.controllers;
 import com.educhat.backend.DTO.*;
 import com.educhat.backend.auth.AuthenticationResponse;
 import com.educhat.backend.models.FacultyUser;
+import com.educhat.backend.services.FacultyUserService;
 import com.educhat.backend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final FacultyUserService facultyUserService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FacultyUserService facultyUserService) {
         this.userService = userService;
+        this.facultyUserService = facultyUserService;
     }
 
     @PostMapping("/register")
@@ -44,13 +47,13 @@ public class UserController {
     public ResponseEntity<List<FacultyUser>> addFacultyToProfile(
             @PathVariable Long userId,
             @RequestBody FacultyUserCreateListDTO facultyUserCreateList) {
-        List<FacultyUser> createdFacultyUsers = userService.createFacultyUser(userId, facultyUserCreateList.getFacultyUserList());
+        List<FacultyUser> createdFacultyUsers = facultyUserService.createFacultyUser(userId, facultyUserCreateList.getFacultyUserList());
         return ResponseEntity.ok(createdFacultyUsers);
     }
 
     @GetMapping("/selected-faculties/user/{userId}")
     public ResponseEntity<List<SelectedFacultiesDTO>> getSelectedFaculties(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.selectedFaculties(userId));
+        return ResponseEntity.ok(facultyUserService.getSelectedFaculties(userId));
     }
     
 }
