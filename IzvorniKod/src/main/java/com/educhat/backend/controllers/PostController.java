@@ -6,6 +6,7 @@ import com.educhat.backend.DTO.PostResponseDTO;
 import com.educhat.backend.models.Post;
 import com.educhat.backend.services.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +54,16 @@ public class PostController {
     public ResponseEntity<PostDetailsDTO> postDetails(@PathVariable Long postId, @PathVariable Long userId) {
         PostDetailsDTO response = postService.getPostDetails(postId, userId);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{postId}/user/{userId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId, @PathVariable Long userId) {
+        boolean isDeleted = postService.deletePost(postId, userId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Post deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this post.");
+        }
     }
 
 }

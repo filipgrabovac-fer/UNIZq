@@ -1,11 +1,11 @@
 package com.educhat.backend.services;
 
 import com.educhat.backend.exceptions.FacultyUserNotFoundException;
+import com.educhat.backend.exceptions.FacultyYearNotFoundException;
 import com.educhat.backend.exceptions.PostNotFoundException;
-import com.educhat.backend.models.Answer;
-import com.educhat.backend.models.AnswerImage;
-import com.educhat.backend.models.FacultyUser;
-import com.educhat.backend.models.Post;
+import com.educhat.backend.exceptions.SubjectNotFoundException;
+import com.educhat.backend.models.*;
+import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,12 @@ public class AnswerService {
     private CloudinaryService cloudinaryService;
     @Autowired
     private FacultyUserRepository facultyUserRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private FacultyYearRepository facultyYearRepository;
 
     public Answer createAnswerWithImages(Long postId, Long userId, String description, List<MultipartFile> images) {
         // Step 1: Validate post and user
@@ -92,5 +98,44 @@ public class AnswerService {
         }
 
         return savedAnswer;
+    }
+
+    public boolean deleteAnswer(Long answerId, Long userId) {
+        // Fetch the answer
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new IllegalArgumentException("Answer not found."));
+
+        // Check if the user is the creator of the answer
+        if (answer.getFacultyUserId().equals(userId)) {
+            answerRepository.delete(answer);
+            return true;
+        }
+
+        // Fetch the post associated with the answer
+        Post post = postRepository.findById(answer.getPostId())
+                .orElseThrow(() -> new PostNotFoundException("Post not found."));
+
+        // Fetch the faculty user associated with the userId
+        FacultyUser facultyUser = facultyUserRepository.findByUserId(userId)
+                .stream()
+                .filter(fu -> !fu.isKicked()) // Ensure the user is not kicked
+                .findFirst()
+                .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found or inactive."));
+
+        // Fetch the Subject and FacultyYear to determine the faculty of the post
+        Subject subject = subjectRepository.findById(post.getSubjectId())
+                .orElseThrow(() -> new SubjectNotFoundException("Subject not found."));
+
+        FacultyYear facultyYear = facultyYearRepository.findById(subject.getFacultyYearId())
+                .orElseThrow(() -> new FacultyYearNotFoundException("Faculty year not found."));
+
+        // Check if the user has ADMIN role and belongs to the same faculty
+        if (facultyUser.getRole() == Role.ADMIN && facultyUser.getFacultyId().equals(facultyYear.getFacultyId())) {
+            answerRepository.delete(answer);
+            return true;
+        }
+
+        // If neither condition is met, return false
+        return false;
     }
 }
