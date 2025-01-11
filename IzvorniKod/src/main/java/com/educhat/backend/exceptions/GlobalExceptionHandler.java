@@ -68,5 +68,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(ApplicationNotFoundException.class)
+    public ResponseEntity<String> handleApplicationNotFoundException(ApplicationNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(ApplicationAlreadyApprovedException.class)
+    public ResponseEntity<String> handleApplicationAlreadyApprovedException(ApplicationAlreadyApprovedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
