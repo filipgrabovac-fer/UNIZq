@@ -30,30 +30,43 @@ public class PostService {
     private final AnswerImageRepository answerImageRepository;
 
     private final CloudinaryService cloudinaryService;
-    private final PostInteractionRepository postInteractionRepository;
+    private final PostInteractionRepository postInteractionsRepository;
 
     public List<PostResponseDTO> getPostsBySubject(Long subjectId, Long userId) {
-        if(!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException("User not found");
         }
-        if(!subjectRepository.existsById(subjectId)) {
+        if (!subjectRepository.existsById(subjectId)) {
             throw new SubjectNotFoundException("Subject not found");
         }
         List<Post> posts = postRepository.findBySubjectId(subjectId);
 
+        // Fetch facultyUserId for the current user
+        FacultyUser facultyUser = facultyUserRepository.findByUserId(userId)
+                .stream()
+                .filter(fu -> !fu.isKicked())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Faculty user not found or inactive."));
+        Long facultyUserId = facultyUser.getId();
+
         return posts.stream()
-                .map(post ->
-                        new PostResponseDTO(
-                        post.getId(),
-                        post.getTitle(),
-                        post.getDescription(),
-                        post.getFacultyUserId(),
-                        post.getSubjectId(),
-                        post.getUpvotes(),
-                        post.getDownvotes(),
-                        post.getReports(),
-                        post.isActive(),
-                        isUserAdmin(subjectId,userId) || isUserAuthor(post,userId)))
+                .map(post -> {
+                    // Fetch the PostInteractions for the user and post
+                    PostInteractions interaction = postInteractionsRepository.findByPostIdAndFacultyUserId(post.getId(), facultyUserId)
+                            .orElse(new PostInteractions(post.getId(), facultyUserId));
+
+                    return new PostResponseDTO(
+                            post.getId(),
+                            post.getTitle(),
+                            post.getDescription(),
+                            post.getFacultyUserId(),
+                            post.getSubjectId(),
+                            interaction.isUpvoted(),
+                            interaction.isDownvoted(),
+                            post.isActive(),
+                            isUserAdmin(subjectId, userId) || isUserAuthor(post, userId)
+                    );
+                })
                 .collect(Collectors.toList());
     }
 
