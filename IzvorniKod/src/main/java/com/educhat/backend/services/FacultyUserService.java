@@ -1,6 +1,7 @@
 package com.educhat.backend.services;
 
 import com.educhat.backend.DTO.FacultyUserDTO;
+import com.educhat.backend.exceptions.FacultyUserNotFoundException;
 import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.models.User;
 import com.educhat.backend.models.enums.Role;
@@ -39,5 +40,16 @@ public class FacultyUserService {
             dto.setKicked(facultyUser.isKicked());
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    public boolean kickUserFromFaculty(Long facultyId, Long userId) {
+        FacultyUser facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyId, userId)
+                .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found for the specified faculty and user."));
+
+        facultyUser.setKicked(!facultyUser.isKicked());
+
+        facultyUserRepository.save(facultyUser);
+
+        return true;
     }
 }
