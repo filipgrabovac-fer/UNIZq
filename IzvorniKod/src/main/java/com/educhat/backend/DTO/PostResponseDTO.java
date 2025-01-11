@@ -14,11 +14,10 @@ public class PostResponseDTO {
     private Long id;
     private String title;
     private String description;
-    private Long facutlyUserId;
+    private Long facultyUserId;
     private Long subjectId;
-    private int upvotes;
-    private int downvotes;
-    private int reports;
+    private boolean userUpvoted;
+    private boolean userDownvoted;
     private boolean active;
-    private boolean isEditable; // korisnik moze editat/brisat post
+    private boolean isEditable;
 }
