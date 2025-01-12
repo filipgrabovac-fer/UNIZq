@@ -164,4 +164,18 @@ public class UserService {
 
         return selectedFaculties;
     }
+
+    public void updateEmail(Long userId, String newEmail) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
+
+    public void updateUsername(Long userId, String newUsername) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+        user.setUsername(newUsername);
+        userRepository.save(user);
+    }
 }
