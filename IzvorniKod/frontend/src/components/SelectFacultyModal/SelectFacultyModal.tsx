@@ -170,7 +170,7 @@ const SelectFacultyModal = ({
         </div>
 
         {/* Right Panel: Selected Faculties */}
-        <div className="w-2/5 bg-gray-50 p-4 rounded-lg max-[750px]:w-full">
+        <div className="w-2/5 bg-gray-50 p-4 rounded-lg max-[750px]:w-full max-[750px]:hidden">
           <h4 className="text-lg font-medium mb-2">Selected faculties:</h4>
           <div className=" overflow-y-scroll h-[350px]">
             <List
