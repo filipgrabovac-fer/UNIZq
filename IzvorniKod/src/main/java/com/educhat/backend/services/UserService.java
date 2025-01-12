@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -100,82 +101,5 @@ public class UserService {
         }
 
         return new UserDetailsDTO(user.getRealUsername(), user.getEmail(), user.getImageUrl(), numFaculties, numPosts, numLikes);
-    }
-
-    public List<FacultyUser> createFacultyUser(Long userId, List<FacultyUserCreateDTO> facultyUserCreateDTOs) {
-        if(!userRepository.existsById(userId)) {
-            throw new UserNotFoundException("User not found");
-        }
-        List<FacultyUser> savedFacultyUsers = new ArrayList<>();
-
-        for(FacultyUserCreateDTO dto : facultyUserCreateDTOs) {
-            if(!facultyRepository.existsById(dto.getFacultyId())) {
-                throw new FacultyNotFoundException("Faculty not found");
-            }
-            if(facultyUserRepository.existsByUserIdAndFacultyIdAndRole(userId, dto.getFacultyId(), dto.getUserRole())) {
-                throw new FacultyUserAlreadyExistsException("User already selected faculty with id: " + dto.getFacultyId()
-                        + " and role: " + dto.getUserRole());
-            }
-
-            FacultyUser facultyUser = new FacultyUser();
-            facultyUser.setUserId(userId);
-            facultyUser.setFacultyId(dto.getFacultyId());
-            facultyUser.setRole(dto.getUserRole());
-            facultyUser.setKicked(false);
-
-            savedFacultyUsers.add(facultyUser);
-        }
-        facultyUserRepository.saveAll(savedFacultyUsers);
-
-        return savedFacultyUsers;
-    }
-
-    public List<SelectedFacultiesDTO> selectedFaculties(Long userId) {
-        // find user if exist
-        User user = userRepository.findById(userId)
-                .orElseThrow( () -> new UserNotFoundException("User not found"));
-
-        // initialize empty list - zero selected faculties
-        List<SelectedFacultiesDTO> selectedFaculties = new ArrayList<>();
-
-        // iterate through faculties user selected
-        for(FacultyUser facultyUser : facultyUserRepository.findByUserId(userId)) {
-            // if user is kicked from that faculty, don't show it
-            if(facultyUser.isKicked()) continue;
-
-            // find faculty
-            Faculty faculty = facultyRepository.findById(facultyUser.getFacultyId())
-                    .orElseThrow( () -> new FacultyNotFoundException("Faculty not found"));
-
-            // find associated faculty years
-            List<FacultyYearDTO> facultyYearDTOs = new ArrayList<>();
-            for(FacultyYear facultyYear : facultyYearRepository.findByFacultyId(faculty.getId())) {
-                facultyYearDTOs.add(new FacultyYearDTO(facultyYear.getId(), facultyYear.getTitle()));
-            }
-
-            // add created dto to list
-            selectedFaculties.add(new SelectedFacultiesDTO(
-                    faculty.getId(),
-                    faculty.getTitle(),
-                    facultyYearDTOs,
-                    user.getRole().equals(Role.ADMIN),
-                    facultyUser.getRole().equals(Role.ADMIN) || user.getRole().equals(Role.ADMIN)));
-        }
-
-        return selectedFaculties;
-    }
-
-    public void updateEmail(Long userId, String newEmail) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
-        user.setEmail(newEmail);
-        userRepository.save(user);
-    }
-
-    public void updateUsername(Long userId, String newUsername) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
-        user.setUsername(newUsername);
-        userRepository.save(user);
     }
 }
