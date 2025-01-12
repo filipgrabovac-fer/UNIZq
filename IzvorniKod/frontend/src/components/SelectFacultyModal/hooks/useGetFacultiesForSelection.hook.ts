@@ -8,6 +8,7 @@ export type FacultyForSelectionDataType = {
   facultyId: number;
   facultyName: string;
   userRole: UserRoleEnum;
+  isSelected: boolean;
 };
 
 export const useGetFacultiesForSelection = () => {

@@ -8,13 +8,14 @@ export type GetPostDetailsProps = {
 
 export type PostDetailsDataType = {
   answerDetails: {
+    answerId: number;
+    content: string;
     answerImages: string[];
     author: string;
-    content: string;
-    downvoted: boolean;
     editable: boolean;
-    liked: boolean;
     upvoted: boolean;
+    isLiked: boolean;
+    downvoted: boolean;
   }[];
   author: string;
   downvotes: number;

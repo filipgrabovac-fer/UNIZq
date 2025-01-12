@@ -9,6 +9,7 @@ interface Faculty {
   facultyName: string;
   userRole: UserRoleEnum | undefined;
   facultyId: number;
+  isSelected: boolean;
 }
 interface SelectFacultyModalProps {
   isModalOpen: boolean;
@@ -30,26 +31,24 @@ const SelectFacultyModal = ({
   const queryClient = useQueryClient();
 
   const toggleFaculty = (faculty: Faculty) => {
-    if (selectedFaculties?.some((f) => f.facultyId === faculty.facultyId)) {
-      setSelectedFaculties(
-        selectedFaculties?.filter((f) => f.facultyId !== faculty.facultyId)
-      );
-    } else {
-      setSelectedFaculties([
-        ...selectedFaculties,
-        {
-          facultyId: faculty.facultyId,
-          facultyName: faculty.facultyName,
-          userRole: UserRoleEnum.USER,
-        },
-      ]);
-    }
+    setSelectedFaculties((prev) => {
+      const toggledPrev = prev.map((p) => ({
+        facultyId: p.facultyId,
+        isSelected:
+          p.facultyId == faculty.facultyId ? !p.isSelected : p.isSelected,
+        facultyName: p.facultyName,
+        userRole: p.userRole ? p.userRole : UserRoleEnum.USER,
+      }));
+
+      return toggledPrev;
+    });
   };
 
   const toggleRequest = (facultyId: number) => {
     setSelectedFaculties((prev) => {
       const toggledPrev = prev.map((faculty) => ({
         facultyId: faculty.facultyId,
+        isSelected: faculty.isSelected,
         facultyName: faculty.facultyName,
         userRole:
           faculty.facultyId == facultyId
@@ -62,17 +61,14 @@ const SelectFacultyModal = ({
       return toggledPrev;
     });
   };
-  const { data: facultiesForSelectionData } = useGetFacultiesForSelection();
+  const { data: facultiesForSelectionData, isLoading } =
+    useGetFacultiesForSelection();
 
   useEffect(() => {
-    if (facultiesForSelectionData != undefined) {
-      setSelectedFaculties(
-        facultiesForSelectionData.filter(
-          (faculty) => faculty.userRole != undefined
-        )
-      );
+    if (!isLoading) {
+      setSelectedFaculties(facultiesForSelectionData ?? []);
     }
-  }, [facultiesForSelectionData]);
+  }, [isLoading]);
   const filteredFaculties = facultiesForSelectionData?.filter((faculty) =>
     faculty.facultyName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -82,6 +78,7 @@ const SelectFacultyModal = ({
       setIsModalOpen(false);
       setSelectedFaculties([]);
       queryClient.invalidateQueries({ queryKey: ["selected-faculties"] });
+      queryClient.invalidateQueries({ queryKey: ["faculties-for-selection"] });
     },
   });
 
@@ -103,20 +100,8 @@ const SelectFacultyModal = ({
           type="primary"
           className="bg-primary"
           onClick={() => {
-            if (selectedFaculties.length === 0) {
-              return;
-            }
-
             const filteredSelectedFaculties = selectedFaculties.filter(
-              (selectedFaculty) =>
-                facultiesForSelectionData?.filter(
-                  (prevSelectedFaculty) =>
-                    prevSelectedFaculty.facultyId ==
-                      selectedFaculty.facultyId &&
-                    (prevSelectedFaculty.userRole != selectedFaculty.userRole ||
-                      (prevSelectedFaculty.userRole == null &&
-                        selectedFaculty.userRole != null))
-                )?.length != 0
+              (selectedFaculty) => selectedFaculty.isSelected
             );
 
             selectFaculties({
@@ -149,9 +134,11 @@ const SelectFacultyModal = ({
                 <List.Item className="flex items-center justify-between">
                   <div>
                     <Checkbox
-                      checked={selectedFaculties.some(
-                        (f) => f.facultyId === faculty.facultyId
-                      )}
+                      checked={
+                        selectedFaculties.find(
+                          (f) => f.facultyId == faculty.facultyId
+                        )?.isSelected
+                      }
                       onChange={() => toggleFaculty(faculty)}
                     >
                       {faculty.facultyName}
@@ -188,11 +175,13 @@ const SelectFacultyModal = ({
           <div className=" overflow-y-scroll h-[350px]">
             <List
               dataSource={selectedFaculties}
-              renderItem={(faculty) => (
-                <List.Item className="break-normal">
-                  {faculty.facultyName}
-                </List.Item>
-              )}
+              renderItem={(faculty) =>
+                faculty.isSelected && (
+                  <List.Item className="break-normal">
+                    {faculty.facultyName}
+                  </List.Item>
+                )
+              }
               className="p-2 rounded-lg"
             />
           </div>

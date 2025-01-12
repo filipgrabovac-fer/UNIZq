@@ -59,8 +59,10 @@ public class FacultyService {
                     role = null;
                 }
             }
+            boolean isSelected = false;
+            if (facultyUser != null) isSelected = facultyUser.isSelected();
 
-            facultiesDTO.add(new AllFacultiesDTO(faculty.getTitle(), role, faculty.getId()));
+            facultiesDTO.add(new AllFacultiesDTO(faculty.getTitle(), role, faculty.getId(), isSelected));
         }
         return facultiesDTO;
     }

@@ -15,5 +15,6 @@ public class AllFacultiesDTO {
     private String facultyName;
     private Role userRole;
     private Long facultyId;
+    private Boolean isSelected;
 
 }

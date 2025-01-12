@@ -7,6 +7,10 @@ import {
 import { Popover, Modal, Carousel } from "antd";
 import { useRef, useState, useEffect } from "react";
 import { CarouselRef } from "antd/es/carousel";
+import { usePutAnswerInteraction } from "./hooks/usePutAnswerInteraction.hook";
+import { PostInteractionEnum } from "../PostPreview/hooks/usePostPostInteraction.hook";
+import { useDeletePostAnswer } from "./hooks/useDeletePostAnswer.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 type AnswerComponentType = {
   answerAuthor: string;
@@ -14,6 +18,8 @@ type AnswerComponentType = {
   pictures: string[];
   upvoted: boolean;
   downvoted: boolean;
+  answerId: string;
+  editable: boolean;
 };
 
 type GetIconStyleType = {
@@ -33,11 +39,13 @@ export const AnswerComponent = ({
   answerAuthor,
   answerText,
   pictures,
-}: // upvoted,
-// downvoted,
-AnswerComponentType) => {
-  const [isThumbUpClicked, setIsThumbUpClicked] = useState(false);
-  const [isThumbDownClicked, setIsThumbDownClicked] = useState(false);
+  answerId,
+  editable,
+  upvoted,
+  downvoted,
+}: AnswerComponentType) => {
+  const [isThumbUpClicked, setIsThumbUpClicked] = useState(upvoted);
+  const [isThumbDownClicked, setIsThumbDownClicked] = useState(downvoted);
   const [isCarouselModalVisible, setIsCarouselModalVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -46,6 +54,13 @@ AnswerComponentType) => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const carouselRef = useRef<CarouselRef>(null);
 
+  const queryClient = useQueryClient();
+
+  const { mutate: putAnswerInteraction } = usePutAnswerInteraction();
+  const { mutate: deletePostAnswer } = useDeletePostAnswer({
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["post-details"] }),
+  });
   useEffect(() => {
     if (textRef.current) {
       const lineHeight = parseFloat(
@@ -67,21 +82,28 @@ AnswerComponentType) => {
   const content = (
     <div className="flex flex-col gap-3 p-1">
       <button
-        onClick={() => {
-          // e.stopPropagation();
+        onClick={(e) => {
+          e.stopPropagation();
+          putAnswerInteraction({
+            answerId,
+            action: PostInteractionEnum.REPORT,
+          });
         }}
         className="cursor-pointer"
       >
         Report
       </button>
-      <button
-        onClick={() => {
-          // e.stopPropagation();
-        }}
-        className="cursor-pointer text-red"
-      >
-        Delete
-      </button>
+      {editable && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            deletePostAnswer({ answerId });
+          }}
+          className="cursor-pointer text-red"
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 
@@ -107,6 +129,17 @@ AnswerComponentType) => {
             onClick={() => {
               // e.stopPropagation();
               setIsThumbUpClicked(!isThumbUpClicked);
+              putAnswerInteraction({
+                answerId,
+                action: PostInteractionEnum.UPVOTE,
+              });
+              if (isThumbDownClicked) {
+                putAnswerInteraction({
+                  answerId,
+                  action: PostInteractionEnum.DOWNVOTE,
+                });
+                setIsThumbDownClicked(false);
+              }
             }}
             className="w-[20px] cursor-pointer"
             style={getIconStyle({
@@ -118,6 +151,18 @@ AnswerComponentType) => {
             onClick={() => {
               // e.stopPropagation();
               setIsThumbDownClicked(!isThumbDownClicked);
+              putAnswerInteraction({
+                answerId,
+                action: PostInteractionEnum.DOWNVOTE,
+              });
+              if (isThumbUpClicked) {
+                putAnswerInteraction({
+                  answerId,
+                  action: PostInteractionEnum.UPVOTE,
+                });
+
+                setIsThumbUpClicked(false);
+              }
             }}
             className="w-[20px] cursor-pointer"
             style={getIconStyle({

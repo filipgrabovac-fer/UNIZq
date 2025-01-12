@@ -88,7 +88,7 @@ export const Search = ({
         <div className="flex max-[500px]:w-20">
           <CustomButton
             variant="primary"
-            title="Add post"
+            title="Create"
             onClick={onAddPostClick}
             fontSize="sm"
           />

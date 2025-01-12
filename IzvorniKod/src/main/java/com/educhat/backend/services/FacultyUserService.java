@@ -109,26 +109,25 @@ public class FacultyUserService {
     public List<SelectedFacultiesDTO> getSelectedFaculties(Long userId) {
         // find user if exist
         User user = userRepository.findById(userId)
-                .orElseThrow( () -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         // initialize empty list - zero selected faculties
         List<SelectedFacultiesDTO> selectedFaculties = new ArrayList<>();
 
         // iterate through faculties user selected
-        for(FacultyUser facultyUser : facultyUserRepository.findByUserId(userId)) {
+        for (FacultyUser facultyUser : facultyUserRepository.findByUserId(userId)) {
             // if user is kicked from that faculty, don't show it
-            if(facultyUser.isKicked()) continue;
+            if (facultyUser.isKicked()) continue;
 
             // param "soft delete" - if it is set to false don't show that facultyUser
-            if(!facultyUser.isSelected()) continue;
-
+            if (!facultyUser.isSelected()) continue;
             // find faculty
             Faculty faculty = facultyRepository.findById(facultyUser.getFacultyId())
-                    .orElseThrow( () -> new FacultyNotFoundException("Faculty not found"));
+                    .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
 
             // find associated faculty years
             List<FacultyYearDTO> facultyYearDTOs = new ArrayList<>();
-            for(FacultyYear facultyYear : facultyYearRepository.findByFacultyId(faculty.getId())) {
+            for (FacultyYear facultyYear : facultyYearRepository.findByFacultyId(faculty.getId())) {
                 facultyYearDTOs.add(new FacultyYearDTO(facultyYear.getId(), facultyYear.getTitle()));
             }
 
@@ -142,7 +141,8 @@ public class FacultyUserService {
         }
 
         return selectedFaculties;
-      
+    }
+    
     public boolean kickUserFromFaculty(Long facultyId, Long userId) {
         FacultyUser facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyId, userId)
                 .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found for the specified faculty and user."));

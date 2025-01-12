@@ -25,11 +25,11 @@ public class AnswerInteractionController {
     }
 
     // Update or create an answer interaction
-    @PutMapping("/{answerId}/{action}")
+    @PutMapping("/{answerId}/{action}/user/{userId}")
     public ResponseEntity<String> updateOrCreateAnswerInteraction(
             @PathVariable Long answerId,
             @PathVariable String action,
-            @RequestParam Long userId) {
+            @PathVariable Long userId) {
         boolean result = answerInteractionsService.updateOrCreateAnswerInteraction(answerId, userId, action.toLowerCase());
         if (result) {
             return ResponseEntity.ok("Interaction updated/created successfully");

@@ -43,7 +43,7 @@ export const SubjectPosts = () => {
           {filteredPosts.map((post, i) => (
             <PostPreview
               key={i}
-              editable={post.editable}
+              editable={post.isEditable}
               onClick={() =>
                 navigate({
                   to: postRoute.fullPath,
@@ -52,6 +52,8 @@ export const SubjectPosts = () => {
               }
               postId={post.id}
               postTitle={post.title}
+              isDownvoted={post.userDownvoted}
+              isUpvoted={post.userUpvoted}
             />
           ))}
         </div>

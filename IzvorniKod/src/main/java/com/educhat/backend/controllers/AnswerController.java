@@ -28,12 +28,12 @@ public class AnswerController {
     }
 
     @DeleteMapping("/{answerId}/user/{userId}")
-    public ResponseEntity<String> deleteAnswer(@PathVariable Long answerId, @PathVariable Long userId) {
+    public ResponseEntity<Boolean> deleteAnswer(@PathVariable Long answerId, @PathVariable Long userId) {
         boolean isDeleted = answerService.deleteAnswer(answerId, userId);
         if (isDeleted) {
-            return ResponseEntity.ok("Answer deleted successfully.");
+            return ResponseEntity.ok(true);
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this answer.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(true);
         }
     }
 }

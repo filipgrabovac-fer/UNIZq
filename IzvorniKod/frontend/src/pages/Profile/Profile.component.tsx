@@ -149,6 +149,7 @@ export const Profile = () => {
             <Settings
               username={data?.username ?? ""}
               email={data?.email ?? ""}
+              imageUrl={data?.imageUrl}
             />
           )}
         </div>

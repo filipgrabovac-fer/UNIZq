@@ -23,10 +23,12 @@ export const Post = () => {
       <div className="h-full overflow-y-auto">
         {postData?.answerDetails?.map((answer, i) => (
           <AnswerComponent
+            answerId={answer.answerId.toString()}
             pictures={answer.answerImages}
             answerText={answer.content}
             answerAuthor={answer.author}
             key={i}
+            editable={answer.editable}
             upvoted={answer.upvoted}
             downvoted={answer.downvoted}
           />

@@ -23,11 +23,11 @@ public class PostInteractionController {
         return ResponseEntity.ok(postInteractions);
     }
 
-    @PutMapping("/{postId}/{action}")
+    @PutMapping("/{postId}/{action}/user/{userId}")
     public ResponseEntity<String> updateOrCreatePostInteraction(
             @PathVariable Long postId,
             @PathVariable String action,
-            @RequestParam Long userId) {
+            @PathVariable Long userId) {
         boolean result = postInteractionsService.updateOrCreatePostInteraction(postId, userId, action.toLowerCase());
         if (result) {
             return ResponseEntity.ok("Interaction updated/created successfully");

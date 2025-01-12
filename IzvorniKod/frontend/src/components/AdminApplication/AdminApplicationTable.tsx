@@ -36,18 +36,6 @@ export const AdminApplicationTable = ({
     setApplications(uniqueApplications);
   }, [initialApplications]);
 
-  // const handleApprove = (userId: number) => {
-  //   setApplications((prevApplications) =>
-  //     prevApplications.map((application) =>
-  //       application.userId === userId
-  //         ? { ...application, isApproved: true, userRole: "ADMIN" }
-  //         : application
-  //     )
-  //   );
-  //   // Here you can add the logic to update the user's role in the backend
-  //   console.log(`User ${userId} approved as ADMIN`);
-  // };
-
   return (
     <div className="p-4">
       <div className="border-gray_border border-[1px] rounded-[10px] ">

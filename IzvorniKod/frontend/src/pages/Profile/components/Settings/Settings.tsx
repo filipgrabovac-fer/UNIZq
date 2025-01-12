@@ -11,9 +11,10 @@ const { Meta } = Card;
 type SettingsType = {
   username: string;
   email: string;
+  imageUrl?: string;
 };
 
-export const Settings = ({ username, email }: SettingsType) => {
+export const Settings = ({ username, email, imageUrl }: SettingsType) => {
   const [usernameDetails, setUsernameDetails] = useState(username);
   const [emailDetails, setEmailDetails] = useState(email);
 
@@ -36,7 +37,11 @@ export const Settings = ({ username, email }: SettingsType) => {
                 justifyContent: "center",
               }}
             >
-              <UserIcon className="w-[70%]" />
+              {imageUrl ? (
+                <img src={imageUrl} className="w-[70%]" />
+              ) : (
+                <UserIcon className="w-[70%]" />
+              )}
             </div>
           }
         >

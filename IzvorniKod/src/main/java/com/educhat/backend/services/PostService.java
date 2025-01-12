@@ -215,6 +215,7 @@ public class PostService {
             }
             // create answer dto
             answersDTO.add(new AnswerDetailsDTO(
+                    answer.getId(),
                     answer.getDescription(),
                     answerImagesUrl,
                     userAuthorAnswer.getRealUsername(),

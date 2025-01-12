@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerDetailsDTO {
-
+    private Long answerId;
     private String content;
     private List<String> answerImages; // list of images url connected to that answer
     private String author;

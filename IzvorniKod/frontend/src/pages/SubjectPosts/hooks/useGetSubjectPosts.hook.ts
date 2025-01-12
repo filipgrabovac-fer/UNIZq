@@ -8,16 +8,15 @@ export type GetSubjectPostsProps = {
 };
 
 export type SubjectPostType = {
-  active: boolean;
-  description: string;
-  downvotes: number;
-  editable: boolean;
-  facutlyUserId: number;
   id: number;
-  reports: number;
-  subjectId: number;
   title: string;
-  upvotes: number;
+  description: string;
+  facultyUserId: number;
+  subjectId: number;
+  userUpvoted: boolean;
+  userDownvoted: boolean;
+  active: boolean;
+  isEditable: boolean;
 };
 
 export const useGetSubjectPosts = ({ subjectId }: GetSubjectPostsProps) => {
