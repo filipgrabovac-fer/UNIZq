@@ -165,8 +165,8 @@ export const MyActivity = ({}: MyActivityType) => {
                 <div className="mb-3 md:w-[90%] sm:w-[100%]">
                   <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
                     <PostPreview
-                      isDownvoted={false}
-                      isUpvoted={false}
+                      isDownvoted
+                      isUpvoted
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
@@ -179,8 +179,8 @@ export const MyActivity = ({}: MyActivityType) => {
                   </div>
                   <div className="mb-3 transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
                     <PostPreview
-                      isDownvoted={false}
-                      isUpvoted={false}
+                      isDownvoted
+                      isUpvoted
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
@@ -193,8 +193,8 @@ export const MyActivity = ({}: MyActivityType) => {
                   </div>
                   <div className="transition-transform hover:scale-y-105 duration-300 hover:shadow-md">
                     <PostPreview
-                      isDownvoted={false}
-                      isUpvoted={false}
+                      isDownvoted={true}
+                      isUpvoted={true}
                       postTitle={
                         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo quae odit ab magnam tempora, ut excepturi error aut impedit amet libero ipsam fugiat repudiandae aspernatur unde similique nemo hic officiis"
                       }
