@@ -16,7 +16,7 @@ interface SearchComponentProps {
 }
 
 export const AddAnswerComponent = ({ postContent }: SearchComponentProps) => {
-  const [answerContent, setAnswerContent] = useState("");
+  const [answerContent, setAnswerContent] = useState("asd");
   const [imageList, setImageList] = useState<UploadFile[]>();
   const [isGenerateAnswerLoading, setIsGenerateAnswerLoading] = useState(false);
 
