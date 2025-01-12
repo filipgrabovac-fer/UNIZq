@@ -6,6 +6,7 @@ import com.educhat.backend.models.*;
 import com.educhat.backend.models.enums.Role;
 import com.educhat.backend.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -225,6 +226,41 @@ public class PostService {
         response.setAnswerDetails(answersDTO);
 
         return response;
+    }
+
+    public boolean deletePost(Long postId, Long userId) {
+        // Fetch the post
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException("Post not found."));
+
+        // Check if the user is the creator of the post
+        if (post.getFacultyUserId().equals(userId)) {
+            postRepository.delete(post);
+            return true;
+        }
+
+        // Fetch the FacultyUser associated with the userId
+        FacultyUser facultyUser = facultyUserRepository.findByUserId(userId)
+                .stream()
+                .filter(fu -> !fu.isKicked()) // Ensure the user is not kicked
+                .findFirst()
+                .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found or inactive."));
+
+        // Fetch the Subject and FacultyYear to determine the faculty of the post
+        Subject subject = subjectRepository.findById(post.getSubjectId())
+                .orElseThrow(() -> new SubjectNotFoundException("Subject not found."));
+
+        FacultyYear facultyYear = facultyYearRepository.findById(subject.getFacultyYearId())
+                .orElseThrow(() -> new FacultyYearNotFoundException("Faculty year not found."));
+
+        // Check if the user has ADMIN role and belongs to the same faculty
+        if (facultyUser.getRole() == Role.ADMIN && facultyUser.getFacultyId().equals(facultyYear.getFacultyId())) {
+            postRepository.delete(post);
+            return true;
+        }
+
+        // If neither condition is met, return false
+        return false;
     }
 
 }
