@@ -7,6 +7,7 @@ import com.educhat.backend.DTO.SelectedFacultiesDTO;
 import com.educhat.backend.exceptions.FacultyNotFoundException;
 import com.educhat.backend.exceptions.UserNotFoundException;
 import com.educhat.backend.models.Faculty;
+import com.educhat.backend.exceptions.FacultyUserNotFoundException;
 import com.educhat.backend.models.FacultyUser;
 import com.educhat.backend.models.FacultyYear;
 import com.educhat.backend.models.User;
@@ -141,5 +142,15 @@ public class FacultyUserService {
         }
 
         return selectedFaculties;
+      
+    public boolean kickUserFromFaculty(Long facultyId, Long userId) {
+        FacultyUser facultyUser = facultyUserRepository.findByFacultyIdAndUserId(facultyId, userId)
+                .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found for the specified faculty and user."));
+
+        facultyUser.setKicked(!facultyUser.isKicked());
+
+        facultyUserRepository.save(facultyUser);
+
+        return true;
     }
 }

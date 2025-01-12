@@ -50,5 +50,17 @@ public class UserController {
     public ResponseEntity<List<SelectedFacultiesDTO>> getSelectedFaculties(@PathVariable Long userId) {
         return ResponseEntity.ok(facultyUserService.getSelectedFaculties(userId));
     }
+
+    @PutMapping("user/{userId}/update-email")
+    public ResponseEntity<String> updateEmail(@PathVariable Long userId, @RequestBody UpdateEmailRequestDTO request) {
+        userService.updateEmail(userId, request.getNewEmail());
+        return ResponseEntity.ok("Email updated successfully.");
+    }
+
+    @PutMapping("user/{userId}/update-username")
+    public ResponseEntity<String> updateUsername(@PathVariable Long userId, @RequestBody UpdateUsernameRequestDTO request) {
+        userService.updateUsername(userId, request.getNewUsername());
+        return ResponseEntity.ok("Username updated successfully.");
+    }
     
 }
