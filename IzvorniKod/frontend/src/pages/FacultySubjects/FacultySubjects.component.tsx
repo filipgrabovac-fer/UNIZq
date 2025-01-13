@@ -7,7 +7,7 @@ import {
 import { useGetFacultySubjects } from "./hooks/useGetFacultySubjects.hook";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Search } from "../../components/Search/Search";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { usePostFacultySubject } from "./hooks/usePostFacultySubject.hook";
 import { useQueryClient } from "@tanstack/react-query";

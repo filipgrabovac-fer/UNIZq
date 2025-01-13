@@ -17,7 +17,7 @@ COPY build.gradle settings.gradle gradlew ./
 RUN gradle build 
 
 # Stage 3: Run the application
-FROM openjdk:17-jdk AS unizq
+FROM openjdk:21-jdk AS unizq
 WORKDIR /app
 ARG VERTEXAI_CLIENT_ID
 ENV VERTEXAI_CLIENT_ID=${VERTEXAI_CLIENT_ID}
@@ -27,6 +27,7 @@ ARG VERTEXAI_PROJECT_ID
 ENV VERTEXAI_PROJECT_ID=${VERTEXAI_PROJECT_ID}
 ARG VERTEXAI_REFRESH_TOKEN
 ENV VERTEXAI_REFRESH_TOKEN=${VERTEXAI_REFRESH_TOKEN}
+ENV NIXPACKS_JDK_VERSION=21
 COPY vertex-ai-secret.json ./vertex-ai-secret.json
 # Write to the JSON file
 RUN echo "{ \
