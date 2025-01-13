@@ -6,7 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class FacultyYearTest {
@@ -61,34 +64,36 @@ public class FacultyYearTest {
     }
 
     @Test
-    public void createFacultyYearTest_cancelYearCreationTest(){
-        loginTest.loginTest_successfullLogin();
+    public void createFacultyYearTest_cancelYearCreationTest() {
+        loginTest.loginTest_successfullLogin(); // Ensure this test has proper waits in place
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1)); // Adjust the wait time as needed
 
-        List<WebElement> menus = driver.findElements(By.className("ant-menu-submenu"));
-        WebElement facultiesMenu = menus.get(0);
-
-
+        // Wait for and click on the faculties menu
+        WebElement facultiesMenu = wait.until(ExpectedConditions.elementToBeClickable(
+                By.className("ant-menu-submenu")
+        ));
         facultiesMenu.click();
 
-
-        WebElement facultyMenuFacultyItem = facultiesMenu.findElement(
-                By.xpath(
-                        "//*[text()='FER']"
-                )
-        );
+        // Wait for and click on the specific faculty item (e.g., FER)
+        WebElement facultyMenuFacultyItem = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//*[text()='FER']")
+        ));
         facultyMenuFacultyItem.click();
 
-        WebElement createFacultyYearButton = driver.findElement(
-                By.xpath(
-                        "//*[text()='+ Add Year']"
-                )
-        );
-
+        // Wait for and click on the "Add Year" button
+        WebElement createFacultyYearButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//*[text()='+ Add Year']")
+        ));
         createFacultyYearButton.click();
 
-        WebElement createFacultyYearSaveButton = driver.findElement(By.className("ant-input-suffix"));
+        // Wait for and click on the cancel/save button
+        WebElement createFacultyYearSaveButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.className("ant-input-suffix")
+        ));
         createFacultyYearSaveButton.click();
+
+        // Optionally, assert that the action was canceled or verify any UI feedback
     }
 
     @Test
