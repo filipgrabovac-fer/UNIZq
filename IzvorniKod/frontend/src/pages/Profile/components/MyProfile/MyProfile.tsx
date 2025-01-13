@@ -44,10 +44,10 @@ export const MyProfile = ({
                 width: "100%",
               }}
             >
-              {imageUrl ? (
+              {imageUrl && imageUrl != "" ? (
                 <img
                   src={imageUrl}
-                  alt="profile"
+                  alt="profile image"
                   className="max-md:w-[200px] w-[300px]"
                 />
               ) : (

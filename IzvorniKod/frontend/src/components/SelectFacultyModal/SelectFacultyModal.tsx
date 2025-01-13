@@ -131,8 +131,8 @@ const SelectFacultyModal = ({
             <List
               dataSource={filteredFaculties}
               renderItem={(faculty) => (
-                <List.Item>
-                  <div>
+                <List.Item className="flex items-center justify-between">
+                  <div className="w-[70%] flex">
                     <Checkbox
                       checked={
                         selectedFaculties.find(
@@ -140,9 +140,10 @@ const SelectFacultyModal = ({
                         )?.isSelected
                       }
                       onChange={() => toggleFaculty(faculty)}
-                    >
+                    ></Checkbox>
+                    <p className="truncate w-[90%] ml-[1%]">
                       {faculty.facultyName}
-                    </Checkbox>
+                    </p>
                   </div>
 
                   <div>

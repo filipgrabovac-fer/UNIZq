@@ -22,7 +22,7 @@ export const SubjectPosts = () => {
 
   const filteredPosts = filterPostsByName
     ? data?.filter((post) =>
-        post.title.toLowerCase().includes(filterPostsByName)
+        post.title.toLowerCase().includes(filterPostsByName.toLowerCase())
       )
     : data;
 
