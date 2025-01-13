@@ -69,6 +69,7 @@ export const FacultySubjects = () => {
           <PlusIcon className="w-5 h-5 m-auto" color="white" />
         </button>
         <Modal
+          onCancel={() => setIsModalOpen(false)}
           footer={[
             <Button key="cancel" onClick={() => setIsModalOpen(false)}>
               Cancel
