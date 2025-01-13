@@ -27,8 +27,11 @@ export const usePostGenerateAnswerWithAI = ({
       try {
         const response: PostGenerateAnswerWithAIResponseType =
           await customFetch({
-            body: { question: question },
+            body: JSON.stringify({ question: question }),
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
             endpointUrl: "ai/generate-answer",
           });
         return response.answer;
