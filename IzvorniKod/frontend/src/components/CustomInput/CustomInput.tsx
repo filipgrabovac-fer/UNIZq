@@ -73,6 +73,7 @@ export const CustomInput = ({
           {type === "password" ? (
             togglePassword ? (
               <EyeIcon
+                title="Show password"
                 width={18}
                 className="mr-2 cursor-pointer"
                 onClick={() => {
@@ -81,6 +82,7 @@ export const CustomInput = ({
               />
             ) : (
               <EyeSlashIcon
+                title="Hide password"
                 width={18}
                 className="mr-2 cursor-pointer"
                 onClick={() => {
