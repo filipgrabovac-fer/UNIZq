@@ -1,4 +1,4 @@
-package com.educhat.backend.tests;
+package com.educhat.backend.tests_selenium;
 
 
 
