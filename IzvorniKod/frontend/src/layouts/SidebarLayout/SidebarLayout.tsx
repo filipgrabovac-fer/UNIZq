@@ -4,8 +4,6 @@ import { Outlet } from "@tanstack/react-router";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { useGetEvents } from "../../pages/Events/hooks/useGetEvents.hook";
 import { useGetSelectedFaculties } from "./hooks/useGetSelectedFaculties.hook";
-import { jwtDecode } from "jwt-decode";
-import { getTokenFromLocalStorageOrCookie } from "../../routes/layout.routes";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import SelectFacultyModal from "../../components/SelectFacultyModal/SelectFacultyModal";
 
@@ -26,9 +24,7 @@ export const SidebarLayout = () => {
     return () => mediaQuery.removeEventListener("change", handleScreenResize);
   }, []);
 
-  // @ts-ignore
-  const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
-  const { data: sidebarData } = useGetSelectedFaculties({ userId: userId });
+  const { data: sidebarData } = useGetSelectedFaculties();
   const { data: eventsData } = useGetEvents();
 
   return (

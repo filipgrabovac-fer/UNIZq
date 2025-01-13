@@ -16,9 +16,9 @@ export type SelectedFacultiesDataType = {
   title: string;
 };
 
-export const useGetSelectedFaculties = ({
-  userId,
-}: GetSelectedFacultiesProps) => {
+export const useGetSelectedFaculties = () => {
+  // @ts-ignore
+  const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
   return useQuery<SelectedFacultiesDataType[]>({
     queryKey: ["selected-faculties"],
     queryFn: async () => {

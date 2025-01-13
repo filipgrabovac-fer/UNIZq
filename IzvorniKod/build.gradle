@@ -24,6 +24,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.seleniumhq.selenium:selenium-java:4.27.0'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0' // Provides the JUnit 5 API
+    implementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0' // Runs JUnit 5 tests
+
     implementation platform('com.google.cloud:libraries-bom:26.29.0')
     implementation 'com.google.cloud:google-cloud-vertexai'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -42,12 +46,15 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
     implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     //testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+tasks.named("test") {
+
+useJUnitPlatform()
 }
