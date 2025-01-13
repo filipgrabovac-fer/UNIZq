@@ -11,9 +11,19 @@ type PostLoginResponseType = {
   token: string;
 };
 
-export const usePostLogin = () => {
+type PostLoginProps = {
+  onError:
+    | ((
+        error: Error,
+        variables: UsePostLoginProps,
+        context: unknown
+      ) => Promise<unknown> | unknown)
+    | undefined;
+};
+export const usePostLogin = ({ onError }: PostLoginProps) => {
   const navigate = useNavigate();
   return useMutation({
+    onError: onError,
     mutationFn: async ({ email, password }: UsePostLoginProps) => {
       const response: PostLoginResponseType = await customFetch({
         endpointUrl: "login",
