@@ -47,7 +47,7 @@ public class PostService {
                 .stream()
                 .filter(fu -> !fu.isKicked())
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Faculty user not found or inactive."));
+                .orElseThrow(() -> new FacultyUserNotFoundException("Faculty user not found or inactive."));
         Long facultyUserId = facultyUser.getId();
 
         return posts.stream()
@@ -90,7 +90,7 @@ public class PostService {
 
         // check if user is faculty admin
         Subject subject = subjectRepository.findById(subjectId)
-                .orElseThrow( () -> new SubjectNotFoundException(("Subject now found")));
+                .orElseThrow( () -> new SubjectNotFoundException(("Subject not found")));
         Long facultyYearId = subject.getFacultyYearId();
 
         FacultyYear facultyYear = facultyYearRepository.findById(facultyYearId)
