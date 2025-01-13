@@ -19,7 +19,8 @@ export type SelectedFacultiesDataType = {
 };
 
 export const useGetSelectedFaculties = () => {
-  //@ts-ignore
+
+  // @ts-ignore
   const { userId } = jwtDecode(getTokenFromLocalStorageOrCookie() ?? "");
   return useQuery<SelectedFacultiesDataType[]>({
     queryKey: ["selected-faculties"],

@@ -136,6 +136,7 @@ export const Sidebar = ({ list, events, onYearSelect }: SidebarType) => {
                 {faculty.canEditFacultyYear && (
                   <button className="cursor-pointer text-red ">
                     <TrashIcon
+                      name="delete-faculty-year"
                       className="w-5 h-5"
                       onClick={(e) => {
                         e.stopPropagation();

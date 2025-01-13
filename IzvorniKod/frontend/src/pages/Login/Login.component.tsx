@@ -9,7 +9,12 @@ export const Login = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate: postLogin } = usePostLogin();
+  const { mutate: postLogin, isError } = usePostLogin({
+    onError: () => {
+      setUsernameOrEmail("");
+      setPassword("");
+    },
+  });
   return (
     <div
       className="
@@ -23,12 +28,18 @@ export const Login = () => {
 
       <div className="flex flex-col gap-4 min-[400px]:w-[320px] w-[250px] mb-4">
         <CustomInput
+          errorMessage={
+            isError && usernameOrEmail == "" ? "Invalid email" : undefined
+          }
           required={true}
-          title="email or username"
+          title="email"
           placeholder="email@example.com"
           onChange={(value) => setUsernameOrEmail(value.target.value)}
         />
         <CustomInput
+          errorMessage={
+            isError && password == "" ? "Invalid password" : undefined
+          }
           required={true}
           title="password"
           placeholder="password"
